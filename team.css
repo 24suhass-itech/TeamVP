@@ -1,0 +1,1110 @@
+:root {
+  --text: #ffffff;
+  --muted: #a5acc2;
+  --line: rgba(255, 255, 255, 0.15);
+  --glass: rgba(8, 12, 32, 0.42);
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+
+  color: var(--text);
+
+  font-family: var(--vp-font);
+
+  background:
+    radial-gradient(
+      ellipse 80% 70% at 0% 0%,
+      #142e9a 0%,
+      #0b1b61 30%,
+      #05091f 65%,
+      transparent 100%
+    ),
+
+    radial-gradient(
+      ellipse 70% 60% at 100% 100%,
+      #07164e 0%,
+      #020510 65%,
+      transparent 100%
+    ),
+
+    linear-gradient(
+      135deg,
+      #02030a 0%,
+      #030615 45%,
+      #000105 100%
+    );
+
+  background-attachment: fixed;
+
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   TEAM PAGE
+========================================================= */
+.topbar {
+  position: absolute;
+}
+.team-page {
+  width: 100%;
+
+  min-height: 100vh;
+
+  padding-top: 125px;
+
+  padding-bottom: 120px;
+}
+
+
+/* =========================================================
+   VP REVOLVER
+   CENTERED BELOW NAVBAR
+========================================================= */
+
+.vp-selector {
+  position: absolute;
+
+  top: 142px;
+  right: 80px;
+  left: auto;
+
+  transform: none;
+
+  width: 146px;
+  height: 132px;
+
+  margin: 0;
+  z-index: 50;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.vp-display {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 24px;
+  background: linear-gradient(110deg, rgba(50, 65, 150, 0.22), rgba(8, 12, 32, 0.42));
+  backdrop-filter: blur(22px) saturate(165%);
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 0 22px rgba(255, 255, 255, 0.045);
+}
+
+.vp-window {
+  position: relative;
+  width: 100%;
+  height: 88px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
+}
+
+.vp-track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(-22px);
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.vp-item {
+  width: 100%;
+  height: 44px;
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+  color: rgba(219, 226, 246, 0.42);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  transition: color 420ms ease, font-size 420ms ease, font-weight 420ms ease;
+  user-select: none;
+}
+
+.vp-item.is-active {
+  color: #fff;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   REMOVE OLD VP ELEMENTS
+========================================================= */
+
+.vp-arrow,
+.vp-label,
+.vp-display h1,
+.vp-dots {
+
+  display: none !important;
+}
+
+
+.vp-selector::after {
+
+  display: none !important;
+}
+
+
+/* =========================================================
+   TEAM CONTENT
+========================================================= */
+
+.vp-content {
+
+  width:
+    calc(100% - 80px);
+
+  margin:
+    315px auto 0;
+}
+
+
+/* =========================================================
+   SIX PEOPLE — ONE ROW
+========================================================= */
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  width: 100%;
+}
+
+
+/* =========================================================
+   PERSON CARD
+========================================================= */
+
+.person-card {
+
+  width: 100%;
+
+  min-width: 0;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(255,255,255,0.14);
+
+  border-radius: 24px;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(35,48,115,0.20),
+      rgba(5,8,23,0.62)
+    );
+
+  backdrop-filter:
+    blur(18px)
+    saturate(140%);
+
+  -webkit-backdrop-filter:
+    blur(18px)
+    saturate(140%);
+
+  box-shadow:
+
+    0 20px 50px
+    rgba(0,0,0,0.22),
+
+    inset 0 1px 0
+    rgba(255,255,255,0.10);
+
+  transition:
+
+    transform 0.35s ease,
+
+    border-color 0.35s ease;
+}
+
+
+/* =========================================================
+   REMOVE HIERARCHY
+========================================================= */
+
+.captain,
+.vice-captain,
+.management-lead,
+.subsystem-card {
+
+  transform: none;
+
+  grid-column: auto;
+
+  grid-row: auto;
+
+  width: 100%;
+}
+
+
+.person-card:hover {
+
+  transform:
+    translateY(-7px);
+
+  border-color:
+    rgba(255,255,255,0.28);
+}
+
+
+/* =========================================================
+   PERSON PHOTO
+========================================================= */
+
+.person-photo {
+  position: relative;
+
+  width: 55%;
+  aspect-ratio: 4 / 5;
+
+  overflow: hidden;
+
+  margin: 20px auto 0;
+
+  border-radius: 16px;
+
+  background: #070b20;
+
+  /* Force identical rendering area */
+  min-height: 0;
+}
+
+.photo-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+  color: rgba(226, 233, 255, 0.9);
+  font-size: clamp(1.5rem, 3vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: linear-gradient(145deg, rgba(58, 78, 155, 0.72), rgba(10, 16, 44, 0.95));
+}
+
+.person-photo.photo-missing img {
+  display: none;
+}
+
+.person-photo.photo-missing .photo-fallback {
+  visibility: visible;
+}
+
+
+.person-photo::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 55%,
+      rgba(2, 3, 10, 0.55)
+    );
+
+  pointer-events: none;
+}
+
+
+.person-photo img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center center;
+
+  /* Prevent browser interpolation differences */
+  image-rendering: auto;
+
+  transition:
+    transform 0.5s ease;
+}
+
+
+
+.person-card:hover .person-photo img {
+  transform: scale(1.04);
+}
+
+
+/* =========================================================
+   NAME + ROLE
+========================================================= */
+
+.person-info {
+
+  padding:
+    17px 8px 20px;
+
+  text-align: center;
+}
+
+
+.person-info h3 {
+
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(
+      0.9rem,
+      1.15vw,
+      1.25rem
+    );
+
+  font-weight: 500;
+
+  letter-spacing: -0.035em;
+
+  white-space: nowrap;
+}
+
+
+.person-role {
+
+  display: block;
+
+  margin-top: 7px;
+
+  color: #8994b7;
+
+  font-size: 0.52rem;
+
+  font-weight: 600;
+
+  letter-spacing: 0.13em;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+   SIX MEMBERS IN ONE ROW
+========================================================= */
+
+@media (min-width: 1101px) {
+  .team-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px;
+  }
+}
+
+
+/* =========================================================
+   LAPTOP
+========================================================= */
+
+@media (max-width: 1250px) {
+
+  .vp-content {
+
+    width:
+      calc(100% - 50px);
+
+    margin:
+      315px 25px 0;
+  }
+
+
+  .team-grid {
+
+    gap: 14px;
+  }
+
+
+  .person-photo {
+
+    width: 55%;
+  }
+
+
+  .person-info h3 {
+
+    font-size: 0.9rem;
+  }
+
+
+  .person-role {
+
+    font-size: 0.48rem;
+
+    letter-spacing: 0.10em;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+  .vp-selector {
+    top: 110px;
+    width: 146px;
+    height: 132px;
+  }
+
+
+  .vp-content {
+
+    width:
+      calc(100% - 40px);
+
+    margin:
+      270px 20px 0;
+  }
+
+
+  .team-grid {
+
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   NAVBAR TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+  .topbar {
+    top: 12px;
+    padding: 0 12px;
+  }
+
+  .navbar {
+    width: calc(100% - 24px);
+
+    height: 68px;
+    min-height: 68px;
+
+    padding: 8px 16px;
+    gap: 8px;
+  }
+
+  .nav-left,
+  .nav-right {
+    gap: 15px;
+  }
+
+  .nav-link {
+    font-size: 0.72rem;
+  }
+
+  .logo-link {
+    width: 48px;
+    height: 48px;
+  }
+
+  .drone-logo {
+    width: 35px;
+    height: 35px;
+  }
+
+  .team-page {
+    padding-top: 105px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .vp-selector {
+
+    position: absolute;
+
+    top: 105px;
+
+    left: 50%;
+
+    right: auto;
+
+    transform:
+      translateX(-50%);
+
+    width: 140px;
+    height: 108px;
+  }
+
+
+  .vp-content {
+
+    width:
+      calc(100% - 28px);
+
+    margin:
+      220px 14px 0;
+  }
+
+
+  .team-grid {
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+  }
+
+
+  .person-photo {
+
+    width: 55%;
+  }
+
+
+  .person-info {
+
+    padding:
+      14px 5px 18px;
+  }
+
+
+  .person-info h3 {
+
+    font-size: 0.9rem;
+  }
+
+
+  .person-role {
+
+    font-size: 0.45rem;
+
+    letter-spacing: 0.08em;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .navbar {
+    width: calc(100% - 20px);
+
+    height: 60px;
+    min-height: 60px;
+
+    padding: 8px 10px;
+    gap: 4px;
+  }
+
+
+  .nav-left,
+  .nav-right {
+
+    gap: 6px;
+  }
+
+
+  .nav-link {
+
+    font-size: 0.55rem;
+  }
+
+
+  .logo-link {
+
+    width: 38px;
+
+    height: 38px;
+  }
+
+
+  .drone-logo {
+
+    width: 27px;
+
+    height: 27px;
+  }
+
+
+  .vp-selector {
+
+    width: 130px;
+    height: 100px;
+  }
+
+
+  .vp-content {
+
+    margin-top: 200px;
+  }
+
+
+  .team-grid {
+
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .person-photo {
+
+    width: 45%;
+  }
+
+}
+
+/* =========================================================
+   TEAM INTRO — DECRYPT TITLE
+========================================================= */
+
+.team-intro {
+  position: absolute;
+
+  top: 200px;   /* moved up from 330px */
+  left: 0;
+
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  pointer-events: none;
+  z-index: 10;
+}
+
+.decrypt-title {
+  color: rgba(255, 255, 255, 0.92);
+
+  font-family: var(--vp-font);
+
+  /* Bigger */
+  font-size: clamp(2.3rem, 2.9vw, 5.8rem);
+
+  font-weight: 500;
+
+  letter-spacing: 0.16em;
+
+  text-align: center;
+  white-space: nowrap;
+  text-transform: uppercase;
+
+  text-shadow:
+    0 0 12px rgba(130, 155, 255, 0.22),
+    0 0 30px rgba(80, 110, 255, 0.10);
+
+  opacity: 0;
+
+  transform: translateY(12px);
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.decrypt-title.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.decrypt-title.decrypting {
+  letter-spacing: 0.17em;
+}
+/* =========================================================
+   TEAM DIVISION NAVIGATION
+========================================================= */
+
+/* =========================================================
+   TEAM DIVISION NAVIGATION
+========================================================= */
+
+.division-nav {
+  position: absolute;
+
+  top: 335px;
+  left: 0;
+
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 0 30px;
+
+  z-index: 20;
+}
+
+.division-nav {
+  position: absolute;
+  top: 335px;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+
+  padding: 0 30px;
+  z-index: 20;
+}
+
+.division-btn {
+  position: relative;
+
+  min-width: 145px;
+  height: 54px;
+  padding: 0 28px;
+
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.14),
+      rgba(255, 255, 255, 0.035)
+    );
+
+  color: rgba(255, 255, 255, 0.62);
+
+  font-family: var(--vp-font);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.20),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.05),
+    0 8px 25px rgba(0, 0, 0, 0.18);
+
+  cursor: pointer;
+  overflow: hidden;
+
+  transition:
+    transform 220ms cubic-bezier(.2,.8,.2,1),
+    background 220ms ease,
+    color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+
+/* Liquid glass reflection */
+.division-btn::before {
+  content: "";
+  position: absolute;
+
+  top: 1px;
+  left: 12%;
+  width: 76%;
+  height: 45%;
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.18),
+    rgba(255,255,255,0)
+  );
+
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+
+/* Soft glass glow */
+.division-btn::after {
+  content: "";
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: inherit;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255,255,255,0.13),
+      transparent 55%
+    );
+
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+
+/* Hover */
+.division-btn:hover {
+  color: #fff;
+
+  border-color: rgba(255,255,255,0.38);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.19),
+      rgba(255,255,255,0.055)
+    );
+
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.28),
+    inset 0 -1px 1px rgba(255,255,255,0.08),
+    0 10px 35px rgba(0,0,0,0.25),
+    0 0 25px rgba(100,130,255,0.10);
+
+  transform: translateY(-2px);
+}
+
+
+/* Active button */
+.division-btn.active {
+  color: #fff;
+
+  border-color: rgba(255,255,255,0.40);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.25),
+      rgba(255,255,255,0.075)
+    );
+
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.32),
+    inset 0 -1px 1px rgba(255,255,255,0.08),
+    0 10px 35px rgba(0,0,0,0.25),
+    0 0 30px rgba(100,130,255,0.13);
+} 
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.division-btn:hover {
+  color: #ffffff;
+
+  border-color: rgba(255, 255, 255, 0.35);
+
+  background: rgba(25, 35, 85, 0.45);
+
+  box-shadow:
+    0 0 20px rgba(70, 100, 255, 0.12);
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   ACTIVE
+========================================================= */
+
+.division-btn.active {
+  color: #fff;
+
+  border-color: rgba(255,255,255,0.40);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.25),
+      rgba(255,255,255,0.075)
+    );
+
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.32),
+    inset 0 -1px 1px rgba(255,255,255,0.08),
+    0 10px 35px rgba(0,0,0,0.25),
+    0 0 30px rgba(100,130,255,0.13);
+}
+
+/* =========================================================
+   SQUISH / CRUSH ANIMATION
+========================================================= */
+
+.division-btn {
+  overflow: hidden;
+  transform-origin: center;
+}
+
+.division-btn::before,
+.division-btn::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  width: 50%;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition: opacity 100ms ease;
+}
+
+.division-btn::before {
+  left: 0;
+  transform-origin: left center;
+}
+
+.division-btn::after {
+  right: 0;
+  transform-origin: right center;
+}
+
+.division-btn.crushing::before,
+.division-btn.crushing::after {
+  opacity: 1;
+  animation: crushSides 450ms
+    cubic-bezier(0.65, 0, 0.35, 1)
+    forwards;
+}
+
+@keyframes crushSides {
+
+  0% {
+    transform: scaleX(0);
+  }
+
+  35% {
+    transform: scaleX(0.15);
+  }
+
+  70% {
+    transform: scaleX(0.75);
+  }
+
+  100% {
+    transform: scaleX(1);
+  }
+
+}
+/* =========================================================
+   DIVISION FILTER TRANSITION
+========================================================= */
+
+.person-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+
+/* -----------------------------------------
+   EVERY CARD VANISHES
+----------------------------------------- */
+
+.person-card.division-hide {
+  animation: cardVanish 400ms cubic-bezier(.65, 0, .35, 1) forwards;
+  pointer-events: none;
+}
+
+
+@keyframes cardVanish {
+
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  45% {
+    opacity: 0.65;
+    transform: translateY(8px) scale(0.97);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.92);
+  }
+
+}
+
+
+/* -----------------------------------------
+   SELECTED CARDS APPEAR
+----------------------------------------- */
+
+.person-card.division-show {
+  animation: cardAppear 500ms cubic-bezier(.2,.8,.2,1) both;
+}
+
+
+@keyframes cardAppear {
+
+  0% {
+    opacity: 0;
+    transform: translateY(25px) scale(0.94);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.01);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+}
