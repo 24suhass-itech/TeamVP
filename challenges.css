@@ -1,0 +1,398 @@
+/* =========================================================
+   CHALLENGES PAGE
+   ========================================================= */
+
+:root {
+  --text: #ffffff;
+  --muted: #a5acc2;
+  --line: rgba(255, 255, 255, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--vp-font);
+  color: var(--text);
+  background:
+    radial-gradient(
+      ellipse 80% 70% at 0% 0%,
+      #142e9a 0%,
+      #0b1b61 30%,
+      #05091f 65%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 70% 60% at 100% 100%,
+      #07164e 0%,
+      #020510 65%,
+      transparent 100%
+    ),
+    linear-gradient(
+      135deg,
+      #02030a 0%,
+      #030615 45%,
+      #000105 100%
+    );
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   STAR BACKGROUND
+   ========================================================= */
+
+.challenges-page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 190px 40px 100px;
+
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.65) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px);
+
+  background-size:
+    150px 150px,
+    230px 230px,
+    310px 310px;
+
+  background-position:
+    10px 20px,
+    80px 100px,
+    170px 40px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.challenges-hero {
+  position: relative;
+  z-index: 2;
+
+  max-width: 1000px;
+  margin: 0 auto 60px;
+
+  text-align: center;
+}
+
+.challenges-hero h1 {
+  margin: 0 0 38px;
+
+  font-size: clamp(48px, 5vw, 68px);
+  line-height: 1;
+
+  font-weight: 800;
+  letter-spacing: -2px;
+
+  color: #ffffff;
+}
+
+.challenges-hero p {
+  max-width: 850px;
+
+  margin: 0 auto;
+
+  font-size: 22px;
+  line-height: 1.55;
+
+  color: var(--muted);
+}
+
+
+/* =========================================================
+   CHALLENGE LIST
+   ========================================================= */
+
+.challenge-list {
+  position: relative;
+  z-index: 2;
+
+  width: min(1120px, 100%);
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+}
+
+
+/* =========================================================
+   CHALLENGE CARD
+   ========================================================= */
+
+.challenge-card {
+  position: relative;
+
+  min-height: 360px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+
+  padding: 40px 42px;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 24px;
+
+  background:
+    linear-gradient(145deg, rgba(35, 48, 115, 0.28), rgba(5, 8, 23, 0.72));
+
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.challenge-card:hover {
+  transform: translateY(-7px);
+
+  border-color: rgba(255, 255, 255, 0.28);
+
+  box-shadow:
+    0 24px 55px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(80, 110, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+
+/* =========================================================
+   UPCOMING CARD
+   ========================================================= */
+
+.challenge-card.upcoming {
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.22),
+    0 0 30px rgba(80, 110, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+
+/* =========================================================
+   IMAGE
+   ========================================================= */
+
+.challenge-image {
+  width: 100%;
+  padding-right: 30px;
+}
+
+.challenge-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.challenge-content {
+  padding-left: 28px;
+}
+
+.challenge-content h2 {
+  margin: 0 0 26px;
+
+  font-size: clamp(34px, 3vw, 44px);
+  line-height: 1.1;
+
+  font-weight: 800;
+  letter-spacing: -1px;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.challenge-status {
+  display: inline-flex;
+
+  margin-bottom: 15px;
+
+  padding: 7px 13px;
+
+  border: 1px solid rgba(150, 175, 255, 0.35);
+  border-radius: 20px;
+
+  background: rgba(25, 35, 85, 0.35);
+  color: rgba(219, 226, 246, 0.9);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* =========================================================
+   META
+   ========================================================= */
+
+.challenge-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  margin-bottom: 25px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  color: rgba(219, 226, 246, 0.82);
+
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.meta-item span:last-child {
+  color: #dbe2ff;
+}
+
+.meta-icon {
+  width: 23px;
+
+  flex-shrink: 0;
+
+  font-size: 22px;
+  line-height: 1;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.challenge-description {
+  max-width: 500px;
+
+  margin: 0;
+
+  font-size: 18px;
+  line-height: 1.6;
+
+  color: #dbe2f6;
+}
+
+.challenge-description strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .challenges-page {
+    padding: 100px 24px 70px;
+  }
+
+  .challenges-hero {
+    margin-bottom: 45px;
+  }
+
+  .challenges-hero h1 {
+    margin-bottom: 25px;
+  }
+
+  .challenges-hero p {
+    font-size: 18px;
+  }
+
+  .challenge-card {
+    grid-template-columns: 1fr;
+
+    gap: 30px;
+
+    padding: 28px;
+  }
+
+  .challenge-image {
+    padding-right: 0;
+  }
+
+  .challenge-content {
+    padding-left: 0;
+  }
+
+  .challenge-content h2 {
+    font-size: 34px;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .challenges-page {
+    padding: 90px 16px 60px;
+  }
+
+  .challenge-list {
+    gap: 30px;
+  }
+
+  .challenge-card {
+    padding: 20px;
+
+    border-radius: 16px;
+  }
+
+  .challenges-hero h1 {
+    font-size: 42px;
+  }
+
+  .challenges-hero p {
+    font-size: 16px;
+  }
+
+  .challenge-content h2 {
+    font-size: 29px;
+  }
+
+  .meta-item {
+    font-size: 16px;
+  }
+
+  .challenge-description {
+    font-size: 16px;
+  }
+}

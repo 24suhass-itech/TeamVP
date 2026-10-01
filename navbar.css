@@ -39,7 +39,7 @@
 ========================================================= */
 
 .navbar {
-  width: min(700px, calc(100% - 40px));
+  width: min(1000px, calc(100% - 40px));
 
   min-height: 76px;
 
@@ -47,9 +47,9 @@
 
   grid-template-columns: 1fr auto 1fr;
 
-  gap: 45px;
+  gap: 28px;
 
-  padding: 12px 50px;
+  padding: 12px 36px;
 
   align-items: center;
 
@@ -230,6 +230,31 @@
 
 .nav-link:hover::after {
   width: 100%;
+}
+
+.nav-link.active {
+  color: #ffffff;
+}
+
+.nav-link.active::after {
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    width: calc(100% - 24px);
+    gap: 16px;
+    padding: 10px 20px;
+  }
+
+  .nav-left,
+  .nav-right {
+    gap: clamp(8px, 1.5vw, 16px);
+  }
+
+  .nav-link {
+    font-size: clamp(0.8rem, 1.8vw, 1.1rem);
+  }
 }
 
 

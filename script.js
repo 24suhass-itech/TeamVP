@@ -147,7 +147,7 @@ window.addEventListener(
 
 function framePath(number) {
 
-  return `frames/${number}${FRAME_EXTENSION}`;
+  return `/frames/${number}${FRAME_EXTENSION}`;
 
 }
 
