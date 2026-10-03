@@ -1,36 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Events | Team Vayuputra</title>
-  <link rel="icon" type="image/png" href="/assets/drone.png">
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="/assets/drone.png"
+  >
+
+  <!-- =========================
+       SHARED STYLES
+  ========================= -->
+
   <link rel="stylesheet" href="/common.css">
   <link rel="stylesheet" href="/navbar.css">
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/pages.css">
+
+  <!-- =========================
+       EVENTS STYLES
+  ========================= -->
+
+  <link rel="stylesheet" href="/events/events.css">
+
 </head>
+
+
 <body>
+
+
+  <!-- =====================================================
+       NAVBAR
+  ===================================================== -->
+
   <header class="topbar">
-    <nav class="navbar" aria-label="Main navigation">
+
+    <nav class="navbar">
+
+
+      <!-- =========================
+           LEFT NAVIGATION
+      ========================= -->
+
       <div class="nav-left">
-        <a class="nav-link" href="/sponsor/">Sponsor Us</a>
-        <a class="nav-link" href="/team/">Team</a>
-        <a class="nav-link" href="/about/">About</a>
+
+        <a
+          href="/sponsor/"
+          class="nav-link"
+        >
+          Sponsor Us
+        </a>
+
+        <a
+          href="/team/"
+          class="nav-link"
+        >
+          Team
+        </a>
+
+        <a
+          href="/about/"
+          class="nav-link"
+        >
+          About
+        </a>
+
       </div>
-      <a class="logo-link" href="/" aria-label="Team Vayuputra Home">
-        <img class="drone-logo" src="/assets/drone.png" alt="Team Vayuputra Drone Logo">
+
+
+      <!-- =========================
+           CENTER LOGO
+      ========================= -->
+
+      <a
+        href="/"
+        class="logo-link"
+        aria-label="Team Vayuputra Home"
+      >
+
+        <img
+          class="drone-logo"
+          src="/assets/drone.png"
+          alt="Team Vayuputra Drone Logo"
+        >
+
       </a>
+
+
+      <!-- =========================
+           RIGHT NAVIGATION
+      ========================= -->
+
       <div class="nav-right">
-        <a class="nav-link" href="/challenges/">Challenges</a>
-        <a class="nav-link" href="/drones/">Drones</a>
-        <a class="nav-link" href="/events/">Events</a>
+
+        <a
+          href="/challenges/"
+          class="nav-link"
+        >
+          Challenges
+        </a>
+
+        <a
+          href="/drones/"
+          class="nav-link"
+        >
+          Drones
+        </a>
+
+        <a
+          href="/events/"
+          class="nav-link active"
+        >
+          Events
+        </a>
+
       </div>
+
     </nav>
+
   </header>
-  <main class="info-page">
-    <h1>Events</h1>
-    <p>Explore events, competitions, and activities from Team Vayuputra.</p>
+
+
+
+  <!-- =====================================================
+       EVENTS PAGE
+  ===================================================== -->
+
+  <main class="events-page">
+
+
+    <!-- =========================
+         EVENTS HERO
+    ========================= -->
+
+    <section class="events-hero">
+
+      <h1>
+        EVENTS
+      </h1>
+
+      <p>
+        Moments, experiences, and milestones from our journey
+        beyond the competition.
+      </p>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         EVENT LIST
+    ===================================================== -->
+
+    <section class="event-list">
+
+
+      <!-- =================================================
+           EVENT 01
+      ================================================= -->
+
+      <article
+        class="event-card"
+      >
+
+
+        <!-- =========================
+             EVENT IMAGE
+        ========================= -->
+
+        <div class="event-image">
+
+          <img
+            class="event-photo"
+            src="event1.jfif"
+            alt="Yuktha 2026 - Let's Build a Drone"
+            loading="lazy"
+          >
+
+        </div>
+
+
+        <!-- =========================
+             EVENT CONTENT
+        ========================= -->
+
+        <div class="event-content">
+
+
+          <h2>
+            YUKTHA 2026 - LET'S BUILD A DRONE
+          </h2>
+
+
+          <!-- =========================
+               SHORT DESCRIPTION
+          ========================= -->
+
+          <p class="event-description">
+
+            A hands-on drone-building workshop introducing
+            students from our institution and various colleges
+            to drone systems, assembly, integration, and flight.
+            Participants also gained practical exposure to stable
+            hovering and received certificates of participation.
+
+          </p>
+
+
+          <!-- =========================
+               READ MORE
+          ========================= -->
+
+          <a
+            class="read-event"
+            href="/events/yuktha/"
+          >
+            READ MORE &#8594;
+          </a>
+
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =================================================
+           EVENT 02
+      ================================================= -->
+
+      <article
+        class="event-card"
+      >
+
+
+        <!-- =========================
+             EVENT IMAGE
+        ========================= -->
+
+        <div class="event-image">
+
+          <img
+            class="event-photo"
+            src="event2.jfif"
+            alt="Team Recruitment Workshop 2026"
+            loading="lazy"
+          >
+
+        </div>
+
+
+        <!-- =========================
+             EVENT CONTENT
+        ========================= -->
+
+        <div class="event-content">
+
+
+          <h2>
+            TEAM RECRUITMENT WORKSHOP 2026
+          </h2>
+
+
+          <!-- =========================
+               SHORT DESCRIPTION
+          ========================= -->
+
+          <p class="event-description">
+
+            A workshop for students interested in joining
+            Team Vayuputra, covering the fundamentals of drone
+            mechanics and development while sharing our
+            experiences and learning from participating in ISDC.
+
+          </p>
+
+
+          <!-- =========================
+               READ MORE
+          ========================= -->
+
+          <a
+            class="read-event"
+            href="/events/recruitment/"
+          >
+            READ MORE &#8594;
+          </a>
+
+
+        </div>
+
+      </article>
+
+
+    </section>
+
   </main>
+
+
+
 </body>
 </html>

@@ -424,11 +424,7 @@ canvas {
 
   color: rgba(255, 255, 255, 0.7);
 
-  font-family:
-    "SF Mono",
-    "Roboto Mono",
-    Consolas,
-    monospace;
+  font-family: var(--vp-font);
 
   font-size: 10px;
 

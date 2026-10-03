@@ -1,0 +1,627 @@
+:root {
+  --event-text: #ffffff;
+  --event-muted: #a5acc2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--event-text);
+  background:
+    radial-gradient(
+      ellipse 80% 70% at 0% 0%,
+      #142e9a 0%,
+      #0b1b61 30%,
+      #05091f 65%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 70% 60% at 100% 100%,
+      #07164e 0%,
+      #020510 65%,
+      transparent 100%
+    ),
+    linear-gradient(135deg, #02030a 0%, #030615 45%, #000105 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+.event-article-page {
+  min-height: 100vh;
+  padding: 160px 24px 88px;
+}
+
+.event-article {
+  width: min(100%, 1040px);
+  margin: 0 auto;
+}
+
+.article-hero {
+  text-align: center;
+  margin-bottom: 48px;
+  transform: none;
+}
+
+.article-label {
+  margin: 0 0 14px;
+  color: #aebaff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.article-hero h1 {
+  margin: 0 auto 18px;
+  max-width: 900px;
+  color: #ffffff;
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+}
+
+.article-intro {
+  max-width: 780px;
+  margin: 0 auto 36px;
+  color: var(--event-muted);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.65;
+}
+
+.article-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 24px;
+  box-shadow:
+    0 24px 65px rgba(0, 0, 0, 0.34),
+    0 0 35px rgba(80, 110, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.article-body {
+  width: min(100%, 760px);
+  margin: 0 auto;
+  color: #dbe2f6;
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  line-height: 1.85;
+}
+
+.article-body p {
+  margin: 0 0 1.35em;
+}
+
+.back-to-events {
+  display: inline-block;
+  margin-top: 1.2rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.back-to-events:hover {
+  opacity: 0.72;
+  transform: translateX(-3px);
+}
+
+@media (max-width: 600px) {
+  .event-article-page {
+    padding: 130px 16px 60px;
+  }
+
+  .article-hero {
+    margin-bottom: 34px;
+  }
+
+  .article-intro {
+    margin-bottom: 26px;
+  }
+
+  .article-image {
+    border-radius: 18px;
+  }
+}
+/* =========================================================
+   EVENT ARTICLE PAGE
+========================================================= */
+
+.event-article-page {
+  width: min(1500px, calc(100% - 80px));
+  margin: 0 auto;
+  padding-top: 220px;
+  padding-bottom: 100px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.article-hero {
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto 100px;
+}
+
+.article-label {
+  margin: 0 0 28px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  letter-spacing: 0.22em;
+
+  color: #aebcff;
+  text-transform: uppercase;
+}
+
+.article-hero h1 {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+
+  font-size: clamp(48px, 6vw, 96px);
+  line-height: 0.95;
+
+  font-weight: 800;
+
+  color: #ffffff;
+
+  text-transform: uppercase;
+}
+
+.article-intro {
+  max-width: 900px;
+
+  margin: 34px auto 0;
+
+  font-size: 20px;
+  line-height: 1.7;
+
+  color: rgba(220, 225, 245, 0.72);
+}
+
+
+
+/* =========================================================
+   MAIN ARTICLE LAYOUT
+========================================================= */
+
+.article-layout {
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(220px, 1fr)
+    minmax(460px, 620px)
+    minmax(220px, 1fr);
+
+  grid-template-areas:
+
+    "photo1 body photo2"
+
+    "photo3 body photo4";
+
+  column-gap: clamp(36px, 4vw, 60px);
+  row-gap: 80px;
+
+  align-items: center;
+
+  /* Keep the gallery tracks aligned around the fixed-width text column. */
+  width: min(100%, 1450px);
+  max-width: 1450px;
+
+  margin: 0 auto;
+}
+
+.recruitment-gallery {
+  grid-template-areas:
+    "photo1 body photo2"
+    "photo3 body photo4"
+    "photo5 body photo6";
+}
+
+
+/* =========================================================
+   CENTER CONTENT
+========================================================= */
+
+.article-body {
+
+  grid-area: body;
+
+  width: 100%;
+
+  padding: 55px 50px;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(150, 165, 220, 0.18);
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(28, 42, 94, 0.48),
+      rgba(5, 8, 24, 0.82)
+    );
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.35);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.article-body p {
+
+  margin: 0 0 28px;
+
+  font-size: 18px;
+
+  line-height: 1.9;
+
+  color: rgba(230, 233, 247, 0.82);
+}
+
+.article-body p:last-child {
+  margin-bottom: 0;
+}
+
+.article-body strong {
+  color: #ffffff;
+}
+
+
+
+/* =========================================================
+   SIDE PHOTOS
+========================================================= */
+
+.article-photo {
+
+  position: relative;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  border-radius: 16px;
+
+  border: 1px solid rgba(170, 180, 220, 0.25);
+
+  background: #080c20;
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.4);
+
+  aspect-ratio: 4 / 3;
+}
+
+.article-photo img {
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.5s ease;
+}
+
+.article-photo:hover img {
+  transform: scale(1.04);
+}
+
+
+
+/* =========================================================
+   IMAGE POSITIONS
+========================================================= */
+
+.photo-1 {
+  grid-area: photo1;
+
+  transform:
+    rotate(-10deg)
+    translateY(10px);
+}
+
+.photo-2 {
+  grid-area: photo2;
+
+  transform:
+    rotate(10deg)
+    translateY(10px);
+}
+
+.photo-3 {
+  grid-area: photo3;
+
+  transform:
+    rotate(7deg)
+    translateY(-5px);
+}
+
+.photo-4 {
+  grid-area: photo4;
+
+  transform:
+    rotate(-8deg)
+    translateY(-5px);
+}
+
+.photo-5 {
+  grid-area: photo5;
+
+  transform:
+    rotate(-7deg)
+    translateY(-5px);
+}
+
+.photo-6 {
+  grid-area: photo6;
+
+  transform:
+    rotate(8deg)
+    translateY(-5px);
+}
+
+/* =========================================================
+   BOTTOM IMAGE
+========================================================= */
+
+.article-bottom-photo {
+
+  width: min(920px, 92%);
+
+  margin: 100px auto 0;
+
+  overflow: hidden;
+
+  border-radius: 18px;
+
+  border: 1px solid rgba(170, 180, 220, 0.25);
+
+  background: #080c20;
+
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.45);
+}
+
+.article-bottom-photo img {
+
+  width: 100%;
+  height: auto;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+
+
+/* =========================================================
+   BACK TO EVENTS
+========================================================= */
+
+.article-footer {
+
+  display: flex;
+
+  justify-content: center;
+
+  margin-top: 80px;
+}
+
+.back-to-events {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.back-to-events:hover {
+
+  opacity: 0.7;
+
+  transform: translateX(-5px);
+}
+
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .event-article-page {
+    width: min(900px, calc(100% - 50px));
+    padding-top: 190px;
+  }
+
+  .article-layout {
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 2.2fr)
+      minmax(0, 1fr);
+
+    column-gap: clamp(18px, 3vw, 28px);
+  }
+
+  .article-body {
+    padding: 40px 32px;
+  }
+
+  .article-body p {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .event-article-page {
+
+    width: calc(100% - 32px);
+
+    padding-top: 150px;
+    padding-bottom: 70px;
+  }
+
+
+  .article-hero {
+
+    margin-bottom: 55px;
+  }
+
+
+  .article-label {
+    font-size: 11px;
+  }
+
+
+  .article-hero h1 {
+
+    font-size: clamp(38px, 11vw, 60px);
+
+    line-height: 0.98;
+  }
+
+
+  .article-intro {
+
+    font-size: 16px;
+
+    line-height: 1.6;
+  }
+
+
+  /*
+     On mobile, put the content first,
+     then the photographs around it.
+  */
+
+  .article-layout {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 35px;
+  }
+
+
+  .article-body {
+
+    order: 1;
+
+    padding: 30px 24px;
+
+    border-radius: 22px;
+  }
+
+
+  .photo-1 {
+    order: 2;
+
+    transform: none;
+  }
+
+
+  .photo-2 {
+    order: 3;
+
+    transform: none;
+  }
+
+
+  .photo-3 {
+    order: 4;
+
+    transform: none;
+  }
+
+
+  .photo-4 {
+    order: 5;
+
+    transform: none;
+  }
+
+  .photo-5 {
+    order: 6;
+
+    transform: none;
+  }
+
+  .photo-6 {
+    order: 7;
+
+    transform: none;
+  }
+
+  .article-photo {
+
+    width: min(100%, 552px);
+
+    max-width: none;
+
+    align-self: center;
+  }
+
+
+  .article-bottom-photo {
+
+    width: 100%;
+
+    margin-top: 65px;
+  }
+
+
+  .article-body p {
+
+    font-size: 15px;
+
+    line-height: 1.8;
+
+    margin-bottom: 24px;
+  }
+
+}
