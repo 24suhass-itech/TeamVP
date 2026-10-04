@@ -437,6 +437,9 @@ divisionButtons.forEach((button) => {
               card.dataset.division
                 .split(" ");
 
+            const isSharedMentor =
+              card.dataset.division.split(" ").includes("mentors");
+
             const cardGeneration =
               card.dataset.generation || "VP4";
 
@@ -455,7 +458,7 @@ divisionButtons.forEach((button) => {
             */
 
             if (
-              cardGeneration === currentGeneration &&
+              (isSharedMentor || cardGeneration === currentGeneration) &&
               (selectedDivision === "all" ||
                 cardDivisions.includes(selectedDivision))
             ) {
