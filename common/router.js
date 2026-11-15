@@ -282,9 +282,47 @@
      SWAPPING
   ======================================================= */
 
+  /* Pages slide like a carousel in navbar order: going to a link on the
+     right, the current page leaves to the left and the new one comes in
+     from the right (and the reverse). The navbar stays put. Browsers
+     without View Transitions fall back to a quick fade. */
+  const SLIDE_MS = 460;
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const canSlide = typeof document.startViewTransition === "function" && !reduceMotion;
+
   const style = document.createElement("style");
   style.textContent = `
-    html.vp-switching body > :not(.topbar):not([data-vp-persist]) {
+    html[data-vp-direction] .topbar {
+      view-transition-name: vp-navbar;
+    }
+
+    ::view-transition-group(vp-navbar),
+    ::view-transition-new(vp-navbar) {
+      animation: none;
+    }
+
+    ::view-transition-old(vp-navbar) {
+      display: none;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: ${SLIDE_MS}ms;
+      animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+      mix-blend-mode: normal;
+    }
+
+    html[data-vp-direction="forward"]::view-transition-old(root) { animation-name: vp-out-to-left; }
+    html[data-vp-direction="forward"]::view-transition-new(root) { animation-name: vp-in-from-right; }
+    html[data-vp-direction="back"]::view-transition-old(root) { animation-name: vp-out-to-right; }
+    html[data-vp-direction="back"]::view-transition-new(root) { animation-name: vp-in-from-left; }
+
+    @keyframes vp-out-to-left { to { transform: translateX(-100%); } }
+    @keyframes vp-in-from-right { from { transform: translateX(100%); } }
+    @keyframes vp-out-to-right { to { transform: translateX(100%); } }
+    @keyframes vp-in-from-left { from { transform: translateX(-100%); } }
+
+    html.vp-fading body > :not(.topbar):not([data-vp-persist]) {
       transition: opacity ${FADE_MS}ms ease;
     }
 
@@ -293,32 +331,54 @@
     }`;
   document.head.appendChild(style);
 
+  // Position of a page along the navbar (Events articles count as Events).
+  const sectionOf = (pathname) => {
+    const order = [...document.querySelectorAll(".navbar a[href]")].map(
+      (link) => new URL(link.href, location.href).pathname
+    );
+    const index = order.findIndex((path) => path !== "/" && pathname.startsWith(path));
+    return index === -1 ? order.indexOf("/") : index;
+  };
+
+  const depthOf = (pathname) => pathname.split("/").filter(Boolean).length;
+
+  const directionOf = (from, to) => {
+    const fromSection = sectionOf(from);
+    const toSection = sectionOf(to);
+
+    if (fromSection !== toSection) return toSection > fromSection ? "forward" : "back";
+    return depthOf(to) >= depthOf(from) ? "forward" : "back";
+  };
+
   const wait = (ms) => new Promise((resolve) => native.setTimeout(resolve, ms));
   const nextFrame = () => new Promise((resolve) => native.requestAnimationFrame(resolve));
 
   const isPageStyle = (link) =>
     !SHARED_STYLES.includes(new URL(link.href).pathname);
 
-  // Add the new page's stylesheets (and wait for them) before showing it.
-  const addStyles = async (hrefs) => {
+  // Download the new page's stylesheets switched off (media "not all"),
+  // so they can't touch the page still on screen; apply() switches them
+  // on and drops the old page's styles in one go.
+  const loadStyles = async (hrefs) => {
     const current = [...document.querySelectorAll('link[rel="stylesheet"]')].filter(isPageStyle);
     const footerStyle = [...document.querySelectorAll('link[rel="stylesheet"]')].find(
       (link) => new URL(link.href).pathname === "/common/footer.css"
     );
-    const keep = new Set();
+    const keep = [];
     const loading = [];
 
     hrefs.forEach((href) => {
       const existing = current.find((link) => link.href === href);
 
       if (existing) {
-        keep.add(existing);
+        keep.push(existing);
         return;
       }
 
       const link = document.createElement("link");
       link.rel = "stylesheet";
       link.href = href;
+      link.media = "not all";
       loading.push(new Promise((resolve) => {
         link.onload = resolve;
         link.onerror = resolve;
@@ -326,11 +386,15 @@
 
       // Same order as a normal load: page styles before the footer's.
       document.head.insertBefore(link, footerStyle || null);
+      keep.push(link);
     });
 
     await Promise.all(loading);
 
-    return () => current.filter((link) => !keep.has(link)).forEach((link) => link.remove());
+    return () => {
+      keep.forEach((link) => link.removeAttribute("media"));
+      current.filter((link) => !keep.includes(link)).forEach((link) => link.remove());
+    };
   };
 
   const isPersistent = (element) =>
@@ -388,53 +452,79 @@
     native.clearTimeout(scrollSave);
     if (push) history.replaceState({ ...(history.state || {}), scrollY: window.scrollY }, "");
 
-    // Instant feedback: the pill glides and the page fades out right away.
+    // Instant feedback: the pill glides right away. When sliding, the
+    // current page stays on screen until the new one is ready.
+    const direction = directionOf(currentPath, url.pathname);
     if (window.VPPill) window.VPPill.moveTo(url.pathname);
 
     const root = document.documentElement;
-    root.classList.add("vp-switching", "vp-hidden");
+    root.classList.add("vp-switching");
+    if (!canSlide) root.classList.add("vp-fading", "vp-hidden");
 
     let page;
 
     try {
-      const [html] = await Promise.all([fetchText(pages, address, true), wait(FADE_MS)]);
+      const [html] = await Promise.all([
+        fetchText(pages, address, true),
+        canSlide ? null : wait(FADE_MS)
+      ]);
       page = parsePage(html, url.href);
     } catch (error) {
       location.href = url.href;
       return;
     }
 
-    // Styles and scripts download together. The old content is already
-    // faded out, so the new styles can't be seen applying to it.
-    const [codes, removeOldStyles] = await Promise.all([
+    // Everything is downloaded before the switch, so the slide never
+    // stalls waiting for the network.
+    const [codes, applyStyles] = await Promise.all([
       Promise.all(page.scripts.map((src) => fetchText(scripts, src).catch(() => null))),
-      addStyles(page.styles)
+      loadStyles(page.styles)
     ]);
 
     if (id !== navigation) return;
 
-    if (push) history.pushState({ scrollY: 0 }, "", url.href);
-    currentPath = url.pathname;
+    const showNewPage = () => {
+      if (push) history.pushState({ scrollY: 0 }, "", url.href);
+      currentPath = url.pathname;
 
-    endLifecycle(pageLife);
-    pageLife = createLifecycle();
+      endLifecycle(pageLife);
+      pageLife = createLifecycle();
 
-    swapContent(page.doc);
-    removeOldStyles();
+      applyStyles();
+      swapContent(page.doc);
 
-    const target = url.hash && document.getElementById(decodeURIComponent(url.hash.slice(1)));
-    window.scrollTo({ top: target ? target.getBoundingClientRect().top + window.scrollY : scrollY, behavior: "instant" });
+      const target = url.hash && document.getElementById(decodeURIComponent(url.hash.slice(1)));
+      window.scrollTo({ top: target ? target.getBoundingClientRect().top + window.scrollY : scrollY, behavior: "instant" });
 
-    page.scripts.forEach((src, index) => {
-      if (codes[index] !== null) runScript(codes[index], src, pageLife);
-    });
+      page.scripts.forEach((src, index) => {
+        if (codes[index] !== null) runScript(codes[index], src, pageLife);
+      });
+    };
+
+    if (canSlide) {
+      root.dataset.vpDirection = direction;
+
+      try {
+        await document.startViewTransition(showNewPage).finished;
+      } catch (error) {
+        // Skipped by a newer switch; that one finishes the job.
+      }
+
+      if (id === navigation) {
+        delete root.dataset.vpDirection;
+        root.classList.remove("vp-switching");
+      }
+      return;
+    }
+
+    showNewPage();
 
     await nextFrame();
     if (id !== navigation) return;
 
     root.classList.remove("vp-hidden");
     await wait(FADE_MS);
-    if (id === navigation) root.classList.remove("vp-switching");
+    if (id === navigation) root.classList.remove("vp-switching", "vp-fading");
   };
 
 
