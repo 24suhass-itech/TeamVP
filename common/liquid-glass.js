@@ -109,3 +109,164 @@
 
   update();
 })();
+
+
+/* Liquid glass pill that sits behind the current page link and slides
+   to the hovered link, iOS tab bar style. Its last position is kept in
+   sessionStorage so it glides from the old link on the next page. */
+(() => {
+  const navbar = document.querySelector(".navbar");
+  if (!navbar) return;
+
+  const links = [...navbar.querySelectorAll(".nav-link")];
+  const logo = navbar.querySelector(".logo-link");
+  const active = navbar.querySelector(".nav-link.active");
+  const STORAGE_KEY = "navPillRect";
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const pill = document.createElement("span");
+  pill.className = "nav-pill";
+  pill.setAttribute("aria-hidden", "true");
+  navbar.prepend(pill);
+  navbar.classList.add("has-nav-pill");
+
+  let current = null;
+  let animation = null;
+
+  // Pill box around a link, relative to the navbar, with room around the text.
+  const rectFor = (element) => {
+    const nav = navbar.getBoundingClientRect();
+    const box = element.getBoundingClientRect();
+    const fontSize = parseFloat(getComputedStyle(element).fontSize) || 16;
+    const padX = element === logo ? 4 : fontSize * 0.75;
+    const padY = element === logo ? 4 : fontSize * 0.42;
+    const maxHeight = navbar.clientHeight - 8;
+    const height = Math.min(box.height + padY * 2, maxHeight);
+
+    return {
+      x: box.left - nav.left - navbar.clientLeft - padX,
+      y: box.top - nav.top - navbar.clientTop + box.height / 2 - height / 2,
+      w: box.width + padX * 2,
+      h: height
+    };
+  };
+
+  const frameFor = (rect) => ({
+    transform: `translate(${rect.x}px, ${rect.y}px)`,
+    width: `${rect.w}px`,
+    height: `${rect.h}px`
+  });
+
+  const place = (rect) => {
+    if (animation) animation.cancel();
+    Object.assign(pill.style, frameFor(rect));
+    current = rect;
+  };
+
+  const slideTo = (rect) => {
+    if (!current || reduceMotion) return place(rect);
+
+    const from = current;
+    const distance = Math.abs(rect.x - from.x);
+
+    // Stretch wide and squash slightly mid-flight, like a liquid drop.
+    const middle = {
+      x: (from.x + rect.x) / 2 - distance * 0.06,
+      w: (from.w + rect.w) / 2 + distance * 0.12,
+      h: ((from.h + rect.h) / 2) * 0.9,
+      y: 0
+    };
+    middle.y = (from.y + rect.y) / 2 + ((from.h + rect.h) / 2 - middle.h) / 2;
+
+    if (animation) animation.cancel();
+    Object.assign(pill.style, frameFor(rect));
+    current = rect;
+
+    animation = pill.animate(
+      [frameFor(from), { ...frameFor(middle), offset: 0.45 }, frameFor(rect)],
+      { duration: 520, easing: "cubic-bezier(0.22, 1.2, 0.36, 1)" }
+    );
+  };
+
+  const show = (visible) => pill.classList.toggle("visible", visible);
+
+  const restingRect = () => (active ? rectFor(active) : null);
+
+  const init = () => {
+    let saved = null;
+
+    try {
+      saved = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
+      sessionStorage.removeItem(STORAGE_KEY);
+    } catch (error) {
+      saved = null;
+    }
+
+    const target = restingRect();
+
+    if (saved && target) {
+      // Arrived from another page: glide from the previous link.
+      place(saved);
+      show(true);
+      requestAnimationFrame(() => slideTo(target));
+    } else if (saved && logo) {
+      // Arrived on the home page: glide into the logo and fade away.
+      place(saved);
+      show(true);
+      requestAnimationFrame(() => {
+        slideTo(rectFor(logo));
+        show(false);
+      });
+    } else if (target) {
+      place(target);
+      show(true);
+    }
+  };
+
+  // Follow the mouse across links.
+  links.forEach((link) => {
+    link.addEventListener("pointerenter", (event) => {
+      if (event.pointerType !== "mouse") return;
+
+      if (!pill.classList.contains("visible")) place(rectFor(link));
+      show(true);
+      slideTo(rectFor(link));
+    });
+  });
+
+  navbar.addEventListener("pointerleave", (event) => {
+    if (event.pointerType !== "mouse") return;
+
+    const target = restingRect();
+
+    if (target) {
+      slideTo(target);
+    } else {
+      show(false);
+    }
+  });
+
+  // Remember where the pill was so the next page can continue the slide.
+  [...links, logo].filter(Boolean).forEach((link) => {
+    link.addEventListener("click", () => {
+      const rect = pill.classList.contains("visible") ? current : restingRect();
+      if (!rect) return;
+
+      try {
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(rect));
+      } catch (error) {
+        // Storage unavailable: the next page simply starts in place.
+      }
+    });
+  });
+
+  // Keep the pill on its link when the navbar resizes.
+  new ResizeObserver(() => {
+    const target = pill.classList.contains("visible") && !navbar.matches(":hover")
+      ? restingRect()
+      : null;
+    if (target) place(target);
+  }).observe(navbar);
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(init);
+})();

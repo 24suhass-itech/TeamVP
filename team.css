@@ -520,7 +520,7 @@ body {
   }
 
   .navbar {
-    width: calc(100% - 24px);
+    max-width: calc(100% - 24px);
 
     height: 68px;
     min-height: 68px;

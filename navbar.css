@@ -39,7 +39,9 @@
 ========================================================= */
 
 .navbar {
-  width: min(1000px, calc(100% - 40px));
+  /* Hug the links instead of stretching across the page. */
+  width: fit-content;
+  max-width: calc(100% - 40px);
 
   min-height: 76px;
 
@@ -49,7 +51,7 @@
 
   gap: 28px;
 
-  padding: 12px 36px;
+  padding: 12px 30px;
 
   align-items: center;
 
@@ -106,6 +108,87 @@
 .navbar > * {
   position: relative;
   z-index: 1;
+}
+
+
+/* =========================================================
+   LIQUID GLASS PILL
+   Sits behind the current page link and slides between
+   links (positioned by /common/liquid-glass.js).
+========================================================= */
+
+.navbar > .nav-pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.22),
+      rgba(255, 255, 255, 0.07) 55%,
+      rgba(255, 255, 255, 0.12)
+    );
+
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.28),
+    inset 0 1px 1px rgba(255, 255, 255, 0.7),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.22),
+    inset 0 0 12px rgba(255, 255, 255, 0.08);
+
+  opacity: 0;
+
+  transition: opacity 0.3s ease;
+
+  pointer-events: none;
+
+  will-change: transform, width, height;
+}
+
+.navbar > .nav-pill.visible {
+  opacity: 1;
+}
+
+/* Specular rim on the pill */
+.navbar > .nav-pill::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  padding: 1px;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.1) 35%,
+      rgba(255, 255, 255, 0.05) 60%,
+      rgba(255, 255, 255, 0.55)
+    );
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+/* The pill replaces the underline once it is active. */
+.has-nav-pill .nav-link::after {
+  display: none;
+}
+
+.has-nav-pill .nav-link:hover {
+  transform: none;
 }
 
 
@@ -266,7 +349,7 @@
 
 @media (max-width: 900px) {
   .navbar {
-    width: calc(100% - 24px);
+    max-width: calc(100% - 24px);
     gap: 16px;
     padding: 10px 20px;
   }
