@@ -75,7 +75,12 @@
       form.reset();
       setStatus("Thank you! We'll get back to you soon.", "success");
     } catch (error) {
-      setStatus("Something went wrong. Please try again later.", "error");
+      setStatus(
+        error.message && error.message !== "Request failed" && error.message !== "Failed to fetch"
+          ? error.message
+          : "Something went wrong. Please try again later.",
+        "error"
+      );
     } finally {
       button.disabled = false;
       button.textContent = "Submit";
