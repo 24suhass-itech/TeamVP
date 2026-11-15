@@ -53,6 +53,10 @@
 
   padding: 12px 30px;
 
+  /* Space around a link covered by the glass pill, in em. */
+  --pill-pad-x: 0.75;
+  --pill-pad-y: 0.42;
+
   align-items: center;
 
   position: relative;
@@ -352,11 +356,13 @@
     max-width: calc(100% - 24px);
     gap: 16px;
     padding: 10px 20px;
+
+    --pill-pad-x: 0.6;
   }
 
   .nav-left,
   .nav-right {
-    gap: clamp(8px, 1.5vw, 16px);
+    gap: clamp(14px, 2.2vw, 22px);
   }
 
   .nav-link {
@@ -421,41 +427,85 @@
 }
 
 /* Compact, non-overlapping navigation on phone screens. */
-@media (max-width: 640px) {
+/* Tablets: one size on every page. */
+@media (max-width: 850px) {
   .topbar {
-    top: 16px;
+    top: 12px;
     padding: 0 12px;
   }
 
   .navbar {
-    width: 100%;
-    min-height: 50px;
-    grid-template-columns: max-content 30px max-content;
+    min-height: 68px;
+  }
+}
+
+/* Phones: readable links that still fit one row on a 360px screen. */
+@media (max-width: 640px) {
+  .topbar {
+    top: 10px;
+    padding: 0 8px;
+  }
+
+  .navbar {
+    max-width: 100%;
+    min-height: 48px;
+    grid-template-columns: auto auto auto;
     justify-content: center;
-    gap: 8px;
-    padding: 5px 8px;
+    gap: 10px;
+    padding: 6px 10px;
+
+    --pill-pad-x: 0.5;
+    --pill-pad-y: 0.55;
   }
 
   .nav-left,
   .nav-right {
     min-width: 0;
     justify-content: center;
-    gap: 5px;
+    gap: 10px;
   }
 
   .nav-link {
-    font-size: clamp(8px, 2.2vw, 10px);
+    font-size: clamp(10.5px, 3vw, 13px);
     line-height: 1.2;
+    letter-spacing: -0.01em;
     white-space: nowrap;
   }
 
   .logo-link {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
   }
 
   .drone-logo {
-    width: 25px;
-    height: 25px;
+    width: 26px;
+    height: 26px;
+  }
+}
+
+/* Very narrow phones (320px). */
+@media (max-width: 350px) {
+  .navbar {
+    gap: 6px;
+    padding: 5px 8px;
+  }
+
+  .nav-left,
+  .nav-right {
+    gap: 6px;
+  }
+
+  .nav-link {
+    font-size: 9.5px;
+  }
+
+  .logo-link {
+    width: 28px;
+    height: 28px;
+  }
+
+  .drone-logo {
+    width: 23px;
+    height: 23px;
   }
 }

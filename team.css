@@ -509,44 +509,11 @@ body {
 
 
 /* =========================================================
-   NAVBAR TABLET
+   TABLET
+   Navbar sizing for every screen lives in navbar.css.
 ========================================================= */
 
 @media (max-width: 850px) {
-
-  .topbar {
-    top: 12px;
-    padding: 0 12px;
-  }
-
-  .navbar {
-    max-width: calc(100% - 24px);
-
-    height: 68px;
-    min-height: 68px;
-
-    padding: 8px 16px;
-    gap: 8px;
-  }
-
-  .nav-left,
-  .nav-right {
-    gap: 15px;
-  }
-
-  .nav-link {
-    font-size: 0.72rem;
-  }
-
-  .logo-link {
-    width: 48px;
-    height: 48px;
-  }
-
-  .drone-logo {
-    width: 35px;
-    height: 35px;
-  }
 
   .team-page {
     padding-top: 105px;
@@ -555,150 +522,7 @@ body {
 }
 
 
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 650px) {
-
-  .vp-selector {
-
-    position: absolute;
-
-    top: 105px;
-
-    left: 50%;
-
-    right: auto;
-
-    transform:
-      translateX(-50%);
-
-    width: 140px;
-    height: 108px;
-  }
-
-
-  .vp-content {
-
-    width:
-      calc(100% - 28px);
-
-    margin:
-      220px 14px 0;
-  }
-
-
-  .team-grid {
-
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-
-    gap: 15px;
-  }
-
-
-  .person-photo {
-
-    width: 55%;
-  }
-
-
-  .person-info {
-
-    padding:
-      14px 5px 18px;
-  }
-
-
-  .person-info h3 {
-
-    font-size: 0.9rem;
-  }
-
-
-  .person-role {
-
-    font-size: 0.45rem;
-
-    letter-spacing: 0.08em;
-  }
-
-}
-
-
-/* =========================================================
-   VERY SMALL MOBILE
-========================================================= */
-
-@media (max-width: 400px) {
-
-  .navbar {
-    width: calc(100% - 20px);
-
-    height: 60px;
-    min-height: 60px;
-
-    padding: 8px 10px;
-    gap: 4px;
-  }
-
-
-  .nav-left,
-  .nav-right {
-
-    gap: 6px;
-  }
-
-
-  .nav-link {
-
-    font-size: 0.55rem;
-  }
-
-
-  .logo-link {
-
-    width: 38px;
-
-    height: 38px;
-  }
-
-
-  .drone-logo {
-
-    width: 27px;
-
-    height: 27px;
-  }
-
-
-  .vp-selector {
-
-    width: 130px;
-    height: 100px;
-  }
-
-
-  .vp-content {
-
-    margin-top: 200px;
-  }
-
-
-  .team-grid {
-
-    grid-template-columns:
-      1fr;
-  }
-
-
-  .person-photo {
-
-    width: 45%;
-  }
-
-}
+/* Phone layout is at the end of this file so it overrides the title and filter styles. */
 
 /* =========================================================
    TEAM INTRO — DECRYPT TITLE
@@ -1102,6 +926,166 @@ body {
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+
+}
+
+
+/* =========================================================
+   STACKED LAYOUT (small laptops, tablets, phones)
+   Kept last so it overrides the title and filter styles above.
+   Stack: navbar → VP selector → title → filters → cards.
+   Offsets follow the navbar height at each size (navbar.css).
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  /* Navbar ends at ~117px */
+  .vp-selector {
+    top: 132px;
+    left: 50%;
+    right: auto;
+
+    transform: translateX(-50%);
+
+    width: 124px;
+    height: 96px;
+  }
+
+  .team-intro {
+    top: 244px;
+    padding: 0 14px;
+  }
+
+  /* One line that scales with the screen, so the scramble never re-wraps. */
+  .decrypt-title,
+  .decrypt-title.decrypting {
+    font-size: clamp(0.78rem, 3.6vw, 1.6rem);
+    letter-spacing: 0.1em;
+  }
+
+  .division-nav {
+    top: 292px;
+
+    flex-wrap: wrap;
+    gap: 8px;
+
+    padding: 0 14px;
+  }
+
+  .division-btn {
+    min-width: 0;
+    height: 36px;
+    padding: 0 14px;
+
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+  }
+
+  .vp-content {
+    margin-top: 235px;
+  }
+
+}
+
+@media (max-width: 850px) {
+
+  /* Navbar ends at ~80px */
+  .vp-selector {
+    top: 94px;
+  }
+
+  .team-intro {
+    top: 204px;
+  }
+
+  .division-nav {
+    top: 250px;
+  }
+
+  .vp-content {
+    margin-top: 212px;
+  }
+
+}
+
+@media (max-width: 640px) {
+
+  /* Navbar ends at ~58px; filters wrap to two rows */
+  .vp-selector {
+    top: 72px;
+  }
+
+  .team-intro {
+    top: 182px;
+  }
+
+  .division-nav {
+    top: 216px;
+  }
+
+  .vp-content {
+    margin-top: 218px;
+  }
+
+}
+
+@media (max-width: 650px) {
+
+  .vp-content {
+    width: calc(100% - 28px);
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .person-card {
+    border-radius: 20px;
+  }
+
+  .person-photo {
+    width: 64%;
+    margin-top: 16px;
+  }
+
+  .person-info {
+    padding: 12px 8px 16px;
+  }
+
+  .person-info h3 {
+    font-size: 0.88rem;
+    line-height: 1.25;
+    white-space: normal;
+  }
+
+  .person-role {
+    margin-top: 5px;
+
+    font-size: 0.56rem;
+    line-height: 1.4;
+    letter-spacing: 0.06em;
+    white-space: normal;
+  }
+
+}
+
+@media (max-width: 340px) {
+
+  /* Filters wrap to three rows */
+  .vp-content {
+    margin-top: 262px;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .person-photo {
+    width: 50%;
   }
 
 }

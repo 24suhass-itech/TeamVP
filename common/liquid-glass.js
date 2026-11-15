@@ -120,7 +120,22 @@
 
   const links = [...navbar.querySelectorAll(".nav-link")];
   const logo = navbar.querySelector(".logo-link");
-  const active = navbar.querySelector(".nav-link.active");
+
+  // Current page link: marked in the HTML, or matched from the URL
+  // (so /events/yuktha/ still highlights Events).
+  const path = location.pathname.replace(/index\.html$/, "");
+  const active =
+    navbar.querySelector(".nav-link.active") ||
+    links.find((link) => {
+      const href = new URL(link.href, location.href).pathname;
+      return href !== "/" && path.startsWith(href);
+    });
+
+  if (active) {
+    active.classList.add("active");
+    active.setAttribute("aria-current", "page");
+  }
+
   const STORAGE_KEY = "navPillRect";
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -138,8 +153,11 @@
     const nav = navbar.getBoundingClientRect();
     const box = element.getBoundingClientRect();
     const fontSize = parseFloat(getComputedStyle(element).fontSize) || 16;
-    const padX = element === logo ? 4 : fontSize * 0.75;
-    const padY = element === logo ? 4 : fontSize * 0.42;
+    const navStyles = getComputedStyle(navbar);
+    const padXEm = parseFloat(navStyles.getPropertyValue("--pill-pad-x")) || 0.75;
+    const padYEm = parseFloat(navStyles.getPropertyValue("--pill-pad-y")) || 0.42;
+    const padX = element === logo ? 4 : fontSize * padXEm;
+    const padY = element === logo ? 4 : fontSize * padYEm;
     const maxHeight = navbar.clientHeight - 8;
     const height = Math.min(box.height + padY * 2, maxHeight);
 
@@ -190,6 +208,14 @@
 
   const show = (visible) => pill.classList.toggle("visible", visible);
 
+  // Appear at once (no fade), so a glide from the previous page reads as one motion.
+  const showInstantly = () => {
+    pill.style.transition = "none";
+    show(true);
+    pill.getBoundingClientRect();
+    pill.style.transition = "";
+  };
+
   const restingRect = () => (active ? rectFor(active) : null);
 
   const init = () => {
@@ -207,12 +233,12 @@
     if (saved && target) {
       // Arrived from another page: glide from the previous link.
       place(saved);
-      show(true);
+      showInstantly();
       requestAnimationFrame(() => slideTo(target));
     } else if (saved && logo) {
       // Arrived on the home page: glide into the logo and fade away.
       place(saved);
-      show(true);
+      showInstantly();
       requestAnimationFrame(() => {
         slideTo(rectFor(logo));
         show(false);
@@ -249,7 +275,10 @@
   // Remember where the pill was so the next page can continue the slide.
   [...links, logo].filter(Boolean).forEach((link) => {
     link.addEventListener("click", () => {
-      const rect = pill.classList.contains("visible") ? current : restingRect();
+      // From the home page the pill starts out of the logo.
+      const rect = pill.classList.contains("visible")
+        ? current
+        : restingRect() || (logo && rectFor(logo));
       if (!rect) return;
 
       try {
@@ -260,13 +289,38 @@
     });
   });
 
-  // Keep the pill on its link when the navbar resizes.
+  // Keep the pill on its link when the navbar resizes. The observer also
+  // fires once on start; skip that so it can't cut the arrival glide short.
+  let navSize = "";
+
   new ResizeObserver(() => {
+    const size = `${navbar.offsetWidth}x${navbar.offsetHeight}`;
+    const firstCall = !navSize;
+
+    if (size === navSize) return;
+    navSize = size;
+    if (firstCall) return;
+
     const target = pill.classList.contains("visible") && !navbar.matches(":hover")
       ? restingRect()
       : null;
     if (target) place(target);
   }).observe(navbar);
+
+  // Back/forward cache restores the page as it was left (pill on the
+  // clicked link), so settle it back on this page's link.
+  window.addEventListener("pageshow", (event) => {
+    if (!event.persisted) return;
+
+    const target = restingRect();
+
+    if (target) {
+      place(target);
+      show(true);
+    } else {
+      show(false);
+    }
+  });
 
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(init);
 })();
