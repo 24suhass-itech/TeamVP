@@ -56,6 +56,13 @@
       return;
     }
 
+    const data = new FormData(form);
+    const company = data.get("Company").trim();
+
+    // Name the sponsor in the email subject and let replies go straight to them.
+    data.set("subject", `Sponsorship Enquiry from ${company} | Team Vayuputra`);
+    data.set("replyto", data.get("Email").trim());
+
     button.disabled = true;
     button.textContent = "Sending...";
     setStatus("");
@@ -64,7 +71,7 @@
       const response = await fetch(endpoint, {
         method: "POST",
         headers: { Accept: "application/json" },
-        body: new FormData(form)
+        body: data
       });
       const result = await response.json().catch(() => ({}));
 
@@ -73,17 +80,18 @@
       }
 
       form.reset();
-      setStatus("Thank you! We'll get back to you soon.", "success");
+      setStatus(
+        "Thank you for your interest in partnering with Team Vayuputra. Our team will get in touch with you shortly.",
+        "success"
+      );
     } catch (error) {
       setStatus(
-        error.message && error.message !== "Request failed" && error.message !== "Failed to fetch"
-          ? error.message
-          : "Something went wrong. Please try again later.",
+        "We couldn't send your enquiry right now. Please try again, or write to us at vayuputra@psgitech.ac.in.",
         "error"
       );
     } finally {
       button.disabled = false;
-      button.textContent = "Submit";
+      button.textContent = "Send Enquiry";
     }
   });
 })();

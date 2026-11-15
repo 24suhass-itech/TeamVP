@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="/sponsor/sponsor.css?v=2">
 
   <script
-    src="/sponsor/sponsor.js?v=4"
+    src="/sponsor/sponsor.js?v=5"
     defer
   ></script>
 
@@ -371,33 +371,33 @@
         <div class="journey-form-row">
           <label class="journey-form-field">
             <span>Full Name <b>*</b></span>
-            <input type="text" name="Full Name" placeholder="Full Name" autocomplete="name" required>
+            <input type="text" name="Full Name" placeholder="Your full name" autocomplete="name" maxlength="80" required>
           </label>
 
           <label class="journey-form-field">
             <span>Company <b>*</b></span>
-            <input type="text" name="Company" placeholder="Your company" autocomplete="organization" required>
+            <input type="text" name="Company" placeholder="Company / organisation name" autocomplete="organization" maxlength="100" required>
           </label>
         </div>
 
         <div class="journey-form-row">
           <label class="journey-form-field">
             <span>Phone <b>*</b></span>
-            <input type="tel" name="Phone" placeholder="Phone" autocomplete="tel" required>
+            <input type="tel" name="Phone" placeholder="+91 98765 43210" autocomplete="tel" inputmode="tel" pattern="[0-9+\s\-]{10,16}" title="Please enter a valid phone number (10 or more digits)." required>
           </label>
 
           <label class="journey-form-field">
             <span>Email <b>*</b></span>
-            <input type="email" name="Email" placeholder="✉ Email" autocomplete="email" required>
+            <input type="email" name="Email" placeholder="name@company.com" autocomplete="email" maxlength="120" required>
           </label>
         </div>
 
         <label class="journey-form-field">
           <span>Let us know your requirements <b>*</b></span>
-          <textarea name="Requirements" placeholder="What exactly you are looking for..." rows="4" required></textarea>
+          <textarea name="Requirements" placeholder="Tell us how you would like to partner with us (financial, component or technical support)..." rows="4" maxlength="2000" required></textarea>
         </label>
 
-        <button class="journey-form-submit" type="submit">Submit</button>
+        <button class="journey-form-submit" type="submit">Send Enquiry</button>
         <p class="journey-form-status" role="status" aria-live="polite"></p>
       </form>
 
