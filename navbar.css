@@ -119,10 +119,11 @@
 /* =========================================================
    LIQUID GLASS PILL
    Sits behind the current page link and slides between
-   links (positioned by /common/liquid-glass.js).
+   links (positioned by /common/liquid-glass.js). The Team
+   page division bar uses the same pill (team.js).
 ========================================================= */
 
-.navbar > .nav-pill {
+:is(.navbar, .division-nav) > .nav-pill {
   position: absolute;
   top: 0;
   left: 0;
@@ -154,12 +155,12 @@
   will-change: transform;
 }
 
-.navbar > .nav-pill.visible {
+:is(.navbar, .division-nav) > .nav-pill.visible {
   opacity: 1;
 }
 
 /* Specular rim on the pill */
-.navbar > .nav-pill::before {
+:is(.navbar, .division-nav) > .nav-pill::before {
   content: "";
 
   position: absolute;

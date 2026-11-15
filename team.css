@@ -583,351 +583,141 @@ body {
 }
 /* =========================================================
    TEAM DIVISION NAVIGATION
-========================================================= */
-
-/* =========================================================
-   TEAM DIVISION NAVIGATION
+   One liquid glass bar like the navbar, with the same glass
+   pill (.nav-pill in navbar.css) gliding to the selected
+   division. The pill is added by team.js.
 ========================================================= */
 
 .division-nav {
   position: absolute;
-
   top: 335px;
-  left: 0;
+  left: 50%;
 
-  width: 100%;
+  transform: translateX(-50%);
+
+  width: max-content;
+  max-width: calc(100% - 28px);
 
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  gap: 4px;
 
-  gap: 14px;
+  padding: 6px;
 
-  padding: 0 30px;
-
-  z-index: 20;
-}
-
-.division-nav {
-  position: absolute;
-  top: 335px;
-  left: 0;
-  width: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 14px;
-
-  padding: 0 30px;
-  z-index: 20;
-}
-
-.division-btn {
-  position: relative;
-
-  min-width: 145px;
-  height: 54px;
-  padding: 0 28px;
-
-  border: 1px solid rgba(255, 255, 255, 0.20);
   border-radius: 999px;
 
+  /* Same glass recipe as the navbar */
   background:
     linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.14),
-      rgba(255, 255, 255, 0.035)
+      180deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0.03) 48%,
+      rgba(255, 255, 255, 0.06)
     );
 
-  color: rgba(255, 255, 255, 0.62);
-
-  font-family: var(--vp-font);
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-
-  backdrop-filter: blur(22px) saturate(180%);
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(10px) saturate(185%) brightness(1.08);
+  -webkit-backdrop-filter: blur(10px) saturate(185%) brightness(1.08);
 
   box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.20),
-    inset 0 -1px 1px rgba(255, 255, 255, 0.05),
-    0 8px 25px rgba(0, 0, 0, 0.18);
+    0 14px 40px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.18),
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.55),
+    inset 0 -1.5px 1px rgba(255, 255, 255, 0.2),
+    inset 0 10px 18px -8px rgba(255, 255, 255, 0.18),
+    inset 0 -12px 20px -10px rgba(170, 190, 255, 0.16);
 
-  cursor: pointer;
-  overflow: hidden;
-
-  transition:
-    transform 220ms cubic-bezier(.2,.8,.2,1),
-    background 220ms ease,
-    color 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease;
+  z-index: 20;
 }
 
-
-/* Liquid glass reflection */
-.division-btn::before {
+/* Specular rim, as on the navbar */
+.division-nav::before {
   content: "";
+
   position: absolute;
-
-  top: 1px;
-  left: 12%;
-  width: 76%;
-  height: 45%;
-
-  border-radius: 999px;
-
-  background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.18),
-    rgba(255,255,255,0)
-  );
-
-  filter: blur(2px);
-  pointer-events: none;
-}
-
-
-/* Soft glass glow */
-.division-btn::after {
-  content: "";
-  position: absolute;
-
   inset: 0;
+
+  padding: 1.2px;
 
   border-radius: inherit;
 
   background:
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(255,255,255,0.13),
-      transparent 55%
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.85),
+      rgba(255, 255, 255, 0.12) 22%,
+      rgba(255, 255, 255, 0.04) 50%,
+      rgba(255, 255, 255, 0.12) 78%,
+      rgba(255, 255, 255, 0.6)
     );
 
-  opacity: 0.8;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+
   pointer-events: none;
 }
-
-
-/* Hover */
-.division-btn:hover {
-  color: #fff;
-
-  border-color: rgba(255,255,255,0.38);
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,0.19),
-      rgba(255,255,255,0.055)
-    );
-
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,0.28),
-    inset 0 -1px 1px rgba(255,255,255,0.08),
-    0 10px 35px rgba(0,0,0,0.25),
-    0 0 25px rgba(100,130,255,0.10);
-
-  transform: translateY(-2px);
-}
-
-
-/* Active button */
-.division-btn.active {
-  color: #fff;
-
-  border-color: rgba(255,255,255,0.40);
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,0.25),
-      rgba(255,255,255,0.075)
-    );
-
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,0.32),
-    inset 0 -1px 1px rgba(255,255,255,0.08),
-    0 10px 35px rgba(0,0,0,0.25),
-    0 0 30px rgba(100,130,255,0.13);
-} 
-
-
-/* =========================================================
-   HOVER
-========================================================= */
-
-.division-btn:hover {
-  color: #ffffff;
-
-  border-color: rgba(255, 255, 255, 0.35);
-
-  background: rgba(25, 35, 85, 0.45);
-
-  box-shadow:
-    0 0 20px rgba(70, 100, 255, 0.12);
-
-  transform: translateY(-2px);
-}
-
-
-/* =========================================================
-   ACTIVE
-========================================================= */
-
-.division-btn.active {
-  color: #fff;
-
-  border-color: rgba(255,255,255,0.40);
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,0.25),
-      rgba(255,255,255,0.075)
-    );
-
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,0.32),
-    inset 0 -1px 1px rgba(255,255,255,0.08),
-    0 10px 35px rgba(0,0,0,0.25),
-    0 0 30px rgba(100,130,255,0.13);
-}
-
-/* =========================================================
-   SQUISH / CRUSH ANIMATION
-========================================================= */
 
 .division-btn {
-  overflow: hidden;
-  transform-origin: center;
+  position: relative;
+  z-index: 1;
+
+  height: 46px;
+  padding: 0 24px;
+
+  border: 0;
+  border-radius: 999px;
+
+  background: none;
+
+  color: rgba(255, 255, 255, 0.62);
+
+  font-family: var(--vp-font);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+
+  cursor: pointer;
+
+  transition: color 0.25s ease;
 }
 
-.division-btn::before,
-.division-btn::after {
-  content: "";
-
-  position: absolute;
-
-  top: 0;
-  bottom: 0;
-
-  width: 50%;
-
-  background: rgba(255, 255, 255, 0.08);
-
-  opacity: 0;
-
-  pointer-events: none;
-
-  transition: opacity 100ms ease;
+.division-btn:hover,
+.division-btn.active {
+  color: #fff;
 }
 
-.division-btn::before {
-  left: 0;
-  transform-origin: left center;
+.division-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 2px;
 }
 
-.division-btn::after {
-  right: 0;
-  transform-origin: right center;
-}
 
-.division-btn.crushing::before,
-.division-btn.crushing::after {
-  opacity: 1;
-  animation: crushSides 450ms
-    cubic-bezier(0.65, 0, 0.35, 1)
-    forwards;
-}
-
-@keyframes crushSides {
-
-  0% {
-    transform: scaleX(0);
-  }
-
-  35% {
-    transform: scaleX(0.15);
-  }
-
-  70% {
-    transform: scaleX(0.75);
-  }
-
-  100% {
-    transform: scaleX(1);
-  }
-
-}
 /* =========================================================
-   DIVISION FILTER TRANSITION
+   DIVISION SWITCH
+   Cards slide sideways like the page switch (team.js). The
+   page clips them at the screen edge, so no sideways scroll.
 ========================================================= */
 
-.person-card {
-  opacity: 1;
-  transform: translateY(0) scale(1);
+.team-page {
+  overflow-x: clip;
 }
 
-
-/* -----------------------------------------
-   EVERY CARD VANISHES
------------------------------------------ */
-
-.person-card.division-hide {
-  animation: cardVanish 400ms cubic-bezier(.65, 0, .35, 1) forwards;
-  pointer-events: none;
+.vp-content {
+  position: relative;
 }
 
-
-@keyframes cardVanish {
-
-  0% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
-  45% {
-    opacity: 0.65;
-    transform: translateY(8px) scale(0.97);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.92);
-  }
-
-}
-
-
-/* -----------------------------------------
-   SELECTED CARDS APPEAR
------------------------------------------ */
-
-.person-card.division-show {
-  animation: cardAppear 500ms cubic-bezier(.2,.8,.2,1) both;
-}
-
-
-@keyframes cardAppear {
-
-  0% {
-    opacity: 0;
-    transform: translateY(25px) scale(0.94);
-  }
-
-  60% {
-    opacity: 1;
-    transform: translateY(-4px) scale(1.01);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
+/* Frosted cards pause their blur while sliding, which keeps the
+   slide smooth; over the dark background it isn't visible. */
+.vp-content.is-sliding .person-card {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 
@@ -967,16 +757,13 @@ body {
   .division-nav {
     top: 292px;
 
-    flex-wrap: wrap;
-    gap: 8px;
-
-    padding: 0 14px;
+    gap: 2px;
+    padding: 5px;
   }
 
   .division-btn {
-    min-width: 0;
     height: 36px;
-    padding: 0 14px;
+    padding: 0 12px;
 
     font-size: 0.66rem;
     letter-spacing: 0.08em;
@@ -1020,8 +807,11 @@ body {
     top: 182px;
   }
 
+  /* Two rows here: corners follow the pill inside (its radius plus
+     the bar's padding), like iOS glass panels. */
   .division-nav {
     top: 216px;
+    border-radius: 23px;
   }
 
   .vp-content {
