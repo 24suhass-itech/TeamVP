@@ -17,6 +17,7 @@
   svg.setAttribute("width", "0");
   svg.setAttribute("height", "0");
   svg.style.position = "absolute";
+  svg.setAttribute("data-vp-persist", ""); // kept when router.js swaps pages
   svg.innerHTML = `
     <filter id="liquid-glass-filter" filterUnits="userSpaceOnUse"
             x="0" y="0" color-interpolation-filters="sRGB">
@@ -121,20 +122,30 @@
   const links = [...navbar.querySelectorAll(".nav-link")];
   const logo = navbar.querySelector(".logo-link");
 
-  // Current page link: marked in the HTML, or matched from the URL
-  // (so /events/yuktha/ still highlights Events).
-  const path = location.pathname.replace(/index\.html$/, "");
-  const active =
-    navbar.querySelector(".nav-link.active") ||
-    links.find((link) => {
+  // Current page link matched from the URL (so /events/yuktha/ still
+  // highlights Events). Home has no link; the logo stands for it.
+  const linkFor = (pathname) => {
+    const path = pathname.replace(/index\.html$/, "");
+
+    return links.find((link) => {
       const href = new URL(link.href, location.href).pathname;
       return href !== "/" && path.startsWith(href);
     });
+  };
 
-  if (active) {
-    active.classList.add("active");
-    active.setAttribute("aria-current", "page");
-  }
+  const markActive = (link) => {
+    links.forEach((item) => {
+      item.classList.toggle("active", item === link);
+      if (item === link) {
+        item.setAttribute("aria-current", "page");
+      } else {
+        item.removeAttribute("aria-current");
+      }
+    });
+  };
+
+  let active = navbar.querySelector(".nav-link.active") || linkFor(location.pathname);
+  markActive(active);
 
   const STORAGE_KEY = "navPillRect";
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -273,8 +284,11 @@
   });
 
   // Remember where the pill was so the next page can continue the slide.
+  // Skipped when router.js handles the click (no reload, pill just glides).
   [...links, logo].filter(Boolean).forEach((link) => {
-    link.addEventListener("click", () => {
+    link.addEventListener("click", (event) => {
+      if (event.defaultPrevented) return;
+
       // From the home page the pill starts out of the logo.
       const rect = pill.classList.contains("visible")
         ? current
@@ -321,6 +335,30 @@
       show(false);
     }
   });
+
+  // Page switch without a reload (router.js): glide to the new page's
+  // link straight away, out of the logo when leaving home, into it when
+  // going home.
+  window.VPPill = {
+    moveTo(pathname) {
+      const next = linkFor(pathname);
+      const visible = pill.classList.contains("visible");
+
+      active = next;
+      markActive(next);
+
+      if (next) {
+        if (!visible) {
+          place(logo ? rectFor(logo) : rectFor(next));
+          showInstantly();
+        }
+        slideTo(rectFor(next));
+      } else if (visible && logo) {
+        slideTo(rectFor(logo));
+        show(false);
+      }
+    }
+  };
 
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(init);
 })();
