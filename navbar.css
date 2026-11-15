@@ -276,12 +276,12 @@
   gap: clamp(34px, 3.2vw, 46px);
 }
 
-.nav-left {
-  justify-content: flex-end;
-}
-
+/* Both sides get equal width so the logo stays centred. Any spare room
+   on the shorter side goes between its links, not at the outer edge,
+   so the first and last links sit the same distance from the ends. */
+.nav-left,
 .nav-right {
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 
 
