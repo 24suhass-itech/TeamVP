@@ -554,7 +554,7 @@ body {
 
   font-weight: 500;
 
-  letter-spacing: 0.16em;
+  letter-spacing: 0.06em;
 
   text-align: center;
   white-space: nowrap;
@@ -578,8 +578,9 @@ body {
   transform: translateY(0);
 }
 
+/* Same spacing while scrambling, so the title keeps its width. */
 .decrypt-title.decrypting {
-  letter-spacing: 0.17em;
+  letter-spacing: 0.06em;
 }
 /* =========================================================
    TEAM DIVISION NAVIGATION
@@ -751,7 +752,7 @@ body {
   .decrypt-title,
   .decrypt-title.decrypting {
     font-size: clamp(0.78rem, 3.6vw, 1.6rem);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
   }
 
   .division-nav {
