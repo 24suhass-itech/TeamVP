@@ -312,3 +312,43 @@
 
   font-weight: 700;
 }
+
+/* Compact, non-overlapping navigation on phone screens. */
+@media (max-width: 640px) {
+  .topbar {
+    top: 16px;
+    padding: 0 12px;
+  }
+
+  .navbar {
+    width: 100%;
+    min-height: 50px;
+    grid-template-columns: max-content 30px max-content;
+    justify-content: center;
+    gap: 8px;
+    padding: 5px 8px;
+  }
+
+  .nav-left,
+  .nav-right {
+    min-width: 0;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .nav-link {
+    font-size: clamp(8px, 2.2vw, 10px);
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .logo-link {
+    width: 30px;
+    height: 30px;
+  }
+
+  .drone-logo {
+    width: 25px;
+    height: 25px;
+  }
+}
