@@ -27,7 +27,7 @@
   revealItems.forEach((item) => observer.observe(item));
 })();
 
-/* Send the partner form to email via FormSubmit without leaving the page. */
+/* Send the partner form to email via Web3Forms without leaving the page. */
 (() => {
   const form = document.querySelector(".journey-form");
 
@@ -35,7 +35,7 @@
 
   const button = form.querySelector(".journey-form-submit");
   const status = form.querySelector(".journey-form-status");
-  const endpoint = form.action.replace("formsubmit.co/", "formsubmit.co/ajax/");
+  const endpoint = form.action;
 
   const setStatus = (message, type) => {
     status.textContent = message;
