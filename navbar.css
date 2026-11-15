@@ -150,7 +150,8 @@
 
   pointer-events: none;
 
-  will-change: transform, width, height;
+  transform-origin: 0 0;
+  will-change: transform;
 }
 
 .navbar > .nav-pill.visible {

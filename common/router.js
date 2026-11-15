@@ -286,19 +286,44 @@
      right, the current page leaves to the left and the new one comes in
      from the right (and the reverse). The navbar stays put. Browsers
      without View Transitions fall back to a quick fade. */
-  const SLIDE_MS = 460;
+  const SLIDE_MS = 500;
+  // If the next page isn't ready by then, the pill starts on its own.
+  const PILL_HEAD_START_MS = 150;
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const canSlide = typeof document.startViewTransition === "function" && !reduceMotion;
 
   const style = document.createElement("style");
   style.textContent = `
-    html[data-vp-direction] .topbar {
+    html[data-vp-direction] .navbar {
       view-transition-name: vp-navbar;
     }
 
-    ::view-transition-group(vp-navbar),
+    /* The navbar is shown as a picture during the slide, and a picture
+       has nothing behind it for its glass to blur, so it turns grey.
+       Give the picture's frame the same glass, over the sliding pages. */
+    ::view-transition-group(vp-navbar) {
+      animation: none;
+      border-radius: 999px;
+      /* Same recipe as the live glass in liquid-glass.js: light blur,
+         a colour boost and a touch of brightness. */
+      backdrop-filter: blur(3px) saturate(170%) brightness(1.08);
+    }
+
     ::view-transition-new(vp-navbar) {
       animation: none;
+    }
+
+    /* The incoming page is redrawn on every frame of the slide, and
+       frosted-glass blurs (cards, buttons) are what makes that slow.
+       They sit over smooth gradients, so pausing them for the half
+       second of the slide isn't visible but keeps it smooth. The
+       navbar's own glass is drawn by the group above meanwhile. */
+    html.vp-sliding main,
+    html.vp-sliding main *,
+    html.vp-sliding #site-footer *,
+    html.vp-sliding .navbar {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
     }
 
     ::view-transition-old(vp-navbar) {
@@ -308,7 +333,7 @@
     ::view-transition-old(root),
     ::view-transition-new(root) {
       animation-duration: ${SLIDE_MS}ms;
-      animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+      animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       mix-blend-mode: normal;
     }
 
@@ -406,6 +431,12 @@
     const footer = document.getElementById("site-footer");
     let beforeNavbar = true;
 
+    // Decode images in the background so a page full of photos (Team)
+    // can't hold up frames of the slide; each shows once it's ready.
+    [...doc.images].forEach((img) => {
+      if (!img.hasAttribute("decoding")) img.decoding = "async";
+    });
+
     [...document.body.children].forEach((element) => {
       if (!isPersistent(element)) element.remove();
     });
@@ -452,10 +483,17 @@
     native.clearTimeout(scrollSave);
     if (push) history.replaceState({ ...(history.state || {}), scrollY: window.scrollY }, "");
 
-    // Instant feedback: the pill glides right away. When sliding, the
-    // current page stays on screen until the new one is ready.
+    // The pill glides together with the slide. The browser freezes the
+    // screen briefly to start a slide, which would stall a pill that was
+    // already moving, so it only starts early when the page is slow.
     const direction = directionOf(currentPath, url.pathname);
-    if (window.VPPill) window.VPPill.moveTo(url.pathname);
+    let pillMoved = false;
+    const movePill = () => {
+      if (pillMoved || id !== navigation) return;
+      pillMoved = true;
+      if (window.VPPill) window.VPPill.moveTo(url.pathname);
+    };
+    const pillTimer = native.setTimeout(movePill, canSlide ? PILL_HEAD_START_MS : 0);
 
     const root = document.documentElement;
     root.classList.add("vp-switching");
@@ -484,6 +522,9 @@
     if (id !== navigation) return;
 
     const showNewPage = () => {
+      // Set after the old page's picture is taken, so only the incoming
+      // page has its blurs paused.
+      if (canSlide) root.classList.add("vp-sliding");
       if (push) history.pushState({ scrollY: 0 }, "", url.href);
       currentPath = url.pathname;
 
@@ -504,15 +545,24 @@
     if (canSlide) {
       root.dataset.vpDirection = direction;
 
+      const transition = document.startViewTransition(showNewPage);
+
+      transition.ready
+        .then(() => {
+          native.clearTimeout(pillTimer);
+          movePill();
+        })
+        .catch(movePill);
+
       try {
-        await document.startViewTransition(showNewPage).finished;
+        await transition.finished;
       } catch (error) {
         // Skipped by a newer switch; that one finishes the job.
       }
 
       if (id === navigation) {
         delete root.dataset.vpDirection;
-        root.classList.remove("vp-switching");
+        root.classList.remove("vp-switching", "vp-sliding");
       }
       return;
     }

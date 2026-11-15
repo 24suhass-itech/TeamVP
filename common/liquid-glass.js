@@ -214,8 +214,18 @@
     Object.assign(pill.style, frameFor(rect));
     current = rect;
 
+    // The pill is already sized for where it ends up; on the way it is
+    // only moved and stretched (a transform), which the GPU animates by
+    // itself, so a busy page can't make it stutter.
+    const stretchTo = (box) =>
+      `translate(${box.x}px, ${box.y}px) scale(${box.w / rect.w}, ${box.h / rect.h})`;
+
     animation = pill.animate(
-      [frameFor(from), { ...frameFor(middle), offset: 0.45 }, frameFor(rect)],
+      [
+        { transform: stretchTo(from) },
+        { transform: stretchTo(middle), offset: 0.45 },
+        { transform: stretchTo(rect) }
+      ],
       { duration: 520, easing: "cubic-bezier(0.22, 1.2, 0.36, 1)" }
     );
   };
