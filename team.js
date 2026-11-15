@@ -725,6 +725,18 @@ personCards.forEach((card) => {
 });
 
 
+/* Contact icons still holding a placeholder (#name-gmail /
+   #name-linkedin) do nothing until a real address is added. */
+
+document.querySelectorAll(".person-link").forEach((link) => {
+  link.addEventListener("click", (event) => {
+    if (link.getAttribute("href").startsWith("#")) {
+      event.preventDefault();
+    }
+  });
+});
+
+
 /* Decode every photo once the page is idle. Hidden cards' photos are
    otherwise decoded on the first switch, which makes it stall. */
 

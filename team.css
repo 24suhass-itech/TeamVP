@@ -456,6 +456,73 @@ body {
 
 
 /* =========================================================
+   CONTACT ICONS (email + LinkedIn)
+   Small glass buttons under the name. Placeholder links
+   (#name-gmail / #name-linkedin) do nothing until filled in.
+========================================================= */
+
+.person-links {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+  margin-top: -6px;
+  padding: 0 8px 18px;
+}
+
+.person-link {
+  display: grid;
+  place-items: center;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.14),
+      rgba(255, 255, 255, 0.04)
+    );
+
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.45),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.person-link img {
+  display: block;
+
+  width: 16px;
+  height: 16px;
+
+  opacity: 0.9;
+}
+
+.person-link:hover {
+  transform: translateY(-2px);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.24),
+      rgba(255, 255, 255, 0.08)
+    );
+}
+
+.person-link:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
    LARGE DESKTOP
    SIX MEMBERS IN ONE ROW
 ========================================================= */
@@ -898,6 +965,21 @@ body {
     line-height: 1.4;
     letter-spacing: 0.06em;
     white-space: normal;
+  }
+
+  .person-links {
+    gap: 8px;
+    padding-bottom: 14px;
+  }
+
+  .person-link {
+    width: 30px;
+    height: 30px;
+  }
+
+  .person-link img {
+    width: 14px;
+    height: 14px;
   }
 
 }
