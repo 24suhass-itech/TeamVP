@@ -159,25 +159,28 @@
   let current = null;
   let animation = null;
 
-  // Pill box around a link, relative to the navbar, with room around the text.
+  // Pill box behind a link, relative to the navbar: nearly the full bar
+  // height like the iOS tab bar, with room either side of the text.
   const rectFor = (element) => {
     const nav = navbar.getBoundingClientRect();
     const box = element.getBoundingClientRect();
-    const fontSize = parseFloat(getComputedStyle(element).fontSize) || 16;
     const navStyles = getComputedStyle(navbar);
-    const padXEm = parseFloat(navStyles.getPropertyValue("--pill-pad-x")) || 0.75;
-    const padYEm = parseFloat(navStyles.getPropertyValue("--pill-pad-y")) || 0.42;
-    const padX = element === logo ? 4 : fontSize * padXEm;
-    const padY = element === logo ? 4 : fontSize * padYEm;
-    const maxHeight = navbar.clientHeight - 8;
-    const height = Math.min(box.height + padY * 2, maxHeight);
+    const fontSize = parseFloat(getComputedStyle(element).fontSize) || 16;
+    const padX = element === logo
+      ? 0
+      : (parseFloat(navStyles.getPropertyValue("--pill-pad-x")) || 1) * fontSize;
+    const inset = parseFloat(navStyles.getPropertyValue("--pill-inset")) || 6;
+    const height = navbar.clientHeight - inset * 2;
+    // Short words still get a capsule, not a circle.
+    const width = Math.max(box.width + padX * 2, height * 1.2);
+    const centre = box.left - nav.left - navbar.clientLeft + box.width / 2;
+    const edge = Math.min(inset, 6);
+    const x = Math.min(
+      Math.max(centre - width / 2, edge),
+      navbar.clientWidth - edge - width
+    );
 
-    return {
-      x: box.left - nav.left - navbar.clientLeft - padX,
-      y: box.top - nav.top - navbar.clientTop + box.height / 2 - height / 2,
-      w: box.width + padX * 2,
-      h: height
-    };
+    return { x, y: inset, w: width, h: height };
   };
 
   const frameFor = (rect) => ({
@@ -260,29 +263,6 @@
     }
   };
 
-  // Follow the mouse across links.
-  links.forEach((link) => {
-    link.addEventListener("pointerenter", (event) => {
-      if (event.pointerType !== "mouse") return;
-
-      if (!pill.classList.contains("visible")) place(rectFor(link));
-      show(true);
-      slideTo(rectFor(link));
-    });
-  });
-
-  navbar.addEventListener("pointerleave", (event) => {
-    if (event.pointerType !== "mouse") return;
-
-    const target = restingRect();
-
-    if (target) {
-      slideTo(target);
-    } else {
-      show(false);
-    }
-  });
-
   // Remember where the pill was so the next page can continue the slide.
   // Skipped when router.js handles the click (no reload, pill just glides).
   [...links, logo].filter(Boolean).forEach((link) => {
@@ -315,9 +295,7 @@
     navSize = size;
     if (firstCall) return;
 
-    const target = pill.classList.contains("visible") && !navbar.matches(":hover")
-      ? restingRect()
-      : null;
+    const target = pill.classList.contains("visible") ? restingRect() : null;
     if (target) place(target);
   }).observe(navbar);
 

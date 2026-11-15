@@ -49,13 +49,14 @@
 
   grid-template-columns: 1fr auto 1fr;
 
-  gap: 28px;
+  gap: 34px;
 
-  padding: 12px 30px;
+  padding: 12px 32px;
 
-  /* Space around a link covered by the glass pill, in em. */
-  --pill-pad-x: 0.75;
-  --pill-pad-y: 0.42;
+  /* Glass pill: space either side of the text (em) and its gap from
+     the navbar edge (px). */
+  --pill-pad-x: 1.1;
+  --pill-inset: 7;
 
   align-items: center;
 
@@ -271,7 +272,7 @@
 
   align-items: center;
 
-  gap: clamp(18px, 2.5vw, 42px);
+  gap: clamp(34px, 3.2vw, 46px);
 }
 
 .nav-left {
@@ -355,14 +356,15 @@
   .navbar {
     max-width: calc(100% - 24px);
     gap: 16px;
-    padding: 10px 20px;
+    padding: 10px 26px;
 
-    --pill-pad-x: 0.6;
+    --pill-pad-x: 0.85;
+    --pill-inset: 13;
   }
 
   .nav-left,
   .nav-right {
-    gap: clamp(14px, 2.2vw, 22px);
+    gap: clamp(18px, 2.8vw, 26px);
   }
 
   .nav-link {
@@ -452,10 +454,10 @@
     grid-template-columns: auto auto auto;
     justify-content: center;
     gap: 10px;
-    padding: 6px 10px;
+    padding: 6px 11px;
 
-    --pill-pad-x: 0.5;
-    --pill-pad-y: 0.55;
+    --pill-pad-x: 0.52;
+    --pill-inset: 5;
   }
 
   .nav-left,
@@ -486,13 +488,16 @@
 /* Very narrow phones (320px). */
 @media (max-width: 350px) {
   .navbar {
-    gap: 6px;
-    padding: 5px 8px;
+    gap: 9px;
+    padding: 5px 9px;
+
+    --pill-pad-x: 0.5;
+    --pill-inset: 9;
   }
 
   .nav-left,
   .nav-right {
-    gap: 6px;
+    gap: 9px;
   }
 
   .nav-link {
