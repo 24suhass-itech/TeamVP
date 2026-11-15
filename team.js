@@ -725,12 +725,14 @@ personCards.forEach((card) => {
 });
 
 
-/* Contact icons still holding a placeholder (#name-gmail /
-   #name-linkedin) do nothing until a real address is added. */
+/* Contact icons still waiting for their address (an empty
+   "mailto:" or a "#name-linkedin" placeholder) do nothing. */
 
 document.querySelectorAll(".person-link").forEach((link) => {
   link.addEventListener("click", (event) => {
-    if (link.getAttribute("href").startsWith("#")) {
+    const href = link.getAttribute("href").trim();
+
+    if (href.startsWith("#") || href === "mailto:") {
       event.preventDefault();
     }
   });
