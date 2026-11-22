@@ -127,9 +127,3 @@ label {
   fill: currentColor;
   stroke: none;
 }
-
-@media (max-width: 700px) {
-  .vp-site-footer {
-    width: calc(100% - 30px);
-  }
-}

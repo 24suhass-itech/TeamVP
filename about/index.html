@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About | Team Vayuputra</title>
+  <meta name="description" content="About the International Space Drone Challenge (ISDC), its organiser the Space Robotics Society (SPROS), and Team Vayuputra's part in it.">
   <script src="/common/router.js" defer></script>
   <link rel="icon" type="image/png" href="/assets/drone.png">
-  <link rel="stylesheet" href="/common.css">
-  <link rel="stylesheet" href="/navbar.css?v=7">
-  <link rel="stylesheet" href="/styles.css?v=2">
-  <link rel="stylesheet" href="/pages.css">
-  <link rel="stylesheet" href="/common/footer.css">
+  <link rel="stylesheet" href="/common.css?v=2">
+  <link rel="stylesheet" href="/navbar.css?v=8">
+  <link rel="stylesheet" href="/about/about.css?v=7">
+  <link rel="stylesheet" href="/common/footer.css?v=2">
   <script src="/common/footer.js" defer></script>
   <script src="/common/liquid-glass.js?v=5" defer></script>
 </head>
@@ -32,9 +32,52 @@
       </div>
     </nav>
   </header>
-  <main class="info-page">
-    <h1>About</h1>
-    <p>Learn about Team Vayuputra and our work in aerial robotics.</p>
+  <main class="about-page">
+    <div class="about-wrap">
+
+      <!-- ================= ABOUT US ================= -->
+      <section class="about-card has-logo">
+        <div class="about-text">
+          <h2>About Us</h2>
+          <p>Team Vayuputra is a student-led engineering team from PSG Institute of Technology and Applied Research (PSG iTech), passionate about developing innovative drone technologies and exploring the possibilities of aerial robotics in space exploration.</p>
+          <p>Driven by a shared interest in aerospace engineering, robotics and emerging technologies, the team focuses on designing, developing and integrating unmanned aerial systems for challenging exploration environments. Through our participation in the International Space Drone Challenge (ISDC), we work towards understanding how aerial robots can contribute to future planetary exploration missions, particularly in environments inspired by Mars.</p>
+      
+        </div>
+        <img class="about-logo team-logo" src="/assets/vayuputra-logo.webp" alt="Team Vayuputra logo">
+      </section>
+
+      <!-- ================= ABOUT ISDC ================= -->
+      <section class="about-card has-logo">
+        <div class="about-text">
+          <h2>International Space Drone Challenge</h2>
+          <p>The International Space Drone Challenge (ISDC) is an international space robotics engineering competition organised by the Space Robotics Society (SPROS). It challenges university students to conceive, design, build and fly next-generation aerial robots that could assist astronauts on future planetary exploration missions.</p>
+          <p>The competition recreates the conditions of a Martian environment. Teams prove their drones through a series of mission-based tasks drawn from realistic exploration scenarios: supporting astronauts, reaching places that are hard to get to, and helping with operations around an off-world habitat.</p>
+        </div>
+        <img class="about-logo" src="/assets/spros-logo.png" alt="Space Robotics Society (SPROS) logo" loading="lazy">
+      </section>
+
+      <!-- ================= ABOUT SPROS ================= -->
+      <section class="about-card has-logo">
+        <div class="about-text">
+          <h2>Space Robotics Society (SPROS)</h2>
+          <p>The Space Robotics Society (SPROS) is an international non-profit organisation headquartered in India, dedicated to advancing space technology, robotics and allied fields. It brings students, researchers, educators, engineers and space professionals together on a global platform to drive innovation in future space technologies.</p>
+          <p>Through projects, educational activities and international competitions, SPROS helps aspiring space professionals move beyond theory and take on real engineering challenges in space exploration. Rooted in the student space robotics community, SPROS was established as an organisation in 2021 by its founder, <strong>Sagar Dhaka</strong>, who previously led the organisation of the International Rover Challenge.</p>
+        </div>
+        <img class="about-logo" src="/assets/spros-logo.png" alt="Space Robotics Society (SPROS) logo" loading="lazy">
+      </section>
+
+      <!-- ================= REFERENCES ================= -->
+      <section class="about-card">
+        <h2>Learn More</h2>
+        <div class="ref-links">
+          <a href="https://roverchallenge.org/isdc/" target="_blank" rel="noopener">ISDC Official Website</a>
+          <a href="https://roverchallenge.org/wp-content/uploads/2025/10/ISDC-2026-Rulebook-2.pdf" target="_blank" rel="noopener">ISDC Rulebook</a>
+          <a href="https://www.spaceroboticssociety.org/" target="_blank" rel="noopener">SPROS Official Website</a>
+          <a href="https://www.spaceroboticssociety.org/about/" target="_blank" rel="noopener">About SPROS</a>
+        </div>
+      </section>
+
+    </div>
   </main>
   <div id="site-footer"></div>
 </body>

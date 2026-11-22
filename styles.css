@@ -175,59 +175,56 @@ body {
 
   overflow: hidden;
 
-  background: #020307;
+  /* Centre the framed animation (and its progress line) below the navbar */
+  /* Always the same width as the glass cards; on short screens the
+     frame gets shorter instead of narrower (the image fills it). */
+  --frame-w: min(1120px, calc(100% - 80px));
+  --frame-h: min(calc(min(1120px, 100vw - 80px) * 9 / 16), calc(100svh - 170px));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding-top: 70px;
 }
 
+/* Framed like the glass cards: same width, border and corners */
 canvas {
   display: block;
 
-  width: 100%;
-  height: 100%;
+  width: var(--frame-w);
+  height: var(--frame-h);
 
-  object-fit: contain;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 24px;
+
+  background: #020307;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
+@media (max-width: 700px) {
+  .assembly-sticky {
+    --frame-w: calc(100% - 32px);
+    --frame-h: calc((100vw - 32px) * 9 / 16);
+  }
 
-/* Assembly label */
-
-.assembly-label {
-  position: absolute;
-
-  left: clamp(22px, 5vw, 76px);
-
-  bottom: 44px;
-
-  pointer-events: none;
-}
-
-.assembly-label h2 {
-  font-size: clamp(1.25rem, 2.5vw, 2.4rem);
-
-  letter-spacing: -0.06em;
-
-  font-weight: 600;
-}
-
-.assembly-label p {
-  margin-top: 9px;
-
-  color: #8e96ad;
-
-  font-size: 0.78rem;
+  canvas {
+    border-radius: 20px;
+  }
 }
 
 
 /* Progress bar */
 
 .progress-track {
-  position: absolute;
-
-  right: clamp(22px, 5vw, 76px);
-
-  bottom: 50px;
-
-  width: 130px;
+  width: var(--frame-w);
   height: 2px;
+  border-radius: 2px;
+  overflow: hidden;
 
   background: rgba(255, 255, 255, 0.16);
 }
@@ -241,38 +238,111 @@ canvas {
 
 
 /* =========================
-   END SECTIONS
+   ABOUT THE TEAM (bottom of home)
 ========================= */
 
-.end-section {
-  min-height: 80vh;
-
-  display: grid;
-
-  place-items: center;
-
-  padding: 100px 24px;
-
-  text-align: center;
+.home-about {
+  padding: 100px 40px 120px;
 }
 
-.end-section h2 {
-  font-size: clamp(2.5rem, 7vw, 7rem);
-
-  letter-spacing: -0.08em;
-
-  line-height: 0.9;
+.home-about-card {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 48px 46px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(35, 48, 115, 0.28), rgba(5, 8, 23, 0.72));
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-.end-section p {
-  max-width: 470px;
+.home-about-label {
+  display: inline-flex;
+  margin-bottom: 16px;
+  padding: 7px 13px;
+  border: 1px solid rgba(150, 175, 255, 0.35);
+  border-radius: 20px;
+  background: rgba(25, 35, 85, 0.35);
+  color: rgba(219, 226, 246, 0.9);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
 
-  margin: 25px auto 0;
+.home-about-card h2 {
+  margin-bottom: 24px;
+  font-size: clamp(30px, 3vw, 42px);
+  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
 
-  color: var(--muted);
+.home-about-card h3 {
+  margin: 38px 0 16px;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
 
+.home-about-card p {
+  max-width: 860px;
+  font-size: 18px;
   line-height: 1.7;
+  color: #dbe2f6;
 }
+
+.home-about-card p + p {
+  margin-top: 16px;
+}
+
+.home-about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.home-about-item {
+  padding: 24px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.home-about-item h4 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.home-about-card .home-about-item p {
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+  .home-about {
+    padding: 20px 16px 80px;
+  }
+
+  .home-about-card {
+    padding: 28px 22px;
+    border-radius: 20px;
+  }
+
+  .home-about-card p {
+    font-size: 16px;
+  }
+
+  .home-about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 
 /* =========================
@@ -280,33 +350,6 @@ canvas {
 ========================= */
 
 /* Navbar sizing for every screen lives in navbar.css. */
-
-
-/* =========================
-   SMALL MOBILE
-========================= */
-
-@media (max-width: 560px) {
-
-  .hero {
-    padding-top: 125px;
-  }
-
-  .assembly {
-    height: 460vh;
-  }
-
-  .progress-track {
-    width: 90px;
-
-    bottom: 28px;
-  }
-
-  .assembly-label {
-    bottom: 35px;
-  }
-
-}
 
 
 /* =========================
@@ -384,18 +427,6 @@ canvas {
   opacity: 1;
 }
 
-
-/* Don't show the effect on touch devices */
-
-@media (hover: none) {
-
-  .mouse-point,
-  .mouse-coordinates {
-    display: none;
-  }
-
-}
-
 /* =========================
    STATIC HERO POLAROID
 ========================= */
@@ -428,14 +459,6 @@ canvas {
 
 .mouse-polaroid.active {
   opacity: 1;
-}
-
-@media (hover: none) {
-
-  .mouse-polaroid {
-    display: none;
-  }
-
 }
 /* =========================
    CUSTOM SPHERE CURSOR
@@ -728,32 +751,6 @@ button {
       scale(4);
 
     opacity: 0;
-
-  }
-
-}
-
-
-/* =========================
-   DISABLE CUSTOM CURSOR
-   ON TOUCH DEVICES
-========================= */
-
-@media (hover: none) {
-
-  html,
-  body,
-  a,
-  button {
-
-    cursor: auto;
-
-  }
-
-  .cursor-sphere,
-  .cursor-ripple {
-
-    display: none;
 
   }
 

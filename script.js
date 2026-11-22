@@ -166,12 +166,12 @@ function resizeCanvas() {
 
   canvas.width =
     Math.floor(
-      window.innerWidth * dpr
+      canvas.clientWidth * dpr
     );
 
   canvas.height =
     Math.floor(
-      window.innerHeight * dpr
+      canvas.clientHeight * dpr
     );
 
   drawFrame(currentFrame);
@@ -198,8 +198,9 @@ function drawFrame(index) {
 
   }
 
+  // Fill the frame (crop slightly if it is shorter than 16:9)
   const scale =
-    Math.min(
+    Math.max(
       canvas.width /
         image.naturalWidth,
 
@@ -242,8 +243,10 @@ function drawFrame(index) {
   );
 
 
-  frameNumber.textContent =
-    `Frame ${index + 1} / ${TOTAL_FRAMES}`;
+  if (frameNumber) {
+    frameNumber.textContent =
+      `Frame ${index + 1} / ${TOTAL_FRAMES}`;
+  }
 
 }
 

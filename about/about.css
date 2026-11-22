@@ -1,0 +1,170 @@
+/* =========================================================
+   ABOUT PAGE
+   Same dark-blue starfield and glass cards as Challenges.
+   ========================================================= */
+
+:root {
+  --text: #ffffff;
+  --muted: #a5acc2;
+  --soft: #dbe2f6;
+  --line: rgba(255, 255, 255, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--vp-font);
+  color: var(--text);
+  background:
+    radial-gradient(ellipse 80% 70% at 0% 0%, #142e9a 0%, #0b1b61 30%, #05091f 65%, transparent 100%),
+    radial-gradient(ellipse 70% 60% at 100% 100%, #07164e 0%, #020510 65%, transparent 100%),
+    linear-gradient(135deg, #02030a 0%, #030615 45%, #000105 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+.about-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 190px 40px 110px;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.65) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px);
+  background-size: 150px 150px, 230px 230px, 310px 310px;
+  background-position: 10px 20px, 80px 100px, 170px 40px;
+}
+
+.about-wrap {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+}
+
+
+/* =========================================================
+   GLASS CARD
+   ========================================================= */
+
+.about-card {
+  padding: 44px 46px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(35, 48, 115, 0.28), rgba(5, 8, 23, 0.72));
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.about-card h2 {
+  margin-bottom: 24px;
+  font-size: clamp(30px, 3vw, 42px);
+  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.about-card p {
+  max-width: 820px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--soft);
+}
+
+.about-card p + p {
+  margin-top: 16px;
+}
+
+.about-card strong {
+  color: #ffffff;
+}
+
+
+/* Cards with the SPROS logo on the right */
+
+.about-card.has-logo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  align-items: center;
+  gap: 48px;
+}
+
+.about-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* The team logo has its own dark background, so round it like a tile */
+.team-logo {
+  border-radius: 16px;
+}
+
+/* =========================================================
+   REFERENCES
+   ========================================================= */
+
+.ref-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ref-links a {
+  padding: 11px 18px;
+  border: 1px solid rgba(150, 175, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(25, 35, 85, 0.35);
+  color: #e6ebff;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.ref-links a:hover {
+  background: rgba(60, 80, 170, 0.45);
+  border-color: rgba(190, 205, 255, 0.55);
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .about-page {
+    padding: 150px 16px 80px;
+  }
+
+  .about-wrap {
+    gap: 28px;
+  }
+
+  .about-card {
+    padding: 28px 22px;
+    border-radius: 20px;
+  }
+
+  .about-card.has-logo {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .about-logo {
+    order: -1;
+    width: 180px;
+  }
+
+  .about-card p {
+    font-size: 16px;
+  }
+}

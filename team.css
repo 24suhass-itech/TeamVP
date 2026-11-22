@@ -579,55 +579,7 @@ body {
 }
 
 
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media (max-width: 950px) {
-
-  .vp-selector {
-    top: 110px;
-    width: 146px;
-    height: 132px;
-  }
-
-
-  .vp-content {
-
-    width:
-      calc(100% - 40px);
-
-    margin:
-      270px 20px 0;
-  }
-
-
-  .team-grid {
-
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr));
-
-    gap: 18px;
-  }
-
-}
-
-
-/* =========================================================
-   TABLET
-   Navbar sizing for every screen lives in navbar.css.
-========================================================= */
-
-@media (max-width: 850px) {
-
-  .team-page {
-    padding-top: 105px;
-  }
-
-}
-
-
-/* Phone layout is at the end of this file so it overrides the title and filter styles. */
+/* Navbar sizing lives in navbar.css. */
 
 /* =========================================================
    TEAM INTRO — DECRYPT TITLE
@@ -828,10 +780,10 @@ body {
 
 
 /* =========================================================
-   STACKED LAYOUT (small laptops, tablets, phones)
+   STACKED LAYOUT (small laptops)
    Kept last so it overrides the title and filter styles above.
    Stack: navbar → VP selector → title → filters → cards.
-   Offsets follow the navbar height at each size (navbar.css).
+   Offsets follow the navbar height (navbar.css).
 ========================================================= */
 
 @media (max-width: 1100px) {
@@ -877,126 +829,6 @@ body {
 
   .vp-content {
     margin-top: 235px;
-  }
-
-}
-
-@media (max-width: 850px) {
-
-  /* Navbar ends at ~80px */
-  .vp-selector {
-    top: 94px;
-  }
-
-  .team-intro {
-    top: 204px;
-  }
-
-  .division-nav {
-    top: 250px;
-  }
-
-  .vp-content {
-    margin-top: 212px;
-  }
-
-}
-
-@media (max-width: 640px) {
-
-  /* Navbar ends at ~58px; filters wrap to two rows */
-  .vp-selector {
-    top: 72px;
-  }
-
-  .team-intro {
-    top: 182px;
-  }
-
-  /* Two rows here: corners follow the pill inside (its radius plus
-     the bar's padding), like iOS glass panels. */
-  .division-nav {
-    top: 216px;
-    border-radius: 23px;
-  }
-
-  .vp-content {
-    margin-top: 218px;
-  }
-
-}
-
-@media (max-width: 650px) {
-
-  .vp-content {
-    width: calc(100% - 28px);
-    margin-left: 14px;
-    margin-right: 14px;
-  }
-
-  .team-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-
-  .person-card {
-    border-radius: 20px;
-  }
-
-  .person-photo {
-    width: 64%;
-    margin-top: 16px;
-  }
-
-  .person-info {
-    padding: 12px 8px 16px;
-  }
-
-  .person-info h3 {
-    font-size: 0.88rem;
-    line-height: 1.25;
-    white-space: normal;
-  }
-
-  .person-role {
-    margin-top: 5px;
-
-    font-size: 0.56rem;
-    line-height: 1.4;
-    letter-spacing: 0.06em;
-    white-space: normal;
-  }
-
-  .person-links {
-    gap: 8px;
-    padding-bottom: 14px;
-  }
-
-  .person-link {
-    width: 30px;
-    height: 30px;
-  }
-
-  .person-link img {
-    width: 14px;
-    height: 14px;
-  }
-
-}
-
-@media (max-width: 340px) {
-
-  /* Filters wrap to three rows */
-  .vp-content {
-    margin-top: 262px;
-  }
-
-  .team-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .person-photo {
-    width: 50%;
   }
 
 }

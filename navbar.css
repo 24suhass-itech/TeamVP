@@ -354,26 +354,6 @@
   width: 100%;
 }
 
-@media (max-width: 900px) {
-  .navbar {
-    max-width: calc(100% - 24px);
-    gap: 16px;
-    padding: 10px 26px;
-
-    --pill-pad-x: 0.85;
-    --pill-inset: 13;
-  }
-
-  .nav-left,
-  .nav-right {
-    gap: clamp(18px, 2.8vw, 26px);
-  }
-
-  .nav-link {
-    font-size: clamp(0.8rem, 1.8vw, 1.1rem);
-  }
-}
-
 
 /* =========================================================
    CENTER DRONE LOGO
@@ -428,91 +408,4 @@
   font-size: 1.5rem;
 
   font-weight: 700;
-}
-
-/* Compact, non-overlapping navigation on phone screens. */
-/* Tablets: one size on every page. */
-@media (max-width: 850px) {
-  .topbar {
-    top: 12px;
-    padding: 0 12px;
-  }
-
-  .navbar {
-    min-height: 68px;
-  }
-}
-
-/* Phones: readable links that still fit one row on a 360px screen. */
-@media (max-width: 640px) {
-  .topbar {
-    top: 10px;
-    padding: 0 8px;
-  }
-
-  .navbar {
-    max-width: 100%;
-    min-height: 48px;
-    grid-template-columns: auto auto auto;
-    justify-content: center;
-    gap: 10px;
-    padding: 6px 11px;
-
-    --pill-pad-x: 0.52;
-    --pill-inset: 5;
-  }
-
-  .nav-left,
-  .nav-right {
-    min-width: 0;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .nav-link {
-    font-size: clamp(10.5px, 3vw, 13px);
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
-  }
-
-  .logo-link {
-    width: 32px;
-    height: 32px;
-  }
-
-  .drone-logo {
-    width: 26px;
-    height: 26px;
-  }
-}
-
-/* Very narrow phones (320px). */
-@media (max-width: 350px) {
-  .navbar {
-    gap: 9px;
-    padding: 5px 9px;
-
-    --pill-pad-x: 0.5;
-    --pill-inset: 9;
-  }
-
-  .nav-left,
-  .nav-right {
-    gap: 9px;
-  }
-
-  .nav-link {
-    font-size: 9.5px;
-  }
-
-  .logo-link {
-    width: 28px;
-    height: 28px;
-  }
-
-  .drone-logo {
-    width: 23px;
-    height: 23px;
-  }
 }

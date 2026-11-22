@@ -111,24 +111,6 @@ body {
   opacity: 0.72;
   transform: translateX(-3px);
 }
-
-@media (max-width: 600px) {
-  .event-article-page {
-    padding: 130px 16px 60px;
-  }
-
-  .article-hero {
-    margin-bottom: 34px;
-  }
-
-  .article-intro {
-    margin-bottom: 26px;
-  }
-
-  .article-image {
-    border-radius: 18px;
-  }
-}
 /* =========================================================
    EVENT ARTICLE PAGE
 ========================================================= */
@@ -458,7 +440,7 @@ body {
 
 
 /* =========================================================
-   TABLET
+   SMALL LAPTOP
 ========================================================= */
 
 @media (max-width: 1100px) {
@@ -485,143 +467,6 @@ body {
   .article-body p {
     font-size: 16px;
     line-height: 1.8;
-  }
-
-}
-
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 760px) {
-
-  .event-article-page {
-
-    width: calc(100% - 32px);
-
-    padding-top: 150px;
-    padding-bottom: 70px;
-  }
-
-
-  .article-hero {
-
-    margin-bottom: 55px;
-  }
-
-
-  .article-label {
-    font-size: 11px;
-  }
-
-
-  .article-hero h1 {
-
-    font-size: clamp(38px, 11vw, 60px);
-
-    line-height: 0.98;
-  }
-
-
-  .article-intro {
-
-    font-size: 16px;
-
-    line-height: 1.6;
-  }
-
-
-  /*
-     On mobile, put the content first,
-     then the photographs around it.
-  */
-
-  .article-layout {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 35px;
-  }
-
-
-  .article-body {
-
-    order: 1;
-
-    padding: 30px 24px;
-
-    border-radius: 22px;
-  }
-
-
-  .photo-1 {
-    order: 2;
-
-    transform: none;
-  }
-
-
-  .photo-2 {
-    order: 3;
-
-    transform: none;
-  }
-
-
-  .photo-3 {
-    order: 4;
-
-    transform: none;
-  }
-
-
-  .photo-4 {
-    order: 5;
-
-    transform: none;
-  }
-
-  .photo-5 {
-    order: 6;
-
-    transform: none;
-  }
-
-  .photo-6 {
-    order: 7;
-
-    transform: none;
-  }
-
-  .article-photo {
-
-    width: min(100%, 552px);
-
-    max-width: none;
-
-    align-self: center;
-  }
-
-
-  .article-bottom-photo {
-
-    width: 100%;
-
-    margin-top: 65px;
-  }
-
-
-  .article-body p {
-
-    font-size: 15px;
-
-    line-height: 1.8;
-
-    margin-bottom: 24px;
   }
 
 }
