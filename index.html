@@ -12,10 +12,10 @@
 
   <link rel="stylesheet" href="/common.css?v=2">
 <link rel="stylesheet" href="/navbar.css?v=8">
-<link rel="stylesheet" href="/styles.css?v=8">
+<link rel="stylesheet" href="/styles.css?v=12">
 
   <!-- External JavaScript -->
-  <script src="/script.js?v=3" defer></script>
+  <script src="/script.js?v=9" defer></script>
   <link rel="stylesheet" href="/common/footer.css?v=2">
   <script src="/common/footer.js" defer></script>
   <script src="/common/liquid-glass.js?v=5" defer></script>
@@ -134,7 +134,65 @@
 
       <div class="assembly-sticky">
 
-        <canvas id="droneCanvas"></canvas>
+        <div class="frame-wrap">
+
+          <canvas id="droneCanvas"></canvas>
+
+          <!--
+            Spec cards rise up the right side of the frame while
+            their part is on screen. data-start / data-end are the
+            animation frame numbers (1-720) the card is shown for.
+          -->
+          <div class="spec-card" data-start="1" data-end="125">
+            <span class="spec-kicker">MOTOR</span>
+            <h3>T-Motor AIR2216 II</h3>
+            <dl>
+              <div><dt>KV rating</dt><dd>920 KV</dd></div>
+              <div><dt>Battery</dt><dd>4S LiPo</dd></div>
+              <div><dt>Max power</dt><dd>272 W</dd></div>
+              <div><dt>Weight</dt><dd>64 g</dd></div>
+            </dl>
+          </div>
+
+          <div class="spec-card" data-start="126" data-end="250">
+            <span class="spec-kicker">PROPULSION</span>
+            <h3>Propeller &amp; ESC</h3>
+            <dl>
+              <div><dt>Propeller</dt><dd>T-Motor T1045 II</dd></div>
+              <div><dt>Size</dt><dd>10 &times; 4.5 in</dd></div>
+              <div><dt>Rotation</dt><dd>2 CW + 2 CCW</dd></div>
+              <div><dt>ESC</dt><dd>T-Motor AIR 20A V2.0</dd></div>
+            </dl>
+            <p class="spec-note">The ESC sets each motor&rsquo;s speed by regulating the power it receives, following commands from the flight controller.</p>
+          </div>
+
+          <div class="spec-card" data-start="251" data-end="375">
+            <span class="spec-kicker">FRAME</span>
+            <h3>S500 Air PCB Frame</h3>
+            <dl>
+              <div><dt>Wheelbase</dt><dd>500 mm</dd></div>
+              <div><dt>Weight</dt><dd>~400 g</dd></div>
+              <div><dt>Material</dt><dd>Glass fibre, PA66 arms</dd></div>
+              <div><dt>Landing gear</dt><dd>200 mm</dd></div>
+              <div><dt>Power</dt><dd>Integrated PCB</dd></div>
+            </dl>
+            <p class="spec-note">Upswept, ridge-reinforced arms with an adjustable battery mount and camera/gimbal mounting points.</p>
+          </div>
+
+          <div class="spec-card" data-start="376" data-end="500">
+            <span class="spec-kicker">FLIGHT CONTROLLER</span>
+            <h3>Pixhawk 2.4.8</h3>
+            <dl>
+              <div><dt>Processor</dt><dd>32-bit ARM Cortex-M4</dd></div>
+              <div><dt>Firmware</dt><dd>ArduCopter</dd></div>
+              <div><dt>Memory</dt><dd>2 MB Flash</dd></div>
+              <div><dt>Power input</dt><dd>4.5&ndash;5.5 V</dd></div>
+              <div><dt>Interfaces</dt><dd>PWM, UART, I&sup2;C, CAN, USB</dd></div>
+            </dl>
+            <p class="spec-note">Built-in 3-axis gyroscope, accelerometer, magnetometer and barometer.</p>
+          </div>
+
+        </div>
 
 
         <div class="progress-track">

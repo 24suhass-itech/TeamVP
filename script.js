@@ -176,6 +176,8 @@ function resizeCanvas() {
 
   drawFrame(currentFrame);
 
+  updateSpecCards(lastSpecFrame);
+
 }
 
 
@@ -289,6 +291,10 @@ function updateScroll() {
   progressBar.style.width =
     `${progress * 100}%`;
 
+  updateSpecCards(
+    progress * (TOTAL_FRAMES - 1)
+  );
+
 
   if (
     nextFrame !== currentFrame
@@ -303,6 +309,180 @@ function updateScroll() {
 
   }
 
+}
+
+
+/* =========================
+   SPEC CARDS
+   The frame number only decides WHEN a card is shown
+   (between its data-start and data-end frames). Once
+   triggered, the card springs in on its own timing,
+   like iOS: up from the bottom-right corner, a soft
+   wobble as it settles in the centre of the right
+   side, then springs out through the top-right when
+   its frames are over. Scrolling back reverses it.
+========================= */
+
+const specCards =
+  [...document.querySelectorAll(".spec-card")].map((el) => ({
+    el,
+    start: Number(el.dataset.start) - 1,  // HTML uses 1-based frames
+    end: Number(el.dataset.end) - 1,
+    pos: 0,       // 0 = bottom-right, 0.5 = centre, 1 = top-right
+    vel: 0,
+    target: 0
+  }));
+
+const frameWrap =
+  document.querySelector(".frame-wrap");
+
+let lastSpecFrame = 0;
+let specAnimating = false;
+let specLastTime = 0;
+
+const reduceMotion =
+  window.matchMedia("(prefers-reduced-motion: reduce)");
+
+// Spring feel: higher stiffness = quicker, lower damping = more wobble
+const SPEC_STIFFNESS = 170;
+const SPEC_DAMPING = 15;
+
+// Card centre path, as fractions of the frame (cubic Bezier, top to bottom)
+const SPEC_PATH = [
+  [0.90, 0.00],
+  [0.80, 0.35],
+  [0.80, 0.65],
+  [0.93, 1.00]
+];
+
+function pointOnPath(t) {
+  const u = 1 - t;
+  const a = u * u * u;
+  const b = 3 * u * u * t;
+  const c = 3 * u * t * t;
+  const d = t * t * t;
+
+  return [0, 1].map((k) =>
+    a * SPEC_PATH[0][k] +
+    b * SPEC_PATH[1][k] +
+    c * SPEC_PATH[2][k] +
+    d * SPEC_PATH[3][k]
+  );
+}
+
+function renderSpecCard(card) {
+
+  const { el, pos } = card;
+
+  // Fully visible near the centre, fading out towards either end
+  const distance = Math.abs(pos - 0.5);
+  const opacity = Math.max(0, Math.min(1, 1 - (distance - 0.22) / 0.26));
+
+  if (opacity <= 0.001) {
+    el.style.opacity = "0";
+    el.style.visibility = "hidden";
+    return;
+  }
+
+  const W = frameWrap.clientWidth;
+  const H = frameWrap.clientHeight;
+  const cw = el.offsetWidth;
+  const ch = el.offsetHeight;
+  let x;
+  let y;
+
+  if (W < 600) {
+    // Phones: ride just below the frame, rising a little
+    x = (W - cw) / 2;
+    y = H + 28 + (0.5 - pos) * 140;
+  } else {
+    // pos 0 is the bottom of the path, 1 the top
+    const [px, py] = pointOnPath(1 - pos);
+    x = px * W - cw / 2;
+    y = py * H - ch / 2;
+  }
+
+  const scale = 0.94 + 0.06 * opacity;
+
+  el.style.visibility = "visible";
+  el.style.opacity = opacity.toFixed(3);
+  el.style.transform =
+    `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
+}
+
+function stepSpecCards(now) {
+
+  const dt = Math.min(0.033, (now - specLastTime) / 1000 || 0.016);
+  specLastTime = now;
+
+  let moving = false;
+
+  specCards.forEach((card) => {
+    const force =
+      -SPEC_STIFFNESS * (card.pos - card.target) -
+      SPEC_DAMPING * card.vel;
+
+    card.vel += force * dt;
+    card.pos += card.vel * dt;
+
+    if (
+      Math.abs(card.vel) < 0.0005 &&
+      Math.abs(card.pos - card.target) < 0.0005
+    ) {
+      card.pos = card.target;
+      card.vel = 0;
+    } else {
+      moving = true;
+    }
+
+    renderSpecCard(card);
+  });
+
+  if (moving) {
+    window.requestAnimationFrame(stepSpecCards);
+  } else {
+    specAnimating = false;
+  }
+}
+
+function updateSpecCards(frame) {
+
+  lastSpecFrame = frame;
+
+  if (!frameWrap) return;
+
+  specCards.forEach((card) => {
+
+    // frame stays at 0 until the animation section reaches the
+    // top of the screen, so nothing triggers while on the hero
+    const active =
+      frame > 0 && frame >= card.start && frame <= card.end;
+    const hidden = Math.abs(card.pos - 0.5) >= 0.48;
+
+    // Before its frames it waits below; after them it leaves upwards
+    const target = active ? 0.5 : (frame > card.end ? 1 : 0);
+
+    // Out of view on the wrong side: jump across without animating
+    if (!active && hidden) {
+      card.pos = target;
+      card.vel = 0;
+    }
+
+    card.target = target;
+
+    if (reduceMotion.matches) {
+      card.pos = target;
+      card.vel = 0;
+    }
+
+    renderSpecCard(card);
+  });
+
+  if (!specAnimating && !reduceMotion.matches) {
+    specAnimating = true;
+    specLastTime = performance.now();
+    window.requestAnimationFrame(stepSpecCards);
+  }
 }
 
 
