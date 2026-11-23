@@ -837,32 +837,112 @@ body {
 
 /* =========================================================
    PHONES
-   Kept last so it overrides everything above. Top to bottom:
-   VP selector, title, filters, then the cards two across.
-   The selector, title and filters are positioned by fixed
-   offsets (as on laptops), so each offset below follows the
-   one before it:
-     selector 64px + 96px tall      -> ends 160px
-     title    170px                 -> ends ~194px
-     filters  206px, two rows       -> ends ~290px
-     cards    from 125px + 181px    =  306px
+   Kept last so it overrides everything above. Top to bottom,
+   each block starts where the one before it ends:
+     VP switch   64px, 48px tall          -> ends 112px
+     title       126px                     -> ends ~150px
+     filters     170px, two rows of 36px   -> ends ~252px
+     cards       125px page padding + 143px = 268px
 ========================================================= */
 
 @media (max-width: 700px) {
 
+  /* ---------- VP switch: VP4 | VP3 | VP2, tap to pick ---------- */
+
   .vp-selector {
     top: 64px;
+    left: 50%;
+    right: auto;
+
+    transform: translateX(-50%);
+
+    width: min(240px, calc(100% - 32px));
+    height: 48px;
+
+    overflow: visible;
+    touch-action: manipulation;  /* page scrolls normally over it */
   }
+
+  .vp-display {
+    display: block;
+    padding: 4px;
+  }
+
+  .vp-window {
+    height: 100%;
+
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .vp-track {
+    position: static;
+
+    flex-direction: row;
+    gap: 2px;
+
+    height: 100%;
+
+    transform: none !important;  /* the revolver offset is set inline */
+    transition: none;
+  }
+
+  .vp-item {
+    flex: 1 1 0;
+    height: 100%;
+
+    border-radius: 999px;
+
+    color: rgba(255, 255, 255, 0.62);
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Selected segment: the same glass pill as the filters */
+  .vp-item.is-active {
+    color: #fff;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.22),
+        rgba(255, 255, 255, 0.07) 55%,
+        rgba(255, 255, 255, 0.12)
+      );
+
+    box-shadow:
+      0 6px 18px rgba(0, 0, 0, 0.28),
+      inset 0 1px 1px rgba(255, 255, 255, 0.7),
+      inset 0 -1px 1px rgba(255, 255, 255, 0.22),
+      inset 0 0 12px rgba(255, 255, 255, 0.08);
+  }
+
+  /* ---------- Title ---------- */
 
   .team-intro {
-    top: 170px;
+    top: 126px;
+    padding: 0 16px;
   }
 
-  /* Six filters as an even 3 x 2 grid instead of a pill that
-     wraps unevenly. The sliding highlight follows each button's
-     row and column, so it still glides between them. */
+  .decrypt-title,
+  .decrypt-title.decrypting {
+    font-size: clamp(0.95rem, 4.6vw, 1.25rem);
+  }
+
+  /* ---------- Filters: an even 3 x 2 grid ---------- */
+
   .division-nav {
-    top: 206px;
+    top: 170px;
 
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -876,26 +956,43 @@ body {
 
   .division-btn {
     width: 100%;
+    height: 36px;
     padding: 0 6px;
+
+    font-size: 0.8rem;
   }
+
+  /* ---------- Cards: two across ---------- */
 
   .vp-content {
     width: calc(100% - 32px);
-    margin: 181px 16px 0;
+    margin: 143px 16px 0;
   }
 
-  /* Two cards across, so names have room */
   .team-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
   }
 
+  .person-card {
+    border-radius: 20px;
+  }
+
+  /* No lift on tap: hover sticks after a touch on phones */
   .person-card:hover {
     transform: none;
   }
 
+  .person-photo {
+    width: 62%;
+  }
+
+  .photo-fallback {
+    font-size: 1.6rem;
+  }
+
   .person-info {
-    padding: 14px 8px 16px;
+    padding: 14px 8px 14px;
   }
 
   .person-info h3 {
@@ -905,9 +1002,17 @@ body {
   }
 
   .person-role {
-    font-size: 0.58rem;
+    margin-top: 5px;
+
+    font-size: 0.6rem;
     letter-spacing: 0.1em;
+    line-height: 1.4;
     white-space: normal;
+  }
+
+  .person-links {
+    margin-top: 0;
+    padding-bottom: 16px;
   }
 
 }

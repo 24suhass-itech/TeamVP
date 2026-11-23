@@ -53,14 +53,25 @@ function updateVP() {
    CHANGE VP
 ========================================================= */
 
-function changeVP(direction) {
-  const nextIndex = currentIndex + direction;
+function goToVP(nextIndex) {
+  if (nextIndex === currentIndex) return;
   if (nextIndex < 0 || nextIndex >= vpNames.length) return;
+  const direction = nextIndex > currentIndex ? "up" : "down";
   currentIndex = nextIndex;
   currentGeneration = vpNames[currentIndex];
   updateVP();
-  renderActiveDivision(direction > 0 ? "up" : "down");
+  renderActiveDivision(direction);
 }
+
+function changeVP(direction) {
+  goToVP(currentIndex + direction);
+}
+
+/* Tapping a VP picks it. On phones the selector is a row of
+   three segments (team.css), so this is how it is used there. */
+vpItems.forEach((item, index) => {
+  item.addEventListener("click", () => goToVP(index));
+});
 
 
 /* =========================================================
@@ -294,9 +305,28 @@ const personCards =
     ".person-card"
   );
 
-document.querySelectorAll(".vp3-photo img").forEach((image) => {
+/* A photo that hasn't been added yet shows the person's initials
+   instead of a broken image (e.g. "Harihar R" -> "HR"). */
+document.querySelectorAll(".person-photo img").forEach((image) => {
   const showFallback = () => {
-    image.parentElement.classList.add("photo-missing");
+    const photo = image.parentElement;
+
+    if (!photo.querySelector(".photo-fallback")) {
+      const initials = (image.alt || "")
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((word) => word[0].toUpperCase())
+        .join("");
+
+      const fallback = document.createElement("span");
+      fallback.className = "photo-fallback";
+      fallback.setAttribute("aria-hidden", "true");
+      fallback.textContent = initials;
+      photo.appendChild(fallback);
+    }
+
+    photo.classList.add("photo-missing");
   };
 
   image.addEventListener("error", showFallback);
@@ -724,11 +754,9 @@ function renderActiveDivision(direction) {
   );
 }
 
-personCards.forEach((card) => {
-  if ((card.dataset.generation || "VP4") !== currentGeneration) {
-    card.style.display = "none";
-  }
-});
+/* First view: the same rules as tapping "All" (current VP only,
+   mentors kept to their own filter). */
+showCards(activeDivision);
 
 
 /* Contact icons still waiting for their address (an empty
