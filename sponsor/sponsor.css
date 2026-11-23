@@ -614,8 +614,8 @@ body {
   .sponsor-hero {
     grid-template-columns: minmax(0, 1fr);
     min-height: 0;
-    gap: 8px;
-    padding: 0 0 24px;
+    gap: 4px;
+    padding: 0 0 48px;
   }
 
   .sponsor-hero h1 {
@@ -628,8 +628,10 @@ body {
 
   /* The laptop layout lifts the badge 90px; here that pushed it
      into the button and left a gap below, so it sits in place */
+  /* The badge leads the page; everything else follows below */
   .hero-orbit {
-    width: min(64%, 240px);
+    order: -1;
+    width: min(56%, 210px);
     justify-self: center;
     transform: none;
   }
