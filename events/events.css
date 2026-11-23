@@ -247,3 +247,71 @@ body {
 
   opacity: 0.7;
 }
+
+
+/* =========================================================
+   PHONES
+   Shared by the Events and Drones pages. The two-column card
+   stacks: photo across the full width on top, then the title,
+   text and buttons. Every size here is relative to the card,
+   so it holds together at any phone width.
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .events-page {
+    padding: 96px 16px 56px;
+  }
+
+  .event-list {
+    gap: 24px;
+  }
+
+  .event-card {
+    min-height: 0;
+
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 18px;
+
+    padding: 14px 14px 22px;
+
+    border-radius: 22px;
+  }
+
+  /* No lift on tap: hover sticks after a touch on phones */
+  .event-card:hover {
+    transform: none;
+  }
+
+  .event-image {
+    padding-right: 0;
+  }
+
+  .event-photo {
+    border-radius: 14px;
+  }
+
+  .event-content {
+    padding: 0 6px;
+  }
+
+  .event-content h2 {
+    margin-bottom: 10px;
+
+    font-size: clamp(24px, 7vw, 30px);  /* 25px on a 360px phone, 30px from 430px */
+  }
+
+  .event-description {
+    max-width: none;
+
+    margin-bottom: 18px;
+
+    font-size: 15.5px;
+  }
+
+  /* Keep "READ MORE →" on one line */
+  .read-event {
+    white-space: nowrap;
+  }
+
+}
