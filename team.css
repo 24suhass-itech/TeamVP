@@ -609,9 +609,10 @@ body {
   /* Bigger */
   font-size: clamp(2.3rem, 2.9vw, 5.8rem);
 
-  font-weight: 500;
+  /* Bold like the headings on the other pages */
+  font-weight: 800;
 
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
 
   text-align: center;
   white-space: nowrap;
@@ -637,7 +638,7 @@ body {
 
 /* Same spacing while scrambling, so the title keeps its width. */
 .decrypt-title.decrypting {
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
 }
 /* =========================================================
    TEAM DIVISION NAVIGATION
@@ -737,9 +738,9 @@ body {
   color: rgba(255, 255, 255, 0.62);
 
   font-family: var(--vp-font);
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.01em;
 
   cursor: pointer;
 
@@ -809,7 +810,7 @@ body {
   .decrypt-title,
   .decrypt-title.decrypting {
     font-size: clamp(0.78rem, 3.6vw, 1.6rem);
-    letter-spacing: 0.05em;
+    letter-spacing: 0;
   }
 
   .division-nav {
@@ -823,8 +824,8 @@ body {
     height: 36px;
     padding: 0 12px;
 
-    font-size: 0.66rem;
-    letter-spacing: 0.08em;
+    font-size: 0.74rem;
+    letter-spacing: 0.01em;
   }
 
   .vp-content {

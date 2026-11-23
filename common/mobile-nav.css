@@ -1,0 +1,278 @@
+/* =========================================================
+   MOBILE NAVIGATION
+   Phones and small tablets swap the glass navbar pill for a
+   three-bar button. Tapping it drops the page names in one
+   after another over a dimmed page: no panel, just the names.
+   Everything here is inside the mobile breakpoint, so the
+   desktop layout is untouched. Built by /common/mobile-nav.js.
+   ========================================================= */
+
+/* Hidden on desktop: the button and menu only exist on phones. */
+.vp-menu-button,
+.vp-menu {
+  display: none;
+}
+
+
+@media (max-width: 860px) {
+
+  /* The navbar pill is replaced by the menu button */
+  .topbar {
+    display: none;
+  }
+
+
+  /* =========================
+     THREE-BAR BUTTON
+  ========================= */
+
+  .vp-menu-button {
+    position: fixed;
+    top: calc(14px + env(safe-area-inset-top, 0px));
+    right: 14px;
+
+    z-index: 1200;
+
+    display: grid;
+    place-items: center;
+
+    width: 46px;
+    height: 46px;
+
+    padding: 0;
+
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 16px;
+
+    /* Same glass as the navbar */
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.14),
+        rgba(255, 255, 255, 0.04) 48%,
+        rgba(255, 255, 255, 0.08)
+      ),
+      rgba(8, 13, 34, 0.45);
+
+    backdrop-filter: blur(14px) saturate(185%) brightness(1.08);
+    -webkit-backdrop-filter: blur(14px) saturate(185%) brightness(1.08);
+
+    box-shadow:
+      0 10px 26px rgba(0, 0, 0, 0.35),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.45),
+      inset 0 -1.5px 1px rgba(255, 255, 255, 0.18);
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .vp-menu-button .bars {
+    position: relative;
+
+    display: block;
+
+    width: 20px;
+    height: 14px;
+  }
+
+  .vp-menu-button .bars i {
+    position: absolute;
+    left: 0;
+
+    display: block;
+
+    width: 100%;
+    height: 2px;
+
+    border-radius: 2px;
+
+    background: #ffffff;
+
+    transition:
+      transform 0.36s cubic-bezier(0.32, 0.72, 0, 1),
+      opacity 0.2s ease;
+  }
+
+  .vp-menu-button .bars i:nth-child(1) { top: 0; }
+  .vp-menu-button .bars i:nth-child(2) { top: 6px; }
+  .vp-menu-button .bars i:nth-child(3) { top: 12px; }
+
+  /* Open: the bars fold into a cross */
+  .vp-menu-button.is-open .bars i:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .vp-menu-button.is-open .bars i:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0.4);
+  }
+
+  .vp-menu-button.is-open .bars i:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+
+  /* =========================
+     THE MENU
+     A dimmed page, nothing else. The names sit straight on it.
+  ========================= */
+
+  .vp-menu {
+    position: fixed;
+    inset: 0;
+
+    z-index: 1100;
+
+    display: block;
+
+    padding:
+      calc(84px + env(safe-area-inset-top, 0px))
+      22px
+      calc(24px + env(safe-area-inset-bottom, 0px));
+
+    /* A short screen (phone held sideways) scrolls the list */
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    /* Dimmed and softened just enough to read the names over
+       whatever is on the page */
+    background: rgba(3, 6, 20, 0.82);
+
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+      opacity 0.26s ease,
+      visibility 0.34s;
+  }
+
+  .vp-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+      opacity 0.22s ease,
+      visibility 0s;
+  }
+
+  /* The names run down the right, under the menu button */
+  .vp-menu-panel {
+    width: 100%;
+    max-width: 420px;
+    margin-left: auto;
+
+    text-align: right;
+  }
+
+
+  /* =========================
+     THE NAMES
+     Each one drops in just after the one above it.
+  ========================= */
+
+  .vp-menu-link {
+    display: block;
+
+    padding: 11px 0;
+
+    color: rgba(255, 255, 255, 0.72);
+
+    font-family: var(--vp-font);
+    font-size: 1.12rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-decoration: none;
+
+    -webkit-tap-highlight-color: transparent;
+
+    opacity: 0;
+    transform: translateY(-16px);
+
+    /* Closing: they lift away together, quickly */
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s cubic-bezier(0.32, 0.72, 0, 1),
+      color 0.2s ease;
+  }
+
+  .vp-menu.is-open .vp-menu-link {
+    opacity: 1;
+    transform: none;
+
+    transition:
+      opacity 0.26s cubic-bezier(0.32, 0.72, 0, 1),
+      transform 0.26s cubic-bezier(0.32, 0.72, 0, 1),
+      color 0.2s ease;
+
+    /* One after another, the whole run under half a second */
+    transition-delay: calc(var(--i) * 40ms);
+  }
+
+  .vp-menu-link:active {
+    color: #ffffff;
+  }
+
+  /* The page you are on */
+  .vp-menu-link.is-current {
+    color: #ffffff;
+  }
+
+  .vp-menu-link.is-current::after {
+    content: "";
+
+    display: block;
+
+    width: 20px;
+    height: 2px;
+
+    margin-top: 6px;
+    margin-left: auto;
+
+    border-radius: 2px;
+
+    background: rgba(255, 255, 255, 0.85);
+  }
+
+
+  /* While the menu is open the page behind must not scroll */
+  html.vp-menu-locked,
+  html.vp-menu-locked body {
+    overflow: hidden;
+  }
+
+}
+
+
+/* Phone held sideways: tighten up so all seven fit on screen */
+@media (max-width: 860px) and (max-height: 540px) {
+  .vp-menu {
+    padding-top: calc(70px + env(safe-area-inset-top, 0px));
+  }
+
+  .vp-menu-link {
+    padding: 6px 0;
+    font-size: 1rem;
+  }
+
+  .vp-menu-link.is-current::after {
+    margin-top: 4px;
+  }
+}
+
+
+@media (max-width: 860px) and (prefers-reduced-motion: reduce) {
+  .vp-menu,
+  .vp-menu-link,
+  .vp-menu-button .bars i {
+    transition: none;
+  }
+
+  .vp-menu.is-open .vp-menu-link {
+    transition-delay: 0s;
+  }
+}

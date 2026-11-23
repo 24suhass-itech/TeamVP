@@ -3,12 +3,18 @@
    but links between them swap the page content in place instead of
    reloading. The navbar never disappears, so its glass pill glides the
    moment a link is tapped, whatever the network speed.
-   Pages listed in FULL_LOAD_PATHS (the Drones page) load normally. */
+   Pages listed in FULL_LOAD_PATHS (none at the moment) load normally. */
 (() => {
   if (!window.fetch || !window.DOMParser || !history.pushState) return;
 
-  const FULL_LOAD_PATHS = ["/drones/"];
-  const SHARED_STYLES = ["/common.css", "/navbar.css", "/common/footer.css"];
+  const FULL_LOAD_PATHS = [];
+  const SHARED_STYLES = [
+    "/common.css",
+    "/navbar.css",
+    "/common/footer.css",
+    "/common/cursor.css",
+    "/common/mobile-nav.css"
+  ];
   const SHARED_SCRIPT = /^\/common\//;
   const FADE_MS = 180;
 
@@ -282,9 +288,10 @@
      SWAPPING
   ======================================================= */
 
-  /* Pages slide like a carousel in navbar order: going to a link on the
-     right, the current page leaves to the left and the new one comes in
-     from the right (and the reverse). The navbar stays put. Browsers
+  /* Page content slides like a carousel in navbar order: going to a link
+     on the right, the current content leaves to the left and the new
+     content comes in from the right (and the reverse). The navbar and
+     the shared background stay put. Browsers
      without View Transitions fall back to a quick fade. */
   const SLIDE_MS = 500;
   // If the next page isn't ready by then, the pill starts on its own.
@@ -330,22 +337,42 @@
       display: none;
     }
 
-    ::view-transition-old(root),
-    ::view-transition-new(root) {
+    /* Every page shares the same background, so it stays still and only
+       the content slides. The old page's content and the new page's
+       content get different names, so each slides from exactly where it
+       sits on screen (the old one from wherever it was scrolled to). */
+    html[data-vp-phase="old"] main { view-transition-name: vp-old-main; }
+    html[data-vp-phase="old"] #site-footer { view-transition-name: vp-old-footer; }
+    html[data-vp-phase="new"] main { view-transition-name: vp-new-main; }
+    html[data-vp-phase="new"] #site-footer { view-transition-name: vp-new-footer; }
+
+    /* The background (everything not named above) doesn't move. */
+    ::view-transition-old(root) { display: none; }
+    ::view-transition-new(root) { animation: none; }
+
+    ::view-transition-old(vp-old-main),
+    ::view-transition-old(vp-old-footer),
+    ::view-transition-new(vp-new-main),
+    ::view-transition-new(vp-new-footer) {
       animation-duration: ${SLIDE_MS}ms;
       animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      animation-fill-mode: both;
       mix-blend-mode: normal;
     }
 
-    html[data-vp-direction="forward"]::view-transition-old(root) { animation-name: vp-out-to-left; }
-    html[data-vp-direction="forward"]::view-transition-new(root) { animation-name: vp-in-from-right; }
-    html[data-vp-direction="back"]::view-transition-old(root) { animation-name: vp-out-to-right; }
-    html[data-vp-direction="back"]::view-transition-new(root) { animation-name: vp-in-from-left; }
+    html[data-vp-direction="forward"]::view-transition-old(vp-old-main),
+    html[data-vp-direction="forward"]::view-transition-old(vp-old-footer) { animation-name: vp-out-to-left; }
+    html[data-vp-direction="forward"]::view-transition-new(vp-new-main),
+    html[data-vp-direction="forward"]::view-transition-new(vp-new-footer) { animation-name: vp-in-from-right; }
+    html[data-vp-direction="back"]::view-transition-old(vp-old-main),
+    html[data-vp-direction="back"]::view-transition-old(vp-old-footer) { animation-name: vp-out-to-right; }
+    html[data-vp-direction="back"]::view-transition-new(vp-new-main),
+    html[data-vp-direction="back"]::view-transition-new(vp-new-footer) { animation-name: vp-in-from-left; }
 
-    @keyframes vp-out-to-left { to { transform: translateX(-100%); } }
-    @keyframes vp-in-from-right { from { transform: translateX(100%); } }
-    @keyframes vp-out-to-right { to { transform: translateX(100%); } }
-    @keyframes vp-in-from-left { from { transform: translateX(-100%); } }
+    @keyframes vp-out-to-left { to { transform: translateX(-100vw); } }
+    @keyframes vp-in-from-right { from { transform: translateX(100vw); } }
+    @keyframes vp-out-to-right { to { transform: translateX(100vw); } }
+    @keyframes vp-in-from-left { from { transform: translateX(-100vw); } }
 
     html.vp-fading body > :not(.topbar):not([data-vp-persist]) {
       transition: opacity ${FADE_MS}ms ease;
@@ -524,7 +551,10 @@
     const showNewPage = () => {
       // Set after the old page's picture is taken, so only the incoming
       // page has its blurs paused.
-      if (canSlide) root.classList.add("vp-sliding");
+      if (canSlide) {
+        root.classList.add("vp-sliding");
+        root.dataset.vpPhase = "new";
+      }
       if (push) history.pushState({ scrollY: 0 }, "", url.href);
       currentPath = url.pathname;
 
@@ -544,6 +574,7 @@
 
     if (canSlide) {
       root.dataset.vpDirection = direction;
+      root.dataset.vpPhase = "old";
 
       const transition = document.startViewTransition(showNewPage);
 
@@ -562,6 +593,7 @@
 
       if (id === navigation) {
         delete root.dataset.vpDirection;
+        delete root.dataset.vpPhase;
         root.classList.remove("vp-switching", "vp-sliding");
       }
       return;

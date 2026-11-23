@@ -9,10 +9,29 @@ html {
 body {
   margin: 0;
   color: #fff;
+  /* Same background as the home page */
   background:
-    radial-gradient(circle at 14% 8%, rgba(32, 61, 184, 0.28), transparent 34%),
-    radial-gradient(circle at 88% 48%, rgba(20, 40, 125, 0.22), transparent 38%),
-    #020513;
+    radial-gradient(
+      ellipse 80% 70% at 0% 0%,
+      #142e9a 0%,
+      #0b1b61 30%,
+      #05091f 65%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 70% 60% at 100% 100%,
+      #07164e 0%,
+      #020510 65%,
+      transparent 100%
+    ),
+    linear-gradient(
+      135deg,
+      #02030a 0%,
+      #030615 45%,
+      #000105 100%
+    );
+
+  background-attachment: fixed;
 }
 
 .sponsor-page {
@@ -220,7 +239,13 @@ body {
   border-radius: 50%;
   color: #fff;
   background: rgba(255, 255, 255, 0.04);
-  font-size: 17px;
+}
+
+/* Drawn icons: centre exactly, unlike text symbols */
+.support-icon svg {
+  display: block;
+  width: 18px;
+  height: 18px;
 }
 
 .support-card h3 {

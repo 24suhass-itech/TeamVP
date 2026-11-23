@@ -215,9 +215,17 @@ canvas {
 
 @media (max-width: 700px) {
   .assembly-sticky {
-    /* Sit just under the navbar so the spec cards fit below */
+    /* Tall enough for the animation and the spec card beneath it,
+       but no taller: the panel then unpins as the last frame lands,
+       so the section below slides up into what used to be dead
+       space. The cards are positioned, so they cannot size this
+       themselves, and the panel clips whatever overflows. */
+    height: calc(76px + (100vw - 32px) * 9 / 16 + 310px);
+    height: min(calc(76px + (100vw - 32px) * 9 / 16 + 310px), 100svh);
+
     justify-content: flex-start;
-    padding-top: 140px;
+    padding-top: 76px;
+    padding-bottom: 20px;
 
     --frame-w: calc(100% - 32px);
     --frame-h: calc((100vw - 32px) * 9 / 16);
@@ -309,6 +317,9 @@ canvas {
 }
 
 .spec-card dt {
+  flex-shrink: 0;
+  white-space: nowrap;
+
   color: rgba(230, 236, 255, 0.82);
 }
 
@@ -329,13 +340,38 @@ canvas {
 }
 
 @media (max-width: 700px) {
+  /* Compact enough that the whole card, last row included, fits
+     in the space below the animation on a short phone. */
   .spec-card {
-    width: 230px;
-    padding: 16px 18px;
+    width: min(320px, calc(100vw - 48px));
+    padding: 13px 15px;
+  }
+
+  .spec-kicker {
+    margin-bottom: 3px;
+    font-size: 10px;
+    letter-spacing: 1.5px;
   }
 
   .spec-card h3 {
-    font-size: 17px;
+    margin-bottom: 9px;
+    font-size: 15.5px;
+  }
+
+  .spec-card dl {
+    gap: 5px;
+  }
+
+  .spec-card dl div {
+    padding-top: 5px;
+    font-size: 12.5px;
+  }
+
+  .spec-note {
+    margin-top: 9px;
+    padding-top: 7px;
+    font-size: 11.5px;
+    line-height: 1.45;
   }
 }
 
@@ -582,298 +618,50 @@ canvas {
 .mouse-polaroid.active {
   opacity: 1;
 }
-/* =========================
-   CUSTOM SPHERE CURSOR
-========================= */
-
-html,
-body,
-a,
-button {
-  cursor: none;
-}
 
 
 /* =========================
-   SPHERE
+   MOBILE
+   Phones and small tablets only. Every rule below is inside the
+   mobile breakpoint, so the desktop layout above is untouched.
 ========================= */
 
-.cursor-sphere {
+@media (max-width: 860px) {
 
-  position: fixed;
-
-  left: 0;
-  top: 0;
-
-  width: 18px;
-  height: 18px;
-
-  border-radius: 50%;
-
-  pointer-events: none;
-
-  z-index: 10000;
-
-  transform:
-    translate(-50%, -50%);
-
-  opacity: 0;
-
-  background:
-    radial-gradient(
-      circle at 30% 25%,
-      #ffffff 0%,
-      #dce5ff 18%,
-      #8da8ff 42%,
-      #486cff 68%,
-      #172c91 100%
-    );
-
-  box-shadow:
-
-    0 0 8px
-    rgba(120, 150, 255, 0.8),
-
-    0 0 22px
-    rgba(75, 110, 255, 0.55),
-
-    0 0 45px
-    rgba(55, 90, 255, 0.25);
-
-  transition:
-    opacity 0.2s ease,
-    width 0.18s ease,
-    height 0.18s ease;
-
-}
-
-
-/* =========================
-   OUTER GLOW
-========================= */
-
-.cursor-sphere::before {
-
-  content: "";
-
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 34px;
-  height: 34px;
-
-  border-radius: 50%;
-
-  transform:
-    translate(-50%, -50%);
-
-  border:
-    1px solid
-    rgba(130, 155, 255, 0.28);
-
-  box-shadow:
-    0 0 18px
-    rgba(80, 120, 255, 0.25);
-
-}
-
-
-/* =========================
-   INNER HIGHLIGHT
-========================= */
-
-.cursor-sphere::after {
-
-  content: "";
-
-  position: absolute;
-
-  left: 27%;
-  top: 20%;
-
-  width: 4px;
-  height: 4px;
-
-  border-radius: 50%;
-
-  background: white;
-
-  filter:
-    blur(0.5px);
-
-  opacity: 0.9;
-
-}
-
-
-/* =========================
-   ACTIVE
-========================= */
-
-.cursor-sphere.active {
-
-  opacity: 1;
-
-}
-
-
-/* =========================
-   CLICK ANIMATION
-========================= */
-
-.cursor-sphere.clicking {
-
-  animation:
-    sphereClick
-    420ms
-    cubic-bezier(
-      0.2,
-      0.8,
-      0.2,
-      1
-    );
-
-}
-
-
-@keyframes sphereClick {
-
-  0% {
-
-    width: 18px;
-    height: 18px;
-
-    box-shadow:
-
-      0 0 8px
-      rgba(120, 150, 255, 0.8),
-
-      0 0 22px
-      rgba(75, 110, 255, 0.55),
-
-      0 0 45px
-      rgba(55, 90, 255, 0.25);
-
+  /* A bigger hero title now that the navbar is out of the way */
+  #typingTitle {
+    font-size: clamp(3rem, 14.5vw, 4rem);
   }
 
-  30% {
-
-    width: 11px;
-    height: 11px;
-
-    box-shadow:
-
-      0 0 12px
-      rgba(150, 175, 255, 1),
-
-      0 0 35px
-      rgba(75, 110, 255, 0.8);
-
+  /* The caret sits beside the text rather than below it. The
+     desktop offset is a flat 35px, which is far too far down at
+     this size, so it is set in em and scales with the type. */
+  .typing-cursor {
+    transform: translate(0.08em, 0.37em);
   }
 
-  55% {
+  /* Centred across the full width. Anchoring it at the halfway
+     mark left it only half the screen to sit in, so the words
+     wrapped and sat off to one side. */
+  .scroll-hint {
+    left: 0;
+    right: 0;
 
-    width: 25px;
-    height: 25px;
+    transform: none;
 
-    box-shadow:
-
-      0 0 15px
-      rgba(150, 175, 255, 1),
-
-      0 0 45px
-      rgba(75, 110, 255, 0.75);
-
+    justify-content: center;
+    text-align: center;
   }
 
-  100% {
+  /* There is no mouse to move here, so the polaroid is simply
+     shown: small, tucked into the top-left, at the same angle. */
+  .mouse-polaroid {
+    left: 34px;
+    top: 92px;
 
-    width: 18px;
-    height: 18px;
+    width: 104px;
 
-    box-shadow:
-
-      0 0 8px
-      rgba(120, 150, 255, 0.8),
-
-      0 0 22px
-      rgba(75, 110, 255, 0.55),
-
-      0 0 45px
-      rgba(55, 90, 255, 0.25);
-
-  }
-
-}
-
-
-/* =========================
-   CLICK RIPPLE
-========================= */
-
-.cursor-ripple {
-
-  position: fixed;
-
-  width: 20px;
-  height: 20px;
-
-  border-radius: 50%;
-
-  pointer-events: none;
-
-  z-index: 9999;
-
-  border:
-    1px solid
-    rgba(150, 175, 255, 0.8);
-
-  transform:
-    translate(-50%, -50%)
-    scale(0);
-
-  opacity: 0;
-
-}
-
-
-.cursor-ripple.active {
-
-  animation:
-    cursorRipple
-    500ms
-    cubic-bezier(
-      0.2,
-      0.8,
-      0.2,
-      1
-    );
-
-}
-
-
-@keyframes cursorRipple {
-
-  0% {
-
-    transform:
-      translate(-50%, -50%)
-      scale(0);
-
-    opacity: 0.9;
-
-  }
-
-  100% {
-
-    transform:
-      translate(-50%, -50%)
-      scale(4);
-
-    opacity: 0;
-
+    opacity: 1;
   }
 
 }

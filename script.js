@@ -10,6 +10,9 @@ const ctx = canvas.getContext("2d", {
 const assembly =
   document.querySelector(".assembly");
 
+const assemblySticky =
+  document.querySelector(".assembly-sticky");
+
 const progressBar =
   document.getElementById("progressBar");
 
@@ -264,9 +267,14 @@ function updateScroll() {
   const rect =
     assembly.getBoundingClientRect();
 
+  /* How far the pinned panel can travel. Measuring the panel
+     rather than assuming a full screen matters on phones, where
+     it is only as tall as the framed animation. */
   const distance =
     assembly.offsetHeight -
-    window.innerHeight;
+    (assemblySticky
+      ? assemblySticky.offsetHeight
+      : window.innerHeight);
 
   const progress =
     Math.max(
@@ -451,16 +459,27 @@ function updateSpecCards(frame) {
 
   if (!frameWrap) return;
 
+  /* On a phone the card sits below the animation rather than over
+     it, so the panel reserves room for it. Letting the last card
+     run to the final frame keeps that room filled right up to the
+     moment the section underneath slides into its place. */
+  const holdLast = frameWrap.clientWidth < 600;
+  const lastCard = specCards[specCards.length - 1];
+
   specCards.forEach((card) => {
+
+    const end = (holdLast && card === lastCard)
+      ? TOTAL_FRAMES - 1
+      : card.end;
 
     // frame stays at 0 until the animation section reaches the
     // top of the screen, so nothing triggers while on the hero
     const active =
-      frame > 0 && frame >= card.start && frame <= card.end;
+      frame > 0 && frame >= card.start && frame <= end;
     const hidden = Math.abs(card.pos - 0.5) >= 0.48;
 
     // Before its frames it waits below; after them it leaves upwards
-    const target = active ? 0.5 : (frame > card.end ? 1 : 0);
+    const target = active ? 0.5 : (frame > end ? 1 : 0);
 
     // Out of view on the wrong side: jump across without animating
     if (!active && hidden) {
@@ -568,202 +587,33 @@ preloadImages();
 
 
 /* =========================
-   CUSTOM SPHERE CURSOR
-========================= */
-
-const cursorSphere =
-  document.createElement("div");
-
-const cursorRipple =
-  document.createElement("div");
-
-
-cursorSphere.className =
-  "cursor-sphere";
-
-cursorRipple.className =
-  "cursor-ripple";
-
-
-document.body.appendChild(
-  cursorSphere
-);
-
-document.body.appendChild(
-  cursorRipple
-);
-
-
-/* =========================
-   MOUSE POLAROID
+   HERO POLAROID
+   Fades in once the mouse moves. The cursor itself
+   lives in /common/cursor.js, shared by every page.
 ========================= */
 
 const mousePolaroid =
-  document.querySelector(
-    ".mouse-polaroid"
+  document.querySelector(".mouse-polaroid");
+
+if (mousePolaroid) {
+
+  document.addEventListener(
+    "mousemove",
+    () => {
+
+      mousePolaroid.classList.add("active");
+
+    }
   );
 
 
-/* =========================
-   MOUSE POSITION
-========================= */
+  document.addEventListener(
+    "mouseleave",
+    () => {
 
-let mouseX = 0;
-let mouseY = 0;
-
-let sphereX = 0;
-let sphereY = 0;
-
-let mouseInside = false;
-
-
-/* =========================
-   MOUSE MOVE
-========================= */
-
-document.addEventListener(
-  "mousemove",
-  (event) => {
-
-    mouseX =
-      event.clientX;
-
-    mouseY =
-      event.clientY;
-
-
-    mouseInside = true;
-
-
-    cursorSphere.classList.add(
-      "active"
-    );
-
-
-    /* Keep existing polaroid */
-
-    if (mousePolaroid) {
-
-      mousePolaroid.classList.add(
-        "active"
-      );
+      mousePolaroid.classList.remove("active");
 
     }
-
-  }
-);
-
-
-/* =========================
-   MOUSE LEAVE
-========================= */
-
-document.addEventListener(
-  "mouseleave",
-  () => {
-
-    mouseInside = false;
-
-
-    cursorSphere.classList.remove(
-      "active"
-    );
-
-
-    if (mousePolaroid) {
-
-      mousePolaroid.classList.remove(
-        "active"
-      );
-
-    }
-
-  }
-);
-
-
-/* =========================
-   CLICK ANIMATION
-========================= */
-
-document.addEventListener(
-  "mousedown",
-  () => {
-
-    if (!mouseInside) {
-
-      return;
-
-    }
-
-
-    /* =====================
-       SPHERE CLICK
-    ===================== */
-
-    cursorSphere.classList.remove(
-      "clicking"
-    );
-
-
-    /*
-      Force browser to restart
-      the animation.
-    */
-
-    void cursorSphere.offsetWidth;
-
-
-    cursorSphere.classList.add(
-      "clicking"
-    );
-
-
-    /* =====================
-       RIPPLE
-    ===================== */
-
-    cursorRipple.style.left =
-      `${mouseX}px`;
-
-    cursorRipple.style.top =
-      `${mouseY}px`;
-
-
-    cursorRipple.classList.remove(
-      "active"
-    );
-
-
-    void cursorRipple.offsetWidth;
-
-
-    cursorRipple.classList.add(
-      "active"
-    );
-
-  }
-);
-
-
-/* =========================
-   SMOOTH SPHERE FOLLOW
-========================= */
-function updateSphere() {
-
-  sphereX = mouseX;
-  sphereY = mouseY;
-
-  cursorSphere.style.left =
-    `${sphereX}px`;
-
-  cursorSphere.style.top =
-    `${sphereY}px`;
-
-  requestAnimationFrame(
-    updateSphere
   );
 
 }
-
-updateSphere();

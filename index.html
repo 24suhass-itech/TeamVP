@@ -7,18 +7,22 @@
 
   <title>Team Vayuputra</title>
 
-  <script src="/common/router.js" defer></script>
+  <script src="/common/router.js?v=5" defer></script>
   <link rel="icon" type="image/png" href="/assets/drone.png">
 
   <link rel="stylesheet" href="/common.css?v=2">
 <link rel="stylesheet" href="/navbar.css?v=8">
-<link rel="stylesheet" href="/styles.css?v=12">
+<link rel="stylesheet" href="/styles.css?v=21">
 
   <!-- External JavaScript -->
-  <script src="/script.js?v=9" defer></script>
-  <link rel="stylesheet" href="/common/footer.css?v=2">
+  <script src="/script.js?v=12" defer></script>
+  <link rel="stylesheet" href="/common/footer.css?v=3">
   <script src="/common/footer.js" defer></script>
   <script src="/common/liquid-glass.js?v=5" defer></script>
+  <link rel="stylesheet" href="/common/cursor.css?v=4">
+  <script src="/common/cursor.js?v=5" defer></script>
+  <link rel="stylesheet" href="/common/mobile-nav.css?v=8">
+  <script src="/common/mobile-nav.js?v=4" defer></script>
 </head>
 <img
   class="mouse-polaroid"
@@ -26,7 +30,6 @@
   alt=""
 />
 <body>
-  <div class="custom-cursor"></div>
   <!-- =========================
        GLASS NAVIGATION
   ========================= -->
@@ -180,16 +183,42 @@
           </div>
 
           <div class="spec-card" data-start="376" data-end="500">
-            <span class="spec-kicker">FLIGHT CONTROLLER</span>
-            <h3>Pixhawk 2.4.8</h3>
+            <span class="spec-kicker">AVIONICS</span>
+            <h3>Flight Controller &amp; GPS</h3>
             <dl>
-              <div><dt>Processor</dt><dd>32-bit ARM Cortex-M4</dd></div>
-              <div><dt>Firmware</dt><dd>ArduCopter</dd></div>
-              <div><dt>Memory</dt><dd>2 MB Flash</dd></div>
-              <div><dt>Power input</dt><dd>4.5&ndash;5.5 V</dd></div>
+              <div><dt>Flight controller</dt><dd>Pixhawk 2.4.8</dd></div>
               <div><dt>Interfaces</dt><dd>PWM, UART, I&sup2;C, CAN, USB</dd></div>
+              <div><dt>GPS module</dt><dd>RadioLink SE100</dd></div>
+              <div><dt>Velocity precision</dt><dd>0.1 m/s</dd></div>
+              <div><dt>Max altitude</dt><dd>50,000 m</dd></div>
+              <div><dt>Tracking sensitivity</dt><dd>&minus;167 dBm</dd></div>
+              <div><dt>Time to first fix</dt><dd>26 s cold, 1 s hot</dd></div>
             </dl>
-            <p class="spec-note">Built-in 3-axis gyroscope, accelerometer, magnetometer and barometer.</p>
+          </div>
+
+          <div class="spec-card" data-start="501" data-end="550">
+            <span class="spec-kicker">BATTERY</span>
+            <h3>Pro-Range LiPo</h3>
+            <dl>
+              <div><dt>Nominal voltage</dt><dd>14.8 V (4S)</dd></div>
+              <div><dt>Capacity</dt><dd>5200 mAh</dd></div>
+              <div><dt>Max voltage</dt><dd>16.8 V</dd></div>
+              <div><dt>Discharge rating</dt><dd>40C</dd></div>
+            </dl>
+          </div>
+
+          <div class="spec-card" data-start="551" data-end="680">
+            <span class="spec-kicker">FPV SYSTEM</span>
+            <h3>Camera &amp; VTX</h3>
+            <dl>
+              <div><dt>Camera</dt><dd>Caddx Ratel 2</dd></div>
+              <div><dt>Sensor</dt><dd>1/1.8&Prime; Starlight CMOS</dd></div>
+              <div><dt>Resolution</dt><dd>1200 TVL</dd></div>
+              <div><dt>Min illumination</dt><dd>0.0001 lux</dd></div>
+              <div><dt>VTX</dt><dd>SpeedyBee TX800</dd></div>
+              <div><dt>Output</dt><dd>800 mW, 5.8 GHz</dd></div>
+              <div><dt>Range</dt><dd>Up to 1 km</dd></div>
+            </dl>
           </div>
 
         </div>

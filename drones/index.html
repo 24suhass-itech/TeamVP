@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Drones | Team Vayuputra</title>
+
+  <script src="/common/router.js?v=5" defer></script>
+  <link
+    rel="icon"
+    type="image/png"
+    href="/assets/drone.png"
+  >
+
+  <!-- =========================
+       SHARED STYLES
+  ========================= -->
+
+  <link rel="stylesheet" href="/common.css?v=2">
+  <link rel="stylesheet" href="/navbar.css?v=8">
+
+  <!-- =========================
+       DRONE CARDS
+       Same card layout as the Events page
+  ========================= -->
+
+  <link rel="stylesheet" href="/events/events.css?v=4">
+  <link rel="stylesheet" href="/drones/drones.css?v=5">
+  <link rel="stylesheet" href="/popup.css?v=5">
+  <script src="/popup.js?v=2" defer></script>
+
+  <link rel="stylesheet" href="/common/footer.css?v=3">
+  <script src="/common/footer.js" defer></script>
+  <script src="/common/liquid-glass.js?v=5" defer></script>
+  <link rel="stylesheet" href="/common/cursor.css?v=4">
+  <script src="/common/cursor.js?v=5" defer></script>
+  <link rel="stylesheet" href="/common/mobile-nav.css?v=8">
+  <script src="/common/mobile-nav.js?v=4" defer></script>
+</head>
+
+
+<body>
+
+
+  <!-- =====================================================
+       NAVBAR
+  ===================================================== -->
+
+  <header class="topbar">
+
+    <nav class="navbar">
+
+      <div class="nav-left">
+
+        <a
+          href="/sponsor/"
+          class="nav-link"
+        >
+          Sponsor Us
+        </a>
+
+        <a
+          href="/team/"
+          class="nav-link"
+        >
+          Team
+        </a>
+
+        <a
+          href="/about/"
+          class="nav-link"
+        >
+          About
+        </a>
+
+      </div>
+
+      <a
+        href="/"
+        class="logo-link"
+        aria-label="Team Vayuputra Home"
+      >
+
+        <img
+          class="drone-logo"
+          src="/assets/drone.png"
+          alt="Team Vayuputra Drone Logo"
+        >
+
+      </a>
+
+      <div class="nav-right">
+
+        <a
+          href="/challenges/"
+          class="nav-link"
+        >
+          Challenges
+        </a>
+
+        <a
+          href="/drones/"
+          class="nav-link active"
+          aria-current="page"
+        >
+          Drones
+        </a>
+
+        <a
+          href="/events/"
+          class="nav-link"
+        >
+          Events
+        </a>
+
+      </div>
+
+    </nav>
+
+  </header>
+
+
+
+  <!-- =====================================================
+       DRONES PAGE
+  ===================================================== -->
+
+  <main class="events-page">
+
+
+
+
+
+    <!-- =====================================================
+         DRONE LIST
+    ===================================================== -->
+
+    <section class="event-list">
+
+
+      <!-- =================================================
+           DRONE 01 - AERIES
+      ================================================= -->
+
+      <article class="event-card">
+
+        <div class="event-image">
+
+          <img
+            class="event-photo drone-photo"
+            src="/assets/aeries.jfif"
+            alt="Aeries quadcopter on the grass"
+            loading="lazy"
+          >
+
+        </div>
+
+        <div class="event-content">
+
+          <h2>
+            AERIES
+          </h2>
+
+          <p class="event-description">
+
+            Aeries was Team Vayuputra&rsquo;s first-ever drone,
+            built by VP3 in 2025. It marked the beginning of
+            Team Vayuputra&rsquo;s drone-building journey.
+
+          </p>
+
+          <button
+            type="button"
+            class="read-event"
+            data-specs="aeries-specs"
+          >
+            READ MORE &#8594;
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- Specifications pop-up for Aeries (opened by READ MORE) -->
+      <dialog class="spec-dialog" id="aeries-specs" aria-labelledby="aeries-specs-title">
+        <div class="spec-dialog-inner">
+
+          <button type="button" class="spec-close" aria-label="Close specifications"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+
+          <span class="spec-dialog-kicker">SPECIFICATIONS</span>
+          <h3 id="aeries-specs-title">Aeries</h3>
+
+          <dl class="spec-table">
+              <div><dt>Flight controller</dt><dd>Pixhawk 2.4.8</dd></div>
+              <div><dt>Brushless motors</dt><dd>A2212, 1000 KV (&times;4)</dd></div>
+              <div><dt>ESC</dt><dd>SimonK 30A (&times;4)</dd></div>
+              <div><dt>Propellers</dt><dd>10 &times; 4.5 inch</dd></div>
+              <div><dt>Frame</dt><dd>F450 quadcopter frame</dd></div>
+              <div><dt>Battery</dt><dd>Pro Range 11.1 V LiPo</dd></div>
+              <div><dt>Transmitter</dt><dd>FlySky ST8</dd></div>
+              <div><dt>Receiver</dt><dd>FlySky SR8</dd></div>
+              <div><dt>GPS module</dt><dd>M8N GPS</dd></div>
+              <div><dt>Companion computer</dt><dd>Raspberry Pi 5</dd></div>
+              <div><dt>Camera</dt><dd>Raspberry Pi Camera</dd></div>
+              <div><dt>Payload mechanism</dt><dd>Gripper</dd></div>
+              <div><dt>Cleaning mechanism</dt><dd>Blower</dd></div>
+          </dl>
+
+        </div>
+      </dialog>
+
+
+    </section>
+
+  </main>
+  <div id="site-footer"></div>
+</body>
+</html>

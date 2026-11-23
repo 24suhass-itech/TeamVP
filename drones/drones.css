@@ -1,0 +1,12 @@
+/* =========================================================
+   DRONES PAGE
+   Cards use the Events layout (events.css). Photos are cropped
+   to the same 5:4 shape as the Events photos so every card
+   comes out the same size.
+   ========================================================= */
+
+.drone-photo {
+  aspect-ratio: 5 / 4;
+  object-fit: cover;
+  object-position: center 65%;
+}
