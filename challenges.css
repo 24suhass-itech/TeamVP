@@ -330,9 +330,77 @@ body {
   }
 }
 
-/* Phones: start just under the menu button, like Drones and Events */
+/* =========================================================
+   PHONES
+   Same stacked card as the Drones and Events pages: photo
+   across the full width on top, then the status, title,
+   details and text.
+   ========================================================= */
+
 @media (max-width: 700px) {
+
   .challenges-page {
-    padding-top: 96px;
+    padding: 96px 16px 56px;
   }
+
+  .challenge-list {
+    gap: 24px;
+  }
+
+  .challenge-card {
+    min-height: 0;
+
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 18px;
+
+    padding: 14px 14px 22px;
+
+    border-radius: 22px;
+  }
+
+  /* No lift on tap: hover sticks after a touch on phones */
+  .challenge-card:hover {
+    transform: none;
+  }
+
+  .challenge-image {
+    padding-right: 0;
+  }
+
+  .challenge-photo {
+    border-radius: 14px;
+  }
+
+  .challenge-content {
+    padding: 0 6px;
+  }
+
+  .challenge-content h2 {
+    margin-bottom: 14px;
+
+    font-size: clamp(24px, 7vw, 30px);
+  }
+
+  /* Date and venue: smaller and tighter, with each icon level
+     with the first line when a venue wraps onto two lines */
+  .challenge-meta {
+    gap: 10px;
+
+    margin-bottom: 16px;
+  }
+
+  .meta-item {
+    align-items: baseline;
+    gap: 10px;
+
+    font-size: 15.5px;
+    line-height: 1.4;
+  }
+
+  .challenge-description {
+    max-width: none;
+
+    font-size: 15.5px;
+  }
+
 }
