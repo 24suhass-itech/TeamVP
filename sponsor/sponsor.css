@@ -339,6 +339,9 @@ body {
 }
 
 .journey-form {
+  /* PARTNER WITH US lands here; leave room for the navbar above */
+  scroll-margin-top: 140px;
+
   display: grid;
   gap: 16px;
   width: 100%;
@@ -687,6 +690,7 @@ body {
 
   .journey-form {
     padding: 20px;
+    scroll-margin-top: 84px;  /* clear of the menu button */
   }
 
   .journey-form-row {
