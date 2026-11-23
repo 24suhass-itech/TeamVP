@@ -394,11 +394,30 @@ body {
     font-size: clamp(3rem, 14.5vw, 4rem);
   }
 
-  /* The caret sits beside the text rather than below it. The
-     desktop offset is a flat 35px, which is far too far down at
-     this size, so it is set in em and scales with the type. */
+  /* Phones use different fonts (SF Pro on iPhone, Roboto on
+     Android), and each sits at a different height in its line, so
+     a fixed nudge lined the caret up on one phone and not another.
+     Here the caret is part of the text instead: drawn right after
+     the last typed letter, standing on the same baseline and as
+     tall as a capital letter in whichever font the phone uses. */
   .typing-cursor {
-    transform: translate(0.08em, 0.37em);
+    display: none;
+  }
+
+  #typedText::after {
+    content: "";
+
+    display: inline-block;
+    vertical-align: baseline;
+
+    width: 4px;
+    height: 0.7em;   /* fallback for older browsers */
+    height: 1cap;    /* exact capital height of the font in use */
+    margin-left: 0.18em;  /* clears the title's tight letter-spacing */
+
+    background: #ffffff;
+
+    animation: blinkCursor 0.8s steps(1) infinite;
   }
 
   /* Centred across the full width. Anchoring it at the halfway
