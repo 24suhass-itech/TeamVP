@@ -167,77 +167,108 @@
   }
 }
 
-@media (max-width: 440px) {
+/* =========================================================
+   PHONES
+   One column, built from rows rather than widths, so it lines up
+   the same on every phone:
+   - brand, then each contact on its own row, then the links
+   - the logo and every contact icon share one 36px column, so
+     all the text starts on the same vertical line
+   - the six links sit in three equal columns that share out
+     whatever width the phone has
+   ========================================================= */
+@media (max-width: 700px) {
   .site-footer {
-    padding: 28px 22px 14px;
+    margin-top: 32px;
+    padding: 18px 20px 12px;
   }
 
   .site-footer-main {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-    column-gap: 16px;
-    row-gap: 24px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
   }
 
+  /* Brand */
   .site-footer-brand {
+    grid-row: 1;
     gap: 10px;
   }
 
   .site-footer .site-footer-logo {
-    flex-basis: 36px;
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px;
-    min-height: 36px;
+    flex-basis: 32px;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .site-footer-brand-copy {
+    gap: 3px;
   }
 
   .site-footer-brand-copy strong {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .site-footer-brand-copy > span {
     font-size: 11px;
   }
 
+  /* Contacts: one line each, icon then value. The icon already
+     says what it is, so the small "Email" / "Call" label is
+     dropped here to save a line per contact. */
+  .site-footer-contacts {
+    grid-column: 1;
+    grid-row: 2;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 9px;
+    margin-top: 14px;
+  }
+
+  .site-footer-contact {
+    gap: 10px;
+  }
+
+  /* 20px icons centred in the logo's 32px column */
+  .site-footer .footer-contact-icon {
+    flex-basis: 20px !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    margin: 0 6px;
+  }
+
+  .site-footer-contact-label {
+    display: none;
+  }
+
+  .site-footer-contact-value {
+    font-size: 13px;
+  }
+
+  /* Links: three equal columns, under a divider */
   .site-footer-nav {
-    gap: 10px 12px;
+    grid-column: 1;
+    grid-row: 3;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    justify-content: stretch;
+    gap: 8px 12px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(165, 181, 235, 0.12);
   }
 
   .site-footer-nav a {
     font-size: 12px;
   }
 
-  .site-footer-contacts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 14px;
-    row-gap: 18px;
-  }
-
-  .site-footer-contact {
-    gap: 8px;
-  }
-
-  .site-footer-contact-label {
-    font-size: 12px;
-  }
-
-  .site-footer-contact-value {
-    font-size: 13px;
-  }
-}
-
-@media (max-width: 340px) {
-  .site-footer-main {
-    grid-template-columns: 1fr;
-  }
-
-  .site-footer-nav {
-    grid-column: 1;
-    grid-row: auto;
-    justify-content: start;
-  }
-
-  .site-footer-contacts {
-    grid-template-columns: 1fr;
+  .site-footer-bottom {
+    margin-top: 12px;
+    padding-top: 8px;
+    font-size: 9.5px;
   }
 }
 
