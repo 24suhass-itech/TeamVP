@@ -136,7 +136,7 @@ body {
 
 @media (max-width: 700px) {
   .about-page {
-    padding: 150px 16px 80px;
+    padding: 96px 16px 80px;  /* just under the menu button, like the other pages */
   }
 
   .about-wrap {

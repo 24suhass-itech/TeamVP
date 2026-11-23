@@ -594,3 +594,11 @@ body {
 .brochure-button:hover span {
   transform: translateY(3px);
 }
+
+
+/* Phones: start just under the menu button, like the other pages */
+@media (max-width: 700px) {
+  .sponsor-page {
+    padding-top: 96px;
+  }
+}
