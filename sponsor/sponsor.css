@@ -596,9 +596,122 @@ body {
 }
 
 
-/* Phones: start just under the menu button, like the other pages */
+/* =========================================================
+   PHONES
+   Every section becomes one column: text first, then the
+   drone badge / cards / form beneath it. Heading sizes scale
+   with the screen width, so they fit any phone.
+   ========================================================= */
+
 @media (max-width: 700px) {
+
   .sponsor-page {
+    width: calc(100% - 32px);
     padding-top: 96px;
   }
+
+  /* Hero: text, then the drone badge centred below */
+  .sponsor-hero {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    gap: 8px;
+    padding: 0 0 24px;
+  }
+
+  .sponsor-hero h1 {
+    font-size: clamp(44px, 14vw, 64px);
+  }
+
+  .hero-description {
+    font-size: 15.5px;
+  }
+
+  /* The laptop layout lifts the badge 90px; here that pushed it
+     into the button and left a gap below, so it sits in place */
+  .hero-orbit {
+    width: min(64%, 240px);
+    justify-self: center;
+    transform: none;
+  }
+
+  /* How you can support us */
+  .support-section {
+    padding: 8px 0 56px;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(32px, 10vw, 44px);
+  }
+
+  .support-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .support-card {
+    padding: 22px;
+  }
+
+  .support-card p {
+    max-width: none;
+  }
+
+  /* The journey + form */
+  .journey-section {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding: 44px 0 56px;
+  }
+
+  .journey-content h2 {
+    font-size: clamp(36px, 11vw, 52px);
+  }
+
+  .journey-content > p:not(.eyebrow) {
+    font-size: 15.5px;
+  }
+
+  /* DESIGN — DEVELOPMENT — TESTING — FLIGHT on one line */
+  .journey-line {
+    gap: 8px;
+  }
+
+  .journey-line span {
+    letter-spacing: 0.08em;
+  }
+
+  .journey-line i {
+    min-width: 10px;
+  }
+
+  .journey-form {
+    padding: 20px;
+  }
+
+  .journey-form-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* 16px stops iPhones zooming in when a field is tapped */
+  .journey-form-field input,
+  .journey-form-field textarea {
+    font-size: 16px;
+  }
+
+  /* Contact box */
+  .contact-section {
+    padding: 8px 0 48px;
+  }
+
+  .contact-box {
+    padding: 28px 20px;
+  }
+
+  .contact-box h2 {
+    font-size: clamp(32px, 10vw, 44px);
+  }
+
+  .contact-box > p:not(.eyebrow) {
+    font-size: 15.5px;
+  }
+
 }
