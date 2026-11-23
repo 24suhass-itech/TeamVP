@@ -833,3 +833,81 @@ body {
   }
 
 }
+
+
+/* =========================================================
+   PHONES
+   Kept last so it overrides everything above. Top to bottom:
+   VP selector, title, filters, then the cards two across.
+   The selector, title and filters are positioned by fixed
+   offsets (as on laptops), so each offset below follows the
+   one before it:
+     selector 64px + 96px tall      -> ends 160px
+     title    170px                 -> ends ~194px
+     filters  206px, two rows       -> ends ~290px
+     cards    from 125px + 181px    =  306px
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .vp-selector {
+    top: 64px;
+  }
+
+  .team-intro {
+    top: 170px;
+  }
+
+  /* Six filters as an even 3 x 2 grid instead of a pill that
+     wraps unevenly. The sliding highlight follows each button's
+     row and column, so it still glides between them. */
+  .division-nav {
+    top: 206px;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2px;
+
+    width: calc(100% - 32px);
+    max-width: 420px;
+
+    border-radius: 22px;
+  }
+
+  .division-btn {
+    width: 100%;
+    padding: 0 6px;
+  }
+
+  .vp-content {
+    width: calc(100% - 32px);
+    margin: 181px 16px 0;
+  }
+
+  /* Two cards across, so names have room */
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .person-card:hover {
+    transform: none;
+  }
+
+  .person-info {
+    padding: 14px 8px 16px;
+  }
+
+  .person-info h3 {
+    font-size: 0.95rem;
+    line-height: 1.25;
+    white-space: normal;
+  }
+
+  .person-role {
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    white-space: normal;
+  }
+
+}
