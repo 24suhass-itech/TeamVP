@@ -25,7 +25,7 @@
      here; a filter or transform would not be. */
   border-radius: 28px;
 
-  scrollbar-width: thin;
+  scrollbar-width: none;  /* still scrolls; the bar is just hidden */
 }
 
 .spec-dialog-inner {
@@ -228,7 +228,7 @@
 
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
+  scrollbar-width: none;  /* still scrolls; the bar is just hidden */
 }
 
 .event-popup::backdrop {
@@ -578,4 +578,13 @@
   .event-popup.closing .popup-photo-wide {
     animation: none;
   }
+}
+
+
+/* Hide the scrollbar in Chrome, Edge and Safari too (Firefox uses
+   scrollbar-width above). The pop-ups still scroll with the wheel,
+   trackpad, touch and keyboard. */
+.spec-dialog::-webkit-scrollbar,
+.event-popup::-webkit-scrollbar {
+  display: none;
 }

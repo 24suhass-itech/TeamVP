@@ -31,10 +31,10 @@
 
   <link rel="stylesheet" href="/events/events.css?v=4">
   <link rel="stylesheet" href="/drones/drones.css?v=5">
-  <link rel="stylesheet" href="/popup.css?v=5">
+  <link rel="stylesheet" href="/popup.css?v=6">
   <script src="/popup.js?v=2" defer></script>
-  <link rel="stylesheet" href="/drones/explore.css?v=1">
-  <script src="/drones/explore.js?v=1" defer></script>
+  <link rel="stylesheet" href="/drones/explore.css?v=4">
+  <script src="/drones/explore.js?v=5" defer></script>
 
   <link rel="stylesheet" href="/common/footer.css?v=3">
   <script src="/common/footer.js" defer></script>
@@ -267,25 +267,26 @@
                   <span class="spec-kicker">PROPULSION</span>
                   <h3>Propeller &amp; ESC</h3>
                   <dl>
-                    <div><dt>Propeller</dt><dd>T-Motor T1045 II</dd></div>
-                    <div><dt>Size</dt><dd>10 &times; 4.5 in</dd></div>
-                    <div><dt>Rotation</dt><dd>2 CW + 2 CCW</dd></div>
-                    <div><dt>ESC</dt><dd>T-Motor AIR 20A V2.0</dd></div>
+                    <div><dt>Propeller</dt><dd>SF 10 &times; 4.5</dd></div>
+                    <div><dt>Material</dt><dd>ABS</dd></div>
+                    <div><dt>Shaft diameter</dt><dd>6 mm</dd></div>
+                    <div><dt>Hub diameter</dt><dd>16 mm</dd></div>
+                    <div><dt>ESC</dt><dd>SimonK 30A</dd></div>
+                    <div><dt>Continuous current</dt><dd>30 A</dd></div>
+                    <div><dt>Burst current</dt><dd>40 A</dd></div>
+                    <div><dt>Battery</dt><dd>2S&ndash;3S</dd></div>
                   </dl>
-                  <p class="spec-note">The ESC sets each motor&rsquo;s speed by regulating the power it receives, following commands from the flight controller.</p>
                 </div>
 
                 <div class="spec-card" data-start="251" data-end="375">
                   <span class="spec-kicker">FRAME</span>
-                  <h3>S500 Air PCB Frame</h3>
+                  <h3>F450 / Q450</h3>
                   <dl>
-                    <div><dt>Wheelbase</dt><dd>500 mm</dd></div>
-                    <div><dt>Weight</dt><dd>~400 g</dd></div>
-                    <div><dt>Material</dt><dd>Glass fibre, PA66 arms</dd></div>
-                    <div><dt>Landing gear</dt><dd>200 mm</dd></div>
-                    <div><dt>Power</dt><dd>Integrated PCB</dd></div>
+                    <div><dt>Wheelbase</dt><dd>450 mm</dd></div>
+                    <div><dt>Material</dt><dd>Glass fibre + polyamide nylon</dd></div>
+                    <div><dt>Landing gear height</dt><dd>200 mm</dd></div>
+                    <div><dt>Landing gear material</dt><dd>ABS</dd></div>
                   </dl>
-                  <p class="spec-note">Upswept, ridge-reinforced arms with an adjustable battery mount and camera/gimbal mounting points.</p>
                 </div>
 
                 <div class="spec-card" data-start="376" data-end="500">
@@ -294,11 +295,10 @@
                   <dl>
                     <div><dt>Flight controller</dt><dd>Pixhawk 2.4.8</dd></div>
                     <div><dt>Interfaces</dt><dd>PWM, UART, I&sup2;C, CAN, USB</dd></div>
-                    <div><dt>GPS module</dt><dd>RadioLink SE100</dd></div>
-                    <div><dt>Velocity precision</dt><dd>0.1 m/s</dd></div>
-                    <div><dt>Max altitude</dt><dd>50,000 m</dd></div>
-                    <div><dt>Tracking sensitivity</dt><dd>&minus;167 dBm</dd></div>
-                    <div><dt>Time to first fix</dt><dd>26 s cold, 1 s hot</dd></div>
+                    <div><dt>GPS module</dt><dd>NEO-M8N</dd></div>
+                    <div><dt>Tracking sensitivity</dt><dd>&minus;161 dBm</dd></div>
+                    <div><dt>Cold start</dt><dd>38 s average</dd></div>
+                    <div><dt>Warm start</dt><dd>35 s average</dd></div>
                   </dl>
                 </div>
 
@@ -306,24 +306,26 @@
                   <span class="spec-kicker">BATTERY</span>
                   <h3>Pro-Range LiPo</h3>
                   <dl>
-                    <div><dt>Nominal voltage</dt><dd>14.8 V (4S)</dd></div>
-                    <div><dt>Capacity</dt><dd>5200 mAh</dd></div>
-                    <div><dt>Max voltage</dt><dd>16.8 V</dd></div>
-                    <div><dt>Discharge rating</dt><dd>40C</dd></div>
+                    <div><dt>Nominal voltage</dt><dd>11.1 V (3S)</dd></div>
+                    <div><dt>Capacity</dt><dd>3300 mAh</dd></div>
+                    <div><dt>Max voltage</dt><dd>12.6 V</dd></div>
+                    <div><dt>Discharge rating</dt><dd>25C</dd></div>
+                    <div><dt>Weight</dt><dd>260 g</dd></div>
                   </dl>
                 </div>
 
                 <div class="spec-card" data-start="551" data-end="680">
-                  <span class="spec-kicker">FPV SYSTEM</span>
-                  <h3>Camera &amp; VTX</h3>
+                  <span class="spec-kicker">CONTROLLER</span>
+                  <h3>Transmitter &amp; Receiver</h3>
                   <dl>
-                    <div><dt>Camera</dt><dd>Caddx Ratel 2</dd></div>
-                    <div><dt>Sensor</dt><dd>1/1.8&Prime; Starlight CMOS</dd></div>
-                    <div><dt>Resolution</dt><dd>1200 TVL</dd></div>
-                    <div><dt>Min illumination</dt><dd>0.0001 lux</dd></div>
-                    <div><dt>VTX</dt><dd>SpeedyBee TX800</dd></div>
-                    <div><dt>Output</dt><dd>800 mW, 5.8 GHz</dd></div>
-                    <div><dt>Range</dt><dd>Up to 1 km</dd></div>
+                    <div><dt>Transmitter</dt><dd>FlySky ST8</dd></div>
+                    <div><dt>Channels</dt><dd>8&ndash;10</dd></div>
+                    <div><dt>Frequency</dt><dd>2.4 GHz ISM</dd></div>
+                    <div><dt>Range</dt><dd>&gt;1000 m</dd></div>
+                    <div><dt>Receiver</dt><dd>FlySky SR8</dd></div>
+                    <div><dt>Protocol</dt><dd>ANT</dd></div>
+                    <div><dt>Resolution</dt><dd>4096</dd></div>
+                    <div><dt>Data output</dt><dd>PWM / PPM / i-BUS / S.BUS</dd></div>
                   </dl>
                 </div>
 

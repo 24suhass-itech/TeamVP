@@ -21,10 +21,10 @@ const SPEC_DAMPING = 15;
 
 // Card centre path, as fractions of the frame (cubic Bezier, top to bottom)
 const SPEC_PATH = [
-  [0.90, 0.00],
-  [0.80, 0.35],
-  [0.80, 0.65],
-  [0.93, 1.00]
+  [0.97, 0.00],
+  [0.87, 0.35],
+  [0.87, 0.65],
+  [1.00, 1.00]
 ];
 
 const reduceMotion =

@@ -352,6 +352,12 @@ function cardsFor(division) {
           appear in BOTH filters.
         */
 
+        // Mentors appear only under their own Mentors filter,
+        // not in "All"
+        if (division === "all" && isSharedMentor) {
+          return false;
+        }
+
         return (
           (isSharedMentor || cardGeneration === currentGeneration) &&
           (division === "all" ||
