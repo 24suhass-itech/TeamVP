@@ -33,6 +33,8 @@
   <link rel="stylesheet" href="/drones/drones.css?v=5">
   <link rel="stylesheet" href="/popup.css?v=5">
   <script src="/popup.js?v=2" defer></script>
+  <link rel="stylesheet" href="/drones/explore.css?v=1">
+  <script src="/drones/explore.js?v=1" defer></script>
 
   <link rel="stylesheet" href="/common/footer.css?v=3">
   <script src="/common/footer.js" defer></script>
@@ -174,13 +176,25 @@
 
           </p>
 
-          <button
-            type="button"
-            class="read-event"
-            data-specs="aeries-specs"
-          >
-            READ MORE &#8594;
-          </button>
+          <div class="event-actions">
+
+            <button
+              type="button"
+              class="read-event"
+              data-specs="aeries-specs"
+            >
+              READ MORE &#8594;
+            </button>
+
+            <button
+              type="button"
+              class="read-event"
+              data-specs="aeries-explore"
+            >
+              EXPLORE &#8594;
+            </button>
+
+          </div>
 
         </div>
 
@@ -211,6 +225,123 @@
               <div><dt>Payload mechanism</dt><dd>Gripper</dd></div>
               <div><dt>Cleaning mechanism</dt><dd>Blower</dd></div>
           </dl>
+
+        </div>
+      </dialog>
+
+
+      <!-- Assembly animation pop-up for Aeries (opened by EXPLORE).
+           Scrolling inside it plays the frames; each spec card is
+           shown between its data-start and data-end frames (1-720). -->
+      <dialog class="spec-dialog explore-dialog" id="aeries-explore" aria-labelledby="aeries-explore-title">
+        <div class="spec-dialog-inner explore-inner">
+
+          <div class="explore-scroller">
+            <div class="explore-track">
+              <div class="explore-stage">
+
+                <div class="explore-head">
+                  <span class="spec-dialog-kicker">EXPLORE</span>
+                  <h3 id="aeries-explore-title">Aeries</h3>
+                </div>
+
+                <div class="explore-media">
+
+                  <div class="frame-wrap">
+
+                    <canvas class="explore-canvas" aria-label="Aeries assembly animation"></canvas>
+
+                <div class="spec-card" data-start="1" data-end="125">
+                  <span class="spec-kicker">MOTOR</span>
+                  <h3>A2212 10T/13T</h3>
+                  <dl>
+                    <div><dt>KV rating</dt><dd>1000 KV</dd></div>
+                    <div><dt>Max power</dt><dd>150 W per motor</dd></div>
+                    <div><dt>Shaft diameter</dt><dd>3 mm</dd></div>
+                    <div><dt>Battery</dt><dd>2S&ndash;3S LiPo</dd></div>
+                    <div><dt>Motor length</dt><dd>27.5 mm</dd></div>
+                  </dl>
+                </div>
+
+                <div class="spec-card" data-start="126" data-end="250">
+                  <span class="spec-kicker">PROPULSION</span>
+                  <h3>Propeller &amp; ESC</h3>
+                  <dl>
+                    <div><dt>Propeller</dt><dd>T-Motor T1045 II</dd></div>
+                    <div><dt>Size</dt><dd>10 &times; 4.5 in</dd></div>
+                    <div><dt>Rotation</dt><dd>2 CW + 2 CCW</dd></div>
+                    <div><dt>ESC</dt><dd>T-Motor AIR 20A V2.0</dd></div>
+                  </dl>
+                  <p class="spec-note">The ESC sets each motor&rsquo;s speed by regulating the power it receives, following commands from the flight controller.</p>
+                </div>
+
+                <div class="spec-card" data-start="251" data-end="375">
+                  <span class="spec-kicker">FRAME</span>
+                  <h3>S500 Air PCB Frame</h3>
+                  <dl>
+                    <div><dt>Wheelbase</dt><dd>500 mm</dd></div>
+                    <div><dt>Weight</dt><dd>~400 g</dd></div>
+                    <div><dt>Material</dt><dd>Glass fibre, PA66 arms</dd></div>
+                    <div><dt>Landing gear</dt><dd>200 mm</dd></div>
+                    <div><dt>Power</dt><dd>Integrated PCB</dd></div>
+                  </dl>
+                  <p class="spec-note">Upswept, ridge-reinforced arms with an adjustable battery mount and camera/gimbal mounting points.</p>
+                </div>
+
+                <div class="spec-card" data-start="376" data-end="500">
+                  <span class="spec-kicker">AVIONICS</span>
+                  <h3>Flight Controller &amp; GPS</h3>
+                  <dl>
+                    <div><dt>Flight controller</dt><dd>Pixhawk 2.4.8</dd></div>
+                    <div><dt>Interfaces</dt><dd>PWM, UART, I&sup2;C, CAN, USB</dd></div>
+                    <div><dt>GPS module</dt><dd>RadioLink SE100</dd></div>
+                    <div><dt>Velocity precision</dt><dd>0.1 m/s</dd></div>
+                    <div><dt>Max altitude</dt><dd>50,000 m</dd></div>
+                    <div><dt>Tracking sensitivity</dt><dd>&minus;167 dBm</dd></div>
+                    <div><dt>Time to first fix</dt><dd>26 s cold, 1 s hot</dd></div>
+                  </dl>
+                </div>
+
+                <div class="spec-card" data-start="501" data-end="550">
+                  <span class="spec-kicker">BATTERY</span>
+                  <h3>Pro-Range LiPo</h3>
+                  <dl>
+                    <div><dt>Nominal voltage</dt><dd>14.8 V (4S)</dd></div>
+                    <div><dt>Capacity</dt><dd>5200 mAh</dd></div>
+                    <div><dt>Max voltage</dt><dd>16.8 V</dd></div>
+                    <div><dt>Discharge rating</dt><dd>40C</dd></div>
+                  </dl>
+                </div>
+
+                <div class="spec-card" data-start="551" data-end="680">
+                  <span class="spec-kicker">FPV SYSTEM</span>
+                  <h3>Camera &amp; VTX</h3>
+                  <dl>
+                    <div><dt>Camera</dt><dd>Caddx Ratel 2</dd></div>
+                    <div><dt>Sensor</dt><dd>1/1.8&Prime; Starlight CMOS</dd></div>
+                    <div><dt>Resolution</dt><dd>1200 TVL</dd></div>
+                    <div><dt>Min illumination</dt><dd>0.0001 lux</dd></div>
+                    <div><dt>VTX</dt><dd>SpeedyBee TX800</dd></div>
+                    <div><dt>Output</dt><dd>800 mW, 5.8 GHz</dd></div>
+                    <div><dt>Range</dt><dd>Up to 1 km</dd></div>
+                  </dl>
+                </div>
+
+                  </div>
+
+                  <div class="progress-track">
+                    <div class="progress-bar"></div>
+                  </div>
+
+                </div>
+
+                <div class="explore-hint">SCROLL TO EXPLORE</div>
+
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="spec-close" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
 
         </div>
       </dialog>
