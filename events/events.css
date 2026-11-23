@@ -64,7 +64,7 @@ body {
 
   overflow: hidden;
 
-  padding: 170px 40px 100px;
+  padding: 140px 40px 100px;
 }
 
 
@@ -314,4 +314,34 @@ body {
     white-space: nowrap;
   }
 
+}
+
+
+/* =========================================================
+   PAGE TITLE
+   The page's name, centred at the top under the navbar.
+   ========================================================= */
+
+.page-title {
+  position: relative;
+  z-index: 2;
+
+  margin: 0 0 44px;
+
+  color: #ffffff;
+
+  font-size: clamp(40px, 4.6vw, 60px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media (max-width: 700px) {
+  .page-title {
+    margin-bottom: 22px;
+
+    font-size: clamp(30px, 9vw, 38px);
+  }
 }

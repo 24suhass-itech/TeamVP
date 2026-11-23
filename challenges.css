@@ -56,7 +56,7 @@ body {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-  padding: 190px 40px 100px;
+  padding: 140px 40px 100px;
 }
 
 
@@ -298,4 +298,41 @@ body {
 .challenge-description strong {
   color: #ffffff;
   font-weight: 700;
+}
+
+
+/* =========================================================
+   PAGE TITLE
+   The page's name, centred at the top under the navbar.
+   ========================================================= */
+
+.page-title {
+  position: relative;
+  z-index: 2;
+
+  margin: 0 0 44px;
+
+  color: #ffffff;
+
+  font-size: clamp(40px, 4.6vw, 60px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media (max-width: 700px) {
+  .page-title {
+    margin-bottom: 22px;
+
+    font-size: clamp(30px, 9vw, 38px);
+  }
+}
+
+/* Phones: start just under the menu button, like Drones and Events */
+@media (max-width: 700px) {
+  .challenges-page {
+    padding-top: 96px;
+  }
 }
