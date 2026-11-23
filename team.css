@@ -839,7 +839,7 @@ body {
    PHONES
    Kept last so it overrides everything above. Top to bottom,
    each block starts where the one before it ends:
-     VP switch   64px, 48px tall          -> ends 112px
+     VP switch   64px, 46px tall          -> ends 110px
      title       126px                     -> ends ~150px
      filters     170px, two rows of 36px   -> ends ~252px
      cards       125px page padding + 143px = 268px
@@ -856,8 +856,8 @@ body {
 
     transform: translateX(-50%);
 
-    width: min(240px, calc(100% - 32px));
-    height: 48px;
+    width: min(228px, calc(100% - 32px));
+    height: 46px;
 
     overflow: visible;
     touch-action: manipulation;  /* page scrolls normally over it */

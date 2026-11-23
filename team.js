@@ -56,7 +56,16 @@ function updateVP() {
 function goToVP(nextIndex) {
   if (nextIndex === currentIndex) return;
   if (nextIndex < 0 || nextIndex >= vpNames.length) return;
-  const direction = nextIndex > currentIndex ? "up" : "down";
+  const forward = nextIndex > currentIndex;
+
+  /* The selector is a vertical revolver on laptops (cards move up
+     or down with it) and a side-by-side bar on phones (cards move
+     left or right, like the filters). */
+  const sideways = matchMedia("(max-width: 700px)").matches;
+
+  const direction = sideways
+    ? (forward ? "left" : "right")
+    : (forward ? "up" : "down");
   currentIndex = nextIndex;
   currentGeneration = vpNames[currentIndex];
   updateVP();
@@ -713,11 +722,22 @@ divisionButtons.forEach((button) => {
 
       /* Pick a division to the right: cards move left (and back). */
 
-      const from =
-        divisionButtons.indexOf(activeButton());
+      /* Slide the way the buttons sit on screen: a division to the
+         right moves the cards left (and back). On phones the
+         filters wrap into two rows, so "to the right" is judged by
+         where the button actually is, not its order in the list;
+         one straight above or below slides the cards up or down. */
 
-      const to =
-        divisionButtons.indexOf(button);
+      const fromBox = boxFor(activeButton());
+      const toBox = boxFor(button);
+
+      const dx = toBox.x - fromBox.x;
+      const dy = toBox.y - fromBox.y;
+
+      const direction =
+        Math.abs(dx) > 2
+          ? (dx > 0 ? "left" : "right")
+          : (dy > 0 ? "up" : "down");
 
       activeDivision = division;
 
@@ -731,7 +751,7 @@ divisionButtons.forEach((button) => {
       glidePill(boxFor(button));
 
       slideCards(
-        to > from ? "left" : "right",
+        direction,
         () => showCards(division)
       );
 
