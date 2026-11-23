@@ -111,6 +111,11 @@
   letter-spacing: 0.06em;
 }
 
+/* Phone-only label (shown in the phone rules below) */
+.site-footer-contact-tag {
+  display: none;
+}
+
 .site-footer-contact-value {
   color: #e3e7f5;
   font-size: 11px;
@@ -214,19 +219,29 @@
     font-size: 11px;
   }
 
-  /* Contacts: one line each, icon then value. The icon already
-     says what it is, so the small "Email" / "Call" label is
-     dropped here to save a line per contact. */
+  /* Contacts: one line each in three aligned columns -
+     icon | label | value. Every row shares the same columns
+     (subgrid), so the labels and the values each start on one
+     vertical line, whatever the phone's width. */
   .site-footer-contacts {
     grid-column: 1;
     grid-row: 2;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 9px;
+    grid-template-columns: 32px max-content minmax(0, 1fr);
+    column-gap: 10px;  /* same as the logo's gap, so labels line up with the brand text */
+    row-gap: 9px;
     margin-top: 14px;
   }
 
   .site-footer-contact {
-    gap: 10px;
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    align-items: center;
+  }
+
+  /* Let the label and value sit straight in the row's columns */
+  .site-footer-contact > span {
+    display: contents;
   }
 
   /* 20px icons centred in the logo's 32px column */
@@ -238,11 +253,20 @@
     min-height: 20px !important;
     max-width: 20px !important;
     max-height: 20px !important;
-    margin: 0 6px;
+    justify-self: center;
   }
 
   .site-footer-contact-label {
     display: none;
+  }
+
+  .site-footer-contact-tag {
+    display: block;
+    color: #aebcff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
   }
 
   .site-footer-contact-value {

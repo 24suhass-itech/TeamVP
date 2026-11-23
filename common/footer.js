@@ -2,7 +2,7 @@
   const container = document.getElementById("site-footer");
   if (!container) return;
 
-  fetch("/common/footer.html")
+  fetch("/common/footer.html?v=2")
     .then((response) => {
       if (!response.ok) throw new Error(`Footer request failed: ${response.status}`);
       return response.text();
